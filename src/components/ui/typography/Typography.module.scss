@@ -1,3 +1,7 @@
+.fullWidth {
+  width: 100%;
+}
+
 .H1 {
   /* H1 */
   font-family: Roboto, sans-serif;
@@ -5,18 +9,17 @@
   font-weight: 700;
   font-style: normal;
   line-height: 36px; /* 180% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .H2 {
+  /* H2 */
   font-family: Roboto, sans-serif;
   font-size: 18px;
   font-weight: 700;
   font-style: normal;
   line-height: 24px; /* 133.333% */
-
-  /* H2 */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .H3 {
@@ -26,11 +29,7 @@
   font-weight: 700;
   font-style: normal;
   line-height: 24px; /* 150% */
-  color: var(--dark-900, #000);
-}
-
-.fullWidth {
-  width: 100%;
+  color: var(--color-light-100);
 }
 
 .Link1 {
@@ -62,7 +61,7 @@
   font-weight: 400;
   font-style: normal;
   line-height: 24px; /* 150% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .Body2 {
@@ -72,7 +71,7 @@
   font-weight: 400;
   font-style: normal;
   line-height: 24px; /* 171.429% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .Large {
@@ -82,7 +81,7 @@
   font-weight: 700;
   font-style: normal;
   line-height: 36px; /* 138.462% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .Subtitle1 {
@@ -92,7 +91,7 @@
   font-weight: 700;
   font-style: normal;
   line-height: 24px; /* 150% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .Subtitle2 {
@@ -102,7 +101,7 @@
   font-weight: 700;
   font-style: normal;
   line-height: 24px; /* 171.429% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .Caption {
@@ -112,7 +111,7 @@
   font-weight: 400;
   font-style: normal;
   line-height: 16px; /* 133.333% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
 
 .Overline {
@@ -122,5 +121,5 @@
   font-weight: 700;
   font-style: normal;
   line-height: 16px; /* 133.333% */
-  color: var(--dark-900, #000);
+  color: var(--color-light-100);
 }
