@@ -1,8 +1,11 @@
-.button{
+.button {
   all: unset;
   cursor: pointer;
+  display: flex;
+  padding: 6px 28px;
+
   &:focus-visible {
-    outline: 2px solid var(--color-info-500);
+    outline: 2px solid var(--color-info-700);
   }
 }
 

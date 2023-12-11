@@ -1,0 +1,126 @@
+.H1 {
+  /* H1 */
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 36px; /* 180% */
+  color: var(--dark-900, #000);
+}
+
+.H2 {
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px; /* 133.333% */
+
+  /* H2 */
+  color: var(--dark-900, #000);
+}
+
+.H3 {
+  /* H3 */
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px; /* 150% */
+  color: var(--dark-900, #000);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.Link1 {
+  /* Link 1 */
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px; /* 171.429% */
+  color: var(--primary-500, #397df6);
+  text-decoration-line: underline;
+}
+
+.Link2 {
+  /* Link 2 */
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 16px; /* 133.333% */
+  color: var(--primary-500, #397df6);
+  text-decoration-line: underline;
+}
+
+.Body1 {
+  /* Body 1 */
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px; /* 150% */
+  color: var(--dark-900, #000);
+}
+
+.Body2 {
+  /* Body 2 */
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px; /* 171.429% */
+  color: var(--dark-900, #000);
+}
+
+.Large {
+  /* Large */
+  font-family: Roboto, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 36px; /* 138.462% */
+  color: var(--dark-900, #000);
+}
+
+.Subtitle1 {
+  /* Subtitle 1 */
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px; /* 150% */
+  color: var(--dark-900, #000);
+}
+
+.Subtitle2 {
+  /* Subtitle 2 */
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px; /* 171.429% */
+  color: var(--dark-900, #000);
+}
+
+.Caption {
+  /* Caption */
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 16px; /* 133.333% */
+  color: var(--dark-900, #000);
+}
+
+.Overline {
+  /* Overline */
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 16px; /* 133.333% */
+  color: var(--dark-900, #000);
+}
