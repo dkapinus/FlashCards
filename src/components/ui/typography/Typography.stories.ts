@@ -7,18 +7,18 @@ const meta = {
     variant: {
       control: { type: 'radio' },
       options: [
-        'Body1',
-        'Body2',
-        'Caption',
-        'H1',
-        'H2',
-        'H3',
-        'Large',
-        'Link1',
-        'Link2',
-        'Overline',
-        'Subtitle1',
-        'Subtitle2',
+        'large',
+        'h1',
+        'h2',
+        'h3',
+        'body1',
+        'body2',
+        'subtitle1',
+        'subtitle2',
+        'caption',
+        'overline',
+        'link1',
+        'link2',
       ],
     },
   },
@@ -34,83 +34,83 @@ type Story = StoryObj<typeof meta>
 export const Large: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Large',
+    variant: 'large',
   },
 }
 
 export const H1: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'H1',
+    variant: 'h1',
   },
 }
 
 export const H2: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'H2',
+    variant: 'h2',
   },
 }
 
 export const H3: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'H3',
+    variant: 'h3',
   },
 }
 
 export const Body1: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Body1',
+    variant: 'body1',
   },
 }
 
 export const Body2: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Body2',
+    variant: 'body2',
   },
 }
 
 export const Subtitle1: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Subtitle1',
+    variant: 'subtitle1',
   },
 }
 
 export const Caption: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Caption',
+    variant: 'caption',
   },
 }
 
 export const Overline: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Overline',
+    variant: 'overline',
   },
 }
 
 export const Subtitle2: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Subtitle2',
+    variant: 'subtitle2',
   },
 }
 
 export const Link1: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Link1',
+    variant: 'link1',
   },
 }
 
 export const Link2: Story = {
   args: {
     children: 'Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH',
-    variant: 'Link2',
+    variant: 'link2',
   },
 }
