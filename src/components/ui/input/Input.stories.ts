@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { useState } from 'react'
-
 import { Input } from './'
 
 const meta = {
@@ -19,7 +17,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const InputClasuc: Story = {
+export const InputWithoutIcons: Story = {
   args: {
     disabled: false,
     error: false,
@@ -31,7 +29,7 @@ export const InputClasuc: Story = {
 export const InputWithIconsRight: Story = {
   args: {
     disabled: false,
-    error: true,
+    error: false,
     eye: true,
     label: 'Input',
     placeholder: 'Input',

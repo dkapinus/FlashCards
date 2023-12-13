@@ -32,10 +32,14 @@
   }
 
   &:active {
-    outline: 1px solid var(--color-light-100);
-
     .cross {
       visibility: visible;
+    }
+  }
+
+  &:focus-visible {
+    .inputWrapper {
+      outline: 1px solid var(--color-info-700);
     }
   }
 }
