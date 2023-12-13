@@ -5,30 +5,15 @@
   user-select: none;
 
   display: inline-flex;
-  flex-shrink: 0;
-  gap: 0.625rem;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 
-  box-sizing: border-box;
-  padding: 0.375rem 1.75rem;
-
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 24px;
-  text-align: center;
-  text-decoration: none;
-
-  background-color: transparent;
-  border: none;
-  border-radius: 0.25rem;
-
-  transition:
-    var(--transition-duration-basic) background-color,
-    var(--transition-duration-basic) color;
+  height: 36px;
+  padding: 6px 28px;
 
   &:focus-visible {
-    outline: 2px solid var(--color-outline-focus);
+    border: 2px solid var(--info-700, #2f68cc);
   }
 
   &:disabled {
@@ -45,16 +30,16 @@
 .primary {
   @include button;
 
-  color: var(--color-text-primary);
-  background-color: var(--color-primary);
-  box-shadow: 0 4px 18px rgb(140 97 255 / 35%);
+  background: var(--primary-500, #8c61ff);
+  border-radius: 4px;
+  box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
 
   &:hover:enabled {
-    background-color: var(--color-primary-hover);
+    background: var(--primary-300, #a280ff);
   }
 
   &:active:enabled {
-    background-color: var(--color-primary-active);
+    background: var(--primary-700, #704ecc);
   }
 }
 
@@ -63,6 +48,7 @@
 
   color: var(--color-text-primary);
   background-color: var(--color-dark-300);
+  border-radius: 4px;
   box-shadow: 0 4px 4px 0 rgb(77 86 96 / 13%);
 
   &:hover:enabled {
@@ -77,9 +63,10 @@
 .tertiary {
   @include button;
 
-  color: var(--color-accent-500);
+  color: var(--primary-500, #8c61ff);
   background-color: var(--color-dark-900);
-  border: 1px solid var(--color-accent-700);
+  border: 1px solid var(--primary-500, #8c61ff);
+  border-radius: 4px;
 
   &:hover:enabled {
     background-color: var(--color-dark-500);
@@ -94,9 +81,24 @@
   @include button;
 
   padding: 0.375rem 0;
-
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
-  color: var(--color-accent-700, #704ecc);
-  text-decoration-line: underline;
+  text-decoration: none;
+
+  //text-decoration-line: underline;
+  p {
+    color: var(--primary-500, #8c61ff);
+
+    &:hover:enabled {
+      color: var(--primary-300, #a280ff);
+    }
+
+    &:active:enabled {
+      color: var(--primary-700, #704ecc);
+    }
+
+    &:focus-visible {
+      border-radius: 10px;
+    }
+  }
 }
