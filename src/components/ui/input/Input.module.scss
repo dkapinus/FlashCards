@@ -1,0 +1,76 @@
+.input {
+  all: unset;
+
+  display: flex;
+  flex: 10;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 9px;
+
+  color: var(--color-light-100);
+
+  border: none;
+  border-radius: 2px;
+  outline: none;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 300px;
+  padding: 6px 12px;
+
+  border: 1px solid var(--color-dark-300);
+
+  &:hover {
+    background: var(--color-dark-700);
+    border: 1px solid var(--color-dark-100);
+  }
+
+  &:active {
+    .cross {
+      visibility: visible;
+    }
+  }
+
+  &:focus-visible {
+    .inputWrapper {
+      outline: 1px solid var(--color-info-700);
+    }
+  }
+}
+
+.focus {
+  outline: 1px solid var(--color-info-700);
+}
+
+.eye {
+  flex: 1;
+  height: 20px;
+}
+
+.error {
+  color: var(--color-danger-300);
+  border: 1px solid var(--color-danger-300);
+}
+
+.errorText {
+  color: var(--color-danger-300);
+}
+
+.magnifier {
+  flex: 1;
+  justify-self: flex-start;
+  height: 20px;
+}
+
+.cross {
+  flex: 1;
+  justify-self: flex-end;
+  height: 20px;
+  visibility: hidden;
+}
