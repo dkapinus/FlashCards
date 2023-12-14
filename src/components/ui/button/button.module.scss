@@ -1,30 +1,104 @@
-.button {
+@mixin button {
   all: unset;
+
   cursor: pointer;
-  display: flex;
+  user-select: none;
+
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  height: 36px;
   padding: 6px 28px;
 
   &:focus-visible {
-    outline: 2px solid var(--color-info-700);
+    border: 2px solid var(--info-700, #2f68cc);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  &.fullWidth {
+    justify-content: center;
+    width: 100%;
   }
 }
 
 .primary {
-  background-color: red;
+  @include button;
+
+  background: var(--primary-500, #8c61ff);
+  border-radius: 4px;
+  box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
+
+  &:hover:enabled {
+    background: var(--primary-300, #a280ff);
+  }
+
+  &:active:enabled {
+    background: var(--primary-700, #704ecc);
+  }
 }
 
 .secondary {
-  background-color: green;
+  @include button;
+
+  color: var(--color-text-primary);
+  background-color: var(--color-dark-300);
+  border-radius: 4px;
+  box-shadow: 0 4px 4px 0 rgb(77 86 96 / 13%);
+
+  &:hover:enabled {
+    background-color: var(--color-dark-100);
+  }
+
+  &:active:enabled {
+    background-color: var(--color-dark-500);
+  }
 }
 
 .tertiary {
-  background-color: blue;
+  @include button;
+
+  color: var(--primary-500, #8c61ff);
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--primary-500, #8c61ff);
+  border-radius: 4px;
+
+  &:hover:enabled {
+    background-color: var(--color-dark-500);
+  }
+
+  &:active:enabled {
+    background-color: var(--color-accent-900);
+  }
 }
 
 .link {
-  background-color: yellow;
-}
+  @include button;
 
-.fullWidth {
-  width: 100%;
+  padding: 0.375rem 0;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+  text-decoration: none;
+
+  //text-decoration-line: underline;
+  p {
+    color: var(--primary-500, #8c61ff);
+
+    &:hover:enabled {
+      color: var(--primary-300, #a280ff);
+    }
+
+    &:active:enabled {
+      color: var(--primary-700, #704ecc);
+    }
+
+    &:focus-visible {
+      border-radius: 10px;
+    }
+  }
 }
