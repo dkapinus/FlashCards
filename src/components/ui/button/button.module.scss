@@ -85,15 +85,14 @@
   line-height: var(--line-height-m);
   text-decoration: none;
 
-  //text-decoration-line: underline;
   p {
     color: var(--primary-500, #8c61ff);
 
-    &:hover:enabled {
+    &:hover {
       color: var(--primary-300, #a280ff);
     }
 
-    &:active:enabled {
+    &:active {
       color: var(--primary-700, #704ecc);
     }
 
