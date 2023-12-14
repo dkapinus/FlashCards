@@ -41,6 +41,7 @@ export const InputSearch: Story = {
   args: {
     cross: true,
     disabled: false,
+    error: false,
     magnifier: true,
     placeholder: 'Input search',
     value: 'Input search',

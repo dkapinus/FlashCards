@@ -34,7 +34,7 @@ export const Input = <T extends ElementType = 'input'>(
 
   return (
     <div>
-      <Typography variant={'Body2'}>{label}</Typography>
+      <Typography variant={'body2'}>{label}</Typography>
       <div
         className={`${s.inputWrapper} ${error ? s.error : ''} ${touched ? s.focus : ''}`}
         onBlur={() => setTouched(false)}
@@ -52,7 +52,7 @@ export const Input = <T extends ElementType = 'input'>(
         {cross && <img alt={'SVG Icon'} className={s.cross} src={crossSrc} />}
       </div>
       {error && (
-        <Typography className={s.errorText} variant={'Caption'}>
+        <Typography className={s.errorText} variant={'caption'}>
           error!
         </Typography>
       )}
