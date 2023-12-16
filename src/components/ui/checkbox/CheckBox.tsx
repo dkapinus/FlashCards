@@ -12,34 +12,25 @@ export type CheckboxProps<T extends ElementType = 'input'> = {
   id: string
   label?: string
   onCheckedChange?: (checked: boolean) => void
+  tabindex?: number
 } & ComponentPropsWithoutRef<T>
 
 export const CheckBox = <T extends ElementType = 'input'>(
   props: CheckboxProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CheckboxProps<T>>
 ) => {
-  const { as: Component = 'input', checked, disabled, label, ...rest } = props
+  const { as: Component = 'input', checked, disabled, label, tabindex, ...rest } = props
   const [check, setCheck] = useState(checked)
-  const [focusCheckbox, setFocusCheckbox] = useState(false)
+  // const [focusCheckbox, setFocusCheckbox] = useState(false)
   const changeCheckHandler = () => {
     setCheck(!check)
   }
-  const checkboxFocusWrapperHandler = () => {
-    if (disabled === true) {
-      return
-    }
-    setFocusCheckbox(true)
-  }
-  const checkboxUnFocusWrapperHandler = () => {
-    setFocusCheckbox(false)
-  }
 
   return (
-    <form
-      className={s.form}
-      onBlur={checkboxUnFocusWrapperHandler}
-      onClick={checkboxFocusWrapperHandler}
-    >
-      <div className={`${s.checkboxWrapper} ${focusCheckbox ? s.focusCheckbox : null}`}>
+    <form className={s.form}>
+      <div
+        className={`${s.checkboxWrapper} ${disabled ? s.disabledWrapper : null}`}
+        tabIndex={tabindex}
+      >
         <Checkbox.Root
           checked={check}
           className={`${s.checkboxRoot} ${check ? s.checked : s.notChecked} 

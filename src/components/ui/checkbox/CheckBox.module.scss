@@ -25,8 +25,21 @@ button {
   background-color: var(--color-dark-500);
 }
 
-.focusCheckbox {
+.checkboxWrapper:active {
   background-color: var(--color-dark-100);
+}
+
+.checkboxWrapper:focus {
+  background-color: var(--color-dark-100);
+  outline: none;
+}
+
+.disabledWrapper {
+  cursor: default;
+
+  &:hover {
+    background-color: transparent;
+  }
 }
 
 .checkboxRoot {
@@ -78,7 +91,7 @@ button {
 }
 
 .label {
-  padding-left: 5px;
+  cursor: pointer;
 
   font-family: var(--font-family-primary);
   font-size: 14px;
@@ -89,5 +102,6 @@ button {
 }
 
 .disabledLabel {
+  cursor: default;
   color: var(--color-dark-100);
 }
