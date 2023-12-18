@@ -1,9 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
+import { Icon } from '@/components/icon/Icon'
 import { Typography } from '@/components/ui/typography'
-import crossSrc from '@/images/cross.svg'
-import eyeSrc from '@/images/eye.svg'
-import magnifierSrc from '@/images/magnifier.svg'
 
 import s from './Input.module.scss'
 
@@ -41,15 +39,21 @@ export const Input = <T extends ElementType = 'input'>(
         onClick={() => setTouched(true)}
         tabIndex={0}
       >
-        {magnifier && <img alt={'SVG Icon'} className={s.magnifier} src={magnifierSrc} />}
+        {magnifier && (
+          <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
+        )}
         <Component
           className={`${s.input} ${s[variant]} ${error ? s.errorText : ''} ${className}`}
           onBlur={() => setTouched(false)}
           onClick={() => setTouched(true)}
           {...rest}
         />
-        {eye && <img alt={'SVG Icon'} className={s.eye} src={eyeSrc} />}
-        {cross && <img alt={'SVG Icon'} className={s.cross} src={crossSrc} />}
+        {eye && <Icon height={'20'} iconId={'eye'} viewBox={'0 0 20 20'} width={'20'} />}
+        {cross && (
+          <span className={s.cross}>
+            <Icon height={'16'} iconId={'cross'} viewBox={'0 0 16 16'} width={'16'} />
+          </span>
+        )}
       </div>
       {error && (
         <Typography className={s.errorText} variant={'caption'}>
