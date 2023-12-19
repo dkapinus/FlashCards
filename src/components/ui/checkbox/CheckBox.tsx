@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
+import { Typography } from '@/components/ui/typography'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { CheckIcon } from '@radix-ui/react-icons'
 
@@ -49,7 +50,7 @@ export const CheckBox = <T extends ElementType = 'input'>(
         </Checkbox.Root>
       </div>
       <label className={`${s.label} ${disabled ? s.disabledLabel : null}`} htmlFor={rest.id}>
-        {label}
+        <Typography variant={'body2'}> {label} </Typography>
       </label>
     </form>
   )
