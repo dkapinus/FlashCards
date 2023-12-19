@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
-import { Icon } from '@/components/icon/Icon'
+import { Icon } from '@/components/ui/icon/Icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from './Input.module.scss'

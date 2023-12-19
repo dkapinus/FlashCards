@@ -12,8 +12,14 @@
   height: 36px;
   padding: 6px 28px;
 
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px;
+
   &:focus-visible {
-    border: 2px solid var(--info-700, #2f68cc);
+    border: 2px solid var(--color-info-700, #2f68cc);
   }
 
   &:disabled {
@@ -30,16 +36,16 @@
 .primary {
   @include button;
 
-  background: var(--primary-500, #8c61ff);
+  background: var(--color-primary-500, #8c61ff);
   border-radius: 4px;
   box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
 
   &:hover:enabled {
-    background: var(--primary-300, #a280ff);
+    background: var(--color-primary-300, #a280ff);
   }
 
   &:active:enabled {
-    background: var(--primary-700, #704ecc);
+    background: var(--color-primary-700, #704ecc);
   }
 }
 
@@ -63,9 +69,9 @@
 .tertiary {
   @include button;
 
-  color: var(--primary-500, #8c61ff);
+  color: var(--color-primary-500, #8c61ff);
   background-color: var(--color-dark-900);
-  border: 1px solid var(--primary-500, #8c61ff);
+  border: 1px solid var(--color-primary-500, #8c61ff);
   border-radius: 4px;
 
   &:hover:enabled {
@@ -77,27 +83,29 @@
   }
 }
 
-.link {
+.link,
+.link:visited {
   @include button;
 
-  padding: 0.375rem 0;
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-m);
+  padding: 6px 18px;
+
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px;
+  color: var(--color-primary-500, #8c61ff);
   text-decoration: none;
 
-  p {
-    color: var(--primary-500, #8c61ff);
+  &:active {
+    color: var(--color-primary-700, #704ecc);
+  }
 
-    &:hover {
-      color: var(--primary-300, #a280ff);
-    }
+  &:focus-visible {
+    border-radius: 25px;
+  }
 
-    &:active {
-      color: var(--primary-700, #704ecc);
-    }
-
-    &:focus-visible {
-      border-radius: 10px;
-    }
+  &:hover {
+    color: var(--color-primary-300, #a280ff);
   }
 }

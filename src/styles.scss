@@ -1,0 +1,119 @@
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/mauve.css';
+@import '@radix-ui/colors/violet.css';
+
+/* reset */
+button {
+  all: unset;
+}
+
+.label {
+  color: var(--dark-100, #808080);
+
+  &.disabled {
+    color: var(--color-dark-300);
+  }
+}
+
+.SelectTrigger {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+
+  height: 35px;
+  padding: 0 15px;
+
+  font-size: 13px;
+  line-height: 1;
+  color: var(--violet-11);
+
+  background: var(--dark-900, #000);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px var(--black-a7);
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--color-info-700);
+  }
+}
+
+.SelectTrigger:hover {
+  background: var(--dark-500, #333);
+  border: 1px solid var(--dark-100, #808080);
+  border-radius: 2px;
+}
+
+.SelectTrigger[data-placeholder] {
+  color: var(--light-100, #fff);
+}
+
+.SelectIcon {
+  transform: rotate(-180deg);
+  color: var(--light-100, #fff);
+  transition: all 0.3s ease-out;
+
+  & .disabled {
+    color: var(--color-dark-300);
+  }
+}
+
+.SelectContent {
+  overflow: hidden;
+  background: var(--dark-900, #000);
+  border-radius: 6px;
+  box-shadow:
+    0 10px 38px -10px rgb(22 23 24 / 35%),
+    0 10px 20px -15px rgb(22 23 24 / 20%);
+}
+
+.SelectViewport {
+  padding: 5px;
+}
+
+.SelectItem {
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  height: 25px;
+  padding: 0 35px 0 25px;
+
+  font-size: 13px;
+  line-height: 1;
+  color: var(--violet-11);
+
+  border-radius: 3px;
+}
+
+.SelectItem[data-disabled] {
+  pointer-events: none;
+  color: var(--mauve-8);
+}
+
+.SelectItem[data-highlighted] {
+  color: var(--violet-1);
+  background-color: var(--violet-9);
+  outline: none;
+}
+
+.SelectLabel {
+  padding: 0 25px;
+  font-size: 12px;
+  line-height: 25px;
+  color: var(--mauve-11);
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  left: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+}

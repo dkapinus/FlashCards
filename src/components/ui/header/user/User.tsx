@@ -1,7 +1,7 @@
 import React from 'react'
 
 import f from '@/assets/images/haker.jpg'
-import { Icon } from '@/components/icon/Icon'
+import { Icon } from '@/components/ui/icon/Icon'
 import { Typography } from '@/components/ui/typography'
 
 import h from './User.module.scss'
