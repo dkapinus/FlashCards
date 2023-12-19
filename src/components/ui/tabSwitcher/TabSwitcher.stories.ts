@@ -16,12 +16,13 @@ type Story = StoryObj<typeof meta>
 export const TabSwitcherActive: Story = {
   args: {
     disabled: false,
+    name: 'Switcher',
     value: 'ActiveSwitcher',
   },
 }
 export const TabSwitcherDisabled: Story = {
   args: {
-    disabled: true,
+    name: 'Switcher',
     value: 'DisabledSwitcher',
   },
 }
