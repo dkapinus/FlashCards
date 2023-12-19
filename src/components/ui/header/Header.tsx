@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
-import { Icon } from '@/components/icon/Icon'
 import { Button } from '@/components/ui/button'
 import { User } from '@/components/ui/header/user/User'
+import { Icon } from '@/components/ui/icon/Icon'
 import { Typography } from '@/components/ui/typography'
 
 import h from './Header.module.scss'
