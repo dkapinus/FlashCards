@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Icon } from '@/components/icon/Icon'
-import { Typography } from '@/components/ui/typography'
+import { Icon } from '@/components/ui/icon/Icon'
 
 import { Button } from './'
 
@@ -22,7 +21,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: <Typography variant={'subtitle2'}>Primary Button</Typography>,
+    children: 'Primary Button',
     disabled: false,
     variant: 'primary',
   },
@@ -33,7 +32,7 @@ export const Primary2: Story = {
     children: (
       <>
         <Icon height={'16'} iconId={'log-out'} viewBox={'0 0 16 16'} width={'16'} />
-        <Typography variant={'subtitle2'}>Primary Button</Typography>
+        Primary Button
       </>
     ),
     disabled: false,
@@ -43,8 +42,7 @@ export const Primary2: Story = {
 
 export const Secondary: Story = {
   args: {
-    children: <Typography variant={'subtitle2'}> Secondary Button</Typography>,
-
+    children: ' Secondary Button',
     disabled: false,
     variant: 'secondary',
   },
@@ -55,7 +53,7 @@ export const Secondary2: Story = {
     children: (
       <>
         <Icon height={'16'} iconId={'log-out'} viewBox={'0 0 16 16'} width={'16'} />
-        <Typography variant={'subtitle2'}>Secondary Button</Typography>
+        Secondary Button
       </>
     ),
     disabled: false,
@@ -64,8 +62,7 @@ export const Secondary2: Story = {
 }
 export const Tertiary: Story = {
   args: {
-    children: <Typography variant={'subtitle2'}>Tertiary Button</Typography>,
-
+    children: 'Tertiary Button',
     disabled: false,
     variant: 'tertiary',
   },
@@ -73,7 +70,7 @@ export const Tertiary: Story = {
 export const Link: Story = {
   args: {
     as: 'a',
-    children: <Typography variant={'subtitle1'}>Link_Button</Typography>,
+    children: 'Link_Button',
     disabled: false,
     href: 'https://www.google.com',
     variant: 'link',

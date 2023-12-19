@@ -1,6 +1,6 @@
 import React from 'react'
 
-import iconsSprite from '../../assets/images/icon.svg'
+import iconsSprite from '../../../assets/images/icon.svg'
 
 type IconPropsType = {
   height?: string
