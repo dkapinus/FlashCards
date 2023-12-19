@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 60px;
+
+  background-color: var(--color-dark-700);
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 80%;
+  margin: auto;
+}
+
+.singWrapper {
+  display: flex;
+  align-items: center;
+  color: white;
+}
