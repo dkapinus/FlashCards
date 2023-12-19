@@ -1,121 +1,66 @@
-.h1 {
-  /* H1 */
-  font-family: Roboto, sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 36px; /* 180% */
-  color: var(--color-light-100);
-}
+@mixin typography($fontSize, $lineHeight, $fontWeight) {
+  margin: 0;
 
-.h2 {
-  /* H2 */
-  font-family: Roboto, sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 24px; /* 133.333% */
-  color: var(--color-light-100);
-}
-
-.h3 {
-  /* H3 */
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 24px; /* 150% */
-  color: var(--color-light-100);
-}
-
-.link1 {
-  /* Link 1 */
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 24px; /* 171.429% */
-  color: var(--primary-500, #397df6);
-  text-decoration-line: underline;
-}
-
-.link2 {
-  /* Link 2 */
-  font-family: Roboto, sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 16px; /* 133.333% */
-  color: var(--primary-500, #397df6);
-  text-decoration-line: underline;
-}
-
-.body1 {
-  /* Body 1 */
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 24px; /* 150% */
-  color: var(--color-light-100);
-}
-
-.body2 {
-  /* Body 2 */
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 24px; /* 171.429% */
-  color: var(--color-light-100);
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  color: var(--light-100, #fff);
 }
 
 .large {
-  /* Large */
-  font-family: Roboto, sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 36px; /* 138.462% */
-  color: var(--color-light-100);
+  @include typography(var(--font-size-xxl), var(--line-height-l), var(--font-weight-bold));
+}
+
+.h1 {
+  @include typography(var(--font-size-xl), var(--line-height-l), var(--font-weight-bold));
+}
+
+.h2 {
+  @include typography(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
+}
+
+.h3 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-bold));
+}
+
+.body1 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-regular));
 }
 
 .subtitle1 {
-  /* Subtitle 1 */
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 24px; /* 150% */
-  color: var(--color-light-100);
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-bold));
+}
+
+.body2 {
+  @include typography(var(--font-size-s), var(--line-height-m), var(--font-weight-regular));
 }
 
 .subtitle2 {
-  /* Subtitle 2 */
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 24px; /* 171.429% */
-  color: var(--color-light-100);
-}
-
-.caption {
-  /* Caption */
-  font-family: Roboto, sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 16px; /* 133.333% */
-  color: var(--color-light-100);
+  @include typography(var(--font-size-s), var(--line-height-m), var(--font-weight-bold));
 }
 
 .overline {
-  /* Overline */
-  font-family: Roboto, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 16px; /* 133.333% */
-  color: var(--color-light-100);
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-bold));
+}
+
+.caption {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
+}
+
+.link1,
+.link1:visited {
+  @include typography(var(--font-size-s), var(--line-height-m), var(--font-weight-regular));
+
+  cursor: pointer;
+  color: var(--primary-500, #397df6);
+  text-decoration: underline;
+}
+
+.link2,
+.link2:visited {
+  @include typography(var(--font-size-xs), var(--line-height-s), var(--font-weight-regular));
+
+  cursor: pointer;
+  color: var(--primary-500, #397df6);
+  text-decoration: underline;
 }
