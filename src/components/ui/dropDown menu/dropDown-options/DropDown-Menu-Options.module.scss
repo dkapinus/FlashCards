@@ -1,0 +1,120 @@
+button {
+  all: unset;
+}
+
+.DropdownMenuContent {
+  will-change: transform, opacity;
+
+  position: absolute;
+  left: -44px;
+
+  min-width: 96px;
+  margin-top: 6px;
+  padding: 12px;
+
+  background-color: var(--color-dark-700);
+  filter: drop-shadow(0 0 1px var(--color-dark-100));
+  border-radius: 6px;
+
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DropdownMenuItem {
+  user-select: none;
+
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  line-height: 1;
+
+  outline: none;
+}
+
+.DropdownMenuItem[data-disabled] {
+  pointer-events: none;
+  color: var(--color-dark-100);
+}
+
+.DropdownMenuItem[data-highlighted] {
+  cursor: pointer;
+}
+
+.IconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes slideUpAndFade {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    transform: translateX(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    transform: translateX(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.Icon {
+  margin-right: 6px;
+}
+
+.Line {
+  width: 100%;
+  height: 1px;
+  margin: 12px 0;
+
+  background-color: var(--color-dark-100);
+  border: none;
+}
+
+.DropdownMenuArrow {
+  position: absolute;
+  left: -34px;
+
+  width: 16px;
+  height: 8px;
+
+  fill: var(--color-dark-700);
+}

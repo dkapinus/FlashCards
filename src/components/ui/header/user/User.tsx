@@ -1,10 +1,10 @@
 import React from 'react'
 
-import f from '@/assets/images/haker.jpg'
-import { Icon } from '@/components/ui/icon/Icon'
+import { Avatar } from '@/components/ui/header/user/avatar/Avatar'
 import { Typography } from '@/components/ui/typography'
 
 import h from './User.module.scss'
+
 type UserNameType = {
   name: string
 }
@@ -15,13 +15,9 @@ export const User: React.FC<UserNameType> = props => {
         <Typography className={h.userName} variant={'subtitle1'}>
           {props.name}
         </Typography>
-        <div className={h.iconContainer}>
-          <Icon height={'20'} iconId={'line'} viewBox={'0 0 33 1'} width={'100%'} />
-        </div>
+        <p className={h.iconContainer}></p>
       </div>
-      <div className={h.photo}>
-        <img alt={'Your avtar'} className={h.avatar} src={f} />
-      </div>
+      <Avatar />
     </>
   )
 }
