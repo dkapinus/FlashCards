@@ -19,7 +19,10 @@ type Story = StoryObj<typeof meta>
 export const DropDownOptions: Story = {
   args: {
     child: <User name={'User'} />,
+    edit: () => console.log('edit'),
+    learn: () => console.log('learn'),
     mail: 'adafeafw',
+    remove: () => console.log('remove'),
     userName: 'User',
   },
 }
