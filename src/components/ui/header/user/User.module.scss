@@ -2,24 +2,16 @@
   margin: 0;
 }
 
-.avatar {
-  flex-shrink: 0;
-
-  width: 36px;
-  height: 36px;
-  margin-left: 14px;
-
-  border-radius: 50px;
-}
-
 .link {
   cursor: pointer;
-  width: 50px;
+  width: auto;
   height: 23px;
-  margin-bottom: 6px;
+  margin: 0 14px 6px 0;
 }
 
 .iconContainer {
-  width: 100%;
-  margin-top: -8px;
+  width: 106%;
+  height: 5px;
+  margin-top: 2px;
+  background-image: url('@/assets/images/line.svg');
 }

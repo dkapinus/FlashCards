@@ -11,7 +11,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const HeaderS: Story = {
+export const Headers: Story = {
   args: {
     isLoginIn: true,
     name: 'Users',
