@@ -39,7 +39,6 @@ export const InputWithIconsRight: Story = {
       console.log(e)
     },
     placeholder: 'Input',
-    svgSrc: true,
     variant: 'input',
   },
 }
