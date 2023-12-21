@@ -1,43 +1,56 @@
-import { ChangeEvent, ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, KeyboardEvent, forwardRef, useState } from 'react'
 
 import { Icon } from '@/components/ui/icon/Icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from './Input.module.scss'
 
-export type InputProps<T extends ElementType = 'input'> = {
-  as?: T
-  className?: string
-  cross: boolean
-  error: boolean
-  eye: boolean
-  fullWidth?: boolean
-  magnifier: boolean
-  onChange: (e: string) => void
-  variant?: 'input'
-} & ComponentPropsWithoutRef<T>
+export type InputProps = {
+  cross?: boolean
+  error?: boolean
+  eye?: boolean
+  label?: string
+  magnifier?: boolean
+  onPressEnter?: ComponentPropsWithoutRef<'input'>['onKeyDown']
+  onValueChange?: (e: string) => void
+} & ComponentPropsWithoutRef<'input'>
 
-export const Input = <T extends ElementType = 'input'>(
-  props: InputProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof InputProps<T>>
-) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
-    as: Component = 'input',
     className,
-    cross,
-    error,
-    eye,
-    handleBlur,
+    cross = false,
+    disabled,
+    error = false,
+    eye = false,
     label,
-    magnifier,
+    magnifier = false,
     onChange,
+    onPressEnter,
+    onValueChange,
     value,
-    variant = 'input',
     ...rest
   } = props
   const [touched, setTouched] = useState(false)
+  const [changeValue, setChangeValue] = useState(value)
 
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => {
+    setShowPassword(prev => !prev)
+  }
   const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.currentTarget.value)
+    setChangeValue(e.currentTarget.value)
+    onChange?.(e)
+    onValueChange?.(e.currentTarget.value)
+  }
+
+  const handlePressOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onPressEnter?.(e)
+    }
+  }
+
+  const handleClickClearField = () => {
+    setChangeValue('')
   }
 
   return (
@@ -52,19 +65,34 @@ export const Input = <T extends ElementType = 'input'>(
         {magnifier && (
           <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
         )}
-        <Component
-          className={`${s.input} ${s[variant]} ${error ? s.errorText : ''} ${className}`}
+        <input
+          className={`${s.input}  ${error ? s.errorText : ''}`}
           onBlur={() => setTouched(false)}
           onChange={onchangeHandler}
           onClick={() => setTouched(true)}
+          onKeyDown={handlePressOnEnter}
+          ref={ref}
+          value={changeValue}
           {...rest}
         />
-        {eye && <Icon height={'20'} iconId={'eye'} viewBox={'0 0 20 20'} width={'20'} />}
-        {cross && (
-          <span className={s.cross}>
-            <Icon height={'16'} iconId={'cross'} viewBox={'0 0 16 16'} width={'16'} />
-          </span>
+
+        {eye && (
+          <div onClick={handleClickShowPassword}>
+            {showPassword ? (
+              <Icon height={'24'} iconId={'close_eye'} viewBox={'0 0 24 24'} width={'24'} />
+            ) : (
+              <Icon height={'24'} iconId={'open_eye'} viewBox={'0 0 24 24'} width={'24'} />
+            )}
+          </div>
         )}
+
+        {changeValue
+          ? cross && (
+              <span className={s.cross} onClick={handleClickClearField}>
+                <Icon height={'24'} iconId={'cross'} viewBox={'0 0 24 24'} width={'24'} />
+              </span>
+            )
+          : ''}
       </div>
       {error && (
         <Typography className={s.errorText} variant={'caption'}>
@@ -73,4 +101,4 @@ export const Input = <T extends ElementType = 'input'>(
       )}
     </div>
   )
-}
+})
