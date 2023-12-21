@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
 import { Icon } from '@/components/ui/icon/Icon'
 import { Typography } from '@/components/ui/typography'
@@ -8,7 +8,12 @@ import s from './Input.module.scss'
 export type InputProps<T extends ElementType = 'input'> = {
   as?: T
   className?: string
+  cross: boolean
+  error: boolean
+  eye: boolean
   fullWidth?: boolean
+  magnifier: boolean
+  onChange: (e: string) => void
   variant?: 'input'
 } & ComponentPropsWithoutRef<T>
 
@@ -24,11 +29,16 @@ export const Input = <T extends ElementType = 'input'>(
     handleBlur,
     label,
     magnifier,
+    onChange,
     value,
     variant = 'input',
     ...rest
   } = props
   const [touched, setTouched] = useState(false)
+
+  const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.currentTarget.value)
+  }
 
   return (
     <div>
@@ -45,6 +55,7 @@ export const Input = <T extends ElementType = 'input'>(
         <Component
           className={`${s.input} ${s[variant]} ${error ? s.errorText : ''} ${className}`}
           onBlur={() => setTouched(false)}
+          onChange={onchangeHandler}
           onClick={() => setTouched(true)}
           {...rest}
         />

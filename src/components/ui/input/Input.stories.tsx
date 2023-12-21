@@ -22,6 +22,9 @@ export const InputWithoutIcons: Story = {
     disabled: false,
     error: false,
     label: 'Input',
+    onChange: (e: string) => {
+      console.log(e)
+    },
     placeholder: 'Input',
     variant: 'input',
   },
@@ -32,6 +35,9 @@ export const InputWithIconsRight: Story = {
     error: false,
     eye: true,
     label: 'Input',
+    onChange: (e: string) => {
+      console.log(e)
+    },
     placeholder: 'Input',
     svgSrc: true,
     variant: 'input',
@@ -43,6 +49,9 @@ export const InputSearch: Story = {
     disabled: false,
     error: false,
     magnifier: true,
+    onChange: (e: string) => {
+      console.log(e)
+    },
     placeholder: 'Input search',
     value: 'Input search',
     variant: 'input',

@@ -20,6 +20,8 @@ export const DropDown: Story = {
   args: {
     child: <User name={'User'} />,
     mail: 'adafeafw',
+    onClickProfile: () => console.log('onClickProfile'),
+    singOut: () => console.log('singOut'),
     userName: 'User',
   },
 }

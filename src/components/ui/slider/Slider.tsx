@@ -1,25 +1,24 @@
-import { ComponentPropsWithoutRef, ElementRef, ElementType, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
 
 import { Typography } from '@/components/ui/typography'
 import * as SliderPrimitive from '@radix-ui/react-slider'
-import { clsx } from 'clsx'
 
 import s from './Slider.module.scss'
+
 export type RangeSliderProps<T extends ElementType = 'input'> = {
   as?: T
-  className?: string
   propsValue: number[]
+  valueChange: (e: number[]) => void
 } & ComponentPropsWithoutRef<T>
 
-export const Slider = forwardRef<
-  ElementRef<typeof SliderPrimitive.Root>,
-  Omit<ComponentPropsWithoutRef<typeof SliderPrimitive.Root>, 'propsValue'> & {
-    propsValue: number[]
-  }
->(({ className, max, propsValue, step, ...rest }, ref) => {
+export const Slider = <T extends ElementType = 'input'>(
+  props: RangeSliderProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof RangeSliderProps<T>>
+) => {
+  const { max, propsValue, step, valueChange, ...rest } = props
   const [value, setValue] = useState<number[]>(propsValue)
   const onValueChange = (e: number[]) => {
     setValue(e)
+    valueChange(e)
   }
 
   return (
@@ -32,10 +31,9 @@ export const Slider = forwardRef<
           </Typography>
         </span>
         <SliderPrimitive.Root
-          className={clsx(s.root, className)}
+          className={s.root}
           max={max}
           onValueChange={onValueChange}
-          ref={ref}
           step={step}
           {...rest}
           value={[value?.[0] ?? 0, value?.[1] ?? max ?? 0]}
@@ -54,4 +52,4 @@ export const Slider = forwardRef<
       </div>
     </div>
   )
-})
+}

@@ -9,11 +9,16 @@ type UserNameType = {
   name: string
 }
 export const User: React.FC<UserNameType> = props => {
+  const { name } = props
+  const onClickHandler = () => {
+    console.log('clickUser')
+  }
+
   return (
     <>
-      <div className={h.link}>
+      <div className={h.link} onClick={onClickHandler}>
         <Typography className={h.userName} variant={'subtitle1'}>
-          {props.name}
+          {name}
         </Typography>
         <p className={h.iconContainer}></p>
       </div>
