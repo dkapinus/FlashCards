@@ -22,6 +22,7 @@ export const TabSwitcherActive: Story = {
 }
 export const TabSwitcherDisabled: Story = {
   args: {
+    disabled: true,
     name: 'Switcher',
     value: 'DisabledSwitcher',
   },
