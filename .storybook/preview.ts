@@ -1,6 +1,8 @@
 import type { Preview } from '@storybook/react'
+
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'
+
 import '../src/styles/index.scss'
 
 const preview: Preview = {
@@ -11,6 +13,19 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    backgrounds: {
+      default: 'Dark',
+      values: [
+        {
+          name: 'Dark',
+          value: '#000',
+        },
+        {
+          name: 'Light',
+          value: '#f4f4f4',
+        },
+      ],
     },
   },
 }

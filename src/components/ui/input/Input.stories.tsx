@@ -3,12 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Input } from './'
 
 const meta = {
-  argTypes: {
-    variant: {
-      control: { type: 'onChange' },
-      options: ['input'],
-    },
-  },
+  argTypes: {},
   component: Input,
   tags: ['autodocs'],
   title: 'Components/Input',
@@ -23,7 +18,6 @@ export const InputWithoutIcons: Story = {
     error: false,
     label: 'Input',
     placeholder: 'Input',
-    variant: 'input',
   },
 }
 export const InputWithIconsRight: Story = {
@@ -33,8 +27,6 @@ export const InputWithIconsRight: Story = {
     eye: true,
     label: 'Input',
     placeholder: 'Input',
-    svgSrc: true,
-    variant: 'input',
   },
 }
 export const InputSearch: Story = {
@@ -44,7 +36,5 @@ export const InputSearch: Story = {
     error: false,
     magnifier: true,
     placeholder: 'Input search',
-    value: 'Input search',
-    variant: 'input',
   },
 }

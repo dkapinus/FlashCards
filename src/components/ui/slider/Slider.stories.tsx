@@ -5,7 +5,7 @@ import { Slider } from '@/components/ui/slider/Slider'
 const meta = {
   component: Slider,
   tags: ['autodocs'],
-  title: 'Components/RangeSlider',
+  title: 'Components/SliderStory',
 } satisfies Meta<typeof Slider>
 
 export default meta
@@ -17,5 +17,8 @@ export const SliderStory: Story = {
     min: 0,
     propsValue: [2, 10],
     step: 2,
+    valueChange: (e: number[]) => {
+      console.log(e)
+    },
   },
 }

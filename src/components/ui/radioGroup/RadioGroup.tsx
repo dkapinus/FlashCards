@@ -8,6 +8,7 @@ import r from './RadioGroup.module.scss'
 export type RadioGroupProps<T extends ElementType = 'input'> = {
   active: boolean
   as?: T
+  changeValue: (e: string) => void
   className?: string
   disabled: boolean
   title: string[]
@@ -16,7 +17,17 @@ export type RadioGroupProps<T extends ElementType = 'input'> = {
 export const RadioGroup = <T extends ElementType = 'input'>(
   props: RadioGroupProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof RadioGroupProps<T>>
 ) => {
-  const { active, as: Component = 'input', className, disabled, title, ...rest } = props
+  const {
+    active,
+    as: Component = 'input',
+    changeValue,
+    className,
+    disabled,
+    title,
+    ...rest
+  } = props
+
+  const onCandleChange = (e: string) => changeValue(e)
 
   return (
     <form>
@@ -25,6 +36,7 @@ export const RadioGroup = <T extends ElementType = 'input'>(
         aria-label={'View density'}
         className={r.RadioGroupRoot}
         defaultValue={'default'}
+        onValueChange={onCandleChange}
       >
         <div className={r.RadioGroupWrapper}>
           <Radio.Item className={r.RadioGroupItem} id={'r1'} value={'default'}>
