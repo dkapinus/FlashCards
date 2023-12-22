@@ -21,10 +21,13 @@ export const LoginForm = () => {
     handleSubmit,
     register,
   } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
     resolver: zodResolver(loginSchema),
   })
-
-  console.log('errors: ', errors)
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
@@ -34,7 +37,7 @@ export const LoginForm = () => {
     field: { onChange, value },
   } = useController({
     control,
-    defaultValue: false,
+
     name: 'rememberMe',
   })
 
