@@ -18,12 +18,14 @@ export const TabSwitcher = <T extends ElementType = 'button'>(
   return (
     <Tabs.Root className={`${s.tabsRoot}`} defaultValue={'tab1'}>
       <Tabs.List aria-label={'Manage your account'} className={s.tabsList}>
-        <Tabs.Trigger
-          className={`${s.switcher} ${disabled ? s.disabledSwitcher : null}`}
-          value={'tab1'}
-        >
-          <Typography variant={'body1'}> {name} </Typography>
-        </Tabs.Trigger>{' '}
+        <Typography variant={'body1'}>
+          <Tabs.Trigger
+            className={`${s.switcher} ${disabled ? s.disabledSwitcher : null}`}
+            value={'tab1'}
+          >
+            {name}
+          </Tabs.Trigger>{' '}
+        </Typography>
       </Tabs.List>
     </Tabs.Root>
   )

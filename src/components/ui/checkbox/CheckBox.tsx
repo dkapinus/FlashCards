@@ -49,9 +49,11 @@ export const CheckBox = <T extends ElementType = 'input'>(
           </Checkbox.Indicator>
         </Checkbox.Root>
       </div>
-      <label className={`${s.label} ${disabled ? s.disabledLabel : null}`} htmlFor={rest.id}>
-        <Typography variant={'body2'}> {label} </Typography>
-      </label>
+      <Typography variant={'body2'}>
+        <label className={`${s.label} ${disabled ? s.disabledLabel : null}`} htmlFor={rest.id}>
+          {label}
+        </label>
+      </Typography>
     </form>
   )
 }
