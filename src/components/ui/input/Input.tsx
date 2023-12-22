@@ -8,6 +8,7 @@ import s from './Input.module.scss'
 export type InputProps = {
   cross?: boolean
   error?: boolean
+  errorMessage?: string
   eye?: boolean
   label?: string
   magnifier?: boolean
@@ -20,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     className,
     cross = false,
     disabled,
-    error = false,
+    errorMessage,
     eye = false,
     label,
     magnifier = false,
@@ -57,7 +58,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     <div>
       <Typography variant={'body2'}>{label}</Typography>
       <div
-        className={`${s.inputWrapper} ${error ? s.error : ''} ${touched ? s.focus : ''}`}
+        className={`${s.inputWrapper} ${errorMessage ? s.error : ''} ${touched ? s.focus : ''}`}
         onBlur={() => setTouched(false)}
         onClick={() => setTouched(true)}
         tabIndex={0}
@@ -66,7 +67,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
         )}
         <input
-          className={`${s.input}  ${error ? s.errorText : ''}`}
+          className={`${s.input}  ${errorMessage ? s.errorText : ''}`}
           onBlur={() => setTouched(false)}
           onChange={onchangeHandler}
           onClick={() => setTouched(true)}
@@ -94,9 +95,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             )
           : ''}
       </div>
-      {error && (
+      {errorMessage && (
         <Typography className={s.errorText} variant={'caption'}>
-          error!
+          {errorMessage}
         </Typography>
       )}
     </div>
