@@ -10,7 +10,7 @@ export type CheckboxProps<T extends ElementType = 'input'> = {
   as?: T
   checked?: boolean
   disabled?: boolean
-  id: string
+  id?: string
   label?: string
   onCheckedChange?: (checked: boolean) => void
   tabindex?: number
