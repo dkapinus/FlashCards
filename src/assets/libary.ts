@@ -2,3 +2,4 @@
 // to add select -pnpm  install @radix-ui/react-select
 // add classnames -pnpm  install classnames
 // radioGroup npm install @radix-ui/react-radio-group
+// to add modals - pnpm install @radix-ui/react-dialog
