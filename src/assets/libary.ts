@@ -2,3 +2,5 @@
 // to add select -pnpm  install @radix-ui/react-select
 // add classnames -pnpm  install classnames
 // radioGroup npm install @radix-ui/react-radio-group
+// pnpm i react-hook-form
+// pnpm i zod @hookform/resolvers
