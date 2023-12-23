@@ -1,59 +1,38 @@
-import { ComponentPropsWithoutRef, ElementType, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { Icon } from '@/components/ui/icon/Icon'
 import { Typography } from '@/components/ui/typography'
-import * as Checkbox from '@radix-ui/react-checkbox'
-import { CheckIcon } from '@radix-ui/react-icons'
+import * as RadixCheckbox from '@radix-ui/react-checkbox'
+import cn from 'classnames'
 
-import s from '@/components/ui/checkbox/CheckBox.module.scss'
+import s from './Checkbox.module.scss'
 
-export type CheckboxProps<T extends ElementType = 'input'> = {
-  as?: T
-  checked?: boolean
-  disabled?: boolean
-  id?: string
+export type CheckboxProps = {
   label?: string
-  onCheckedChange?: (checked: boolean) => void
-  tabindex?: number
-} & ComponentPropsWithoutRef<T>
+  onBlur?: () => void
+} & Omit<ComponentPropsWithoutRef<typeof RadixCheckbox.Root>, 'asChild'>
 
-export const CheckBox = <T extends ElementType = 'input'>(
-  props: CheckboxProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CheckboxProps<T>>
-) => {
-  const { as: Component = 'input', checked, disabled, label, tabindex, ...rest } = props
-  const [check, setCheck] = useState(checked)
-  // const [focusCheckbox, setFocusCheckbox] = useState(false)
-  const changeCheckHandler = () => {
-    setCheck(!check)
-  }
-
-  return (
-    <form className={s.form}>
-      <div
-        className={`${s.checkboxWrapper} ${disabled ? s.disabledWrapper : null}`}
-        tabIndex={tabindex}
+export const Checkbox = forwardRef<ElementRef<typeof RadixCheckbox.Root>, CheckboxProps>(
+  ({ className, disabled, label, onBlur, ...restProps }, ref) => {
+    return (
+      <Typography
+        as={'label'}
+        className={cn(s.label, { [s.disabled]: disabled }, className)}
+        variant={'body2'}
       >
-        <Checkbox.Root
-          checked={check}
-          className={`${s.checkboxRoot} ${check ? s.checked : s.notChecked} 
-          ${disabled && !check ? s.disabled : null} `}
+        <RadixCheckbox.Root
+          className={s.root}
           disabled={disabled}
-          id={rest.id}
-          onCheckedChange={changeCheckHandler}
+          onBlur={onBlur}
+          ref={ref}
+          {...restProps}
         >
-          <Checkbox.Indicator
-            className={`${s.checkboxIndicator} ${disabled ? s.disabledIndicator : null}`}
-          >
-            {check && (
-              <CheckIcon className={`${s.checkboxIcon} ${disabled ? s.disabledIcon : null}`} />
-            )}
-          </Checkbox.Indicator>
-        </Checkbox.Root>
-      </div>
-      <Typography variant={'body2'}>
-        <label className={`${s.label} ${disabled ? s.disabledLabel : null}`} htmlFor={rest.id}>
-          {label}
-        </label>
+          <RadixCheckbox.Indicator className={s.indicator}>
+            <Icon height={'18'} iconId={'check'} viewBox={'0 0 18 18'} width={'18px'} />
+          </RadixCheckbox.Indicator>
+        </RadixCheckbox.Root>
+        {label}
       </Typography>
-    </form>
-  )
-}
+    )
+  }
+)
