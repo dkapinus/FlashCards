@@ -5,3 +5,4 @@
 // to add modals - pnpm install @radix-ui/react-dialog
 // to add hook-form -  pnpm i react-hook-form
 // to add zod -pnpm i zod @hookform/resolvers
+// to add hookform/devtools - pnpm i -D @hookform/devtools
