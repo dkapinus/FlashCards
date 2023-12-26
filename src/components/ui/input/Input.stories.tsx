@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 export const InputWithoutIcons: Story = {
   args: {
     disabled: false,
-    error: false,
+    errorMessage: '',
     label: 'Input',
     placeholder: 'Input',
   },
@@ -23,18 +23,17 @@ export const InputWithoutIcons: Story = {
 export const InputWithIconsRight: Story = {
   args: {
     disabled: false,
-    error: false,
-    eye: true,
+    errorMessage: '',
     label: 'Input',
     placeholder: 'Input',
+    type: 'password',
   },
 }
 export const InputSearch: Story = {
   args: {
-    cross: true,
     disabled: false,
-    error: false,
-    magnifier: true,
+    errorMessage: '',
     placeholder: 'Input search',
+    type: 'search',
   },
 }

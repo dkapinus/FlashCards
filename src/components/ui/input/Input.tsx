@@ -6,12 +6,8 @@ import { Typography } from '@/components/ui/typography'
 import s from './Input.module.scss'
 
 export type InputProps = {
-  cross?: boolean
-  error?: boolean
   errorMessage?: string
-  eye?: boolean
   label?: string
-  magnifier?: boolean
   onPressEnter?: ComponentPropsWithoutRef<'input'>['onKeyDown']
   onValueChange?: (e: string) => void
 } & ComponentPropsWithoutRef<'input'>
@@ -19,15 +15,13 @@ export type InputProps = {
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     className,
-    cross = false,
     disabled,
     errorMessage,
-    eye = false,
     label,
-    magnifier = false,
     onChange,
     onPressEnter,
     onValueChange,
+    type,
     value,
     ...rest
   } = props
@@ -63,7 +57,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         onClick={() => setTouched(true)}
         tabIndex={0}
       >
-        {magnifier && (
+        {type === 'search' && (
           <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
         )}
         <input
@@ -77,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           {...rest}
         />
 
-        {eye && (
+        {type === 'password' && (
           <div onClick={handleClickShowPassword}>
             {showPassword ? (
               <Icon height={'24'} iconId={'close_eye'} viewBox={'0 0 24 24'} width={'24'} />
@@ -87,13 +81,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           </div>
         )}
 
-        {changeValue
-          ? cross && (
-              <span className={s.cross} onClick={handleClickClearField}>
-                <Icon height={'24'} iconId={'cross'} viewBox={'0 0 24 24'} width={'24'} />
-              </span>
-            )
-          : ''}
+        {type !== 'password' && changeValue && (
+          <span className={s.cross} onClick={handleClickClearField}>
+            <Icon height={'24'} iconId={'cross'} viewBox={'0 0 24 24'} width={'24'} />
+          </span>
+        )}
       </div>
       {errorMessage && (
         <Typography className={s.errorText} variant={'caption'}>
