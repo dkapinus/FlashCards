@@ -5,7 +5,7 @@ import { Typography } from '@/components/ui/typography'
 import * as RadixCheckbox from '@radix-ui/react-checkbox'
 import cn from 'classnames'
 
-import s from './Checkbox.module.scss'
+import s from './CheckBox.module.scss'
 
 export type CheckboxProps = {
   label?: string
