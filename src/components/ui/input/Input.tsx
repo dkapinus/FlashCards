@@ -82,7 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           </div>
         )}
 
-        {type !== 'password' && changeValue && (
+        {type === 'search' && changeValue && (
           <span className={s.cross} onClick={handleClickClearField}>
             <Icon height={'24'} iconId={'cross'} viewBox={'0 0 24 24'} width={'24'} />
           </span>
