@@ -25,12 +25,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     value,
     ...rest
   } = props
-  const [touched, setTouched] = useState(false)
+
   const [changeValue, setChangeValue] = useState(value)
+
+  const [types, setType] = useState(type)
 
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => {
     setShowPassword(prev => !prev)
+    if (!showPassword) {
+      setType('')
+    } else {
+      setType('password')
+    }
   }
   const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setChangeValue(e.currentTarget.value)
@@ -51,22 +58,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <div>
       <Typography variant={'body2'}>{label}</Typography>
-      <div
-        className={`${s.inputWrapper} ${errorMessage ? s.error : ''} ${touched ? s.focus : ''}`}
-        onBlur={() => setTouched(false)}
-        onClick={() => setTouched(true)}
-        tabIndex={0}
-      >
+      <div className={`${s.inputWrapper} ${errorMessage ? s.error : ''} `} tabIndex={0}>
         {type === 'search' && (
           <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
         )}
         <input
           className={`${s.input}  ${errorMessage ? s.errorText : ''}`}
-          onBlur={() => setTouched(false)}
           onChange={onchangeHandler}
-          onClick={() => setTouched(true)}
           onKeyDown={handlePressOnEnter}
           ref={ref}
+          type={types}
           value={changeValue}
           {...rest}
         />
@@ -74,9 +75,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         {type === 'password' && (
           <div onClick={handleClickShowPassword}>
             {showPassword ? (
-              <Icon height={'24'} iconId={'close_eye'} viewBox={'0 0 24 24'} width={'24'} />
-            ) : (
               <Icon height={'24'} iconId={'open_eye'} viewBox={'0 0 24 24'} width={'24'} />
+            ) : (
+              <Icon height={'24'} iconId={'close_eye'} viewBox={'0 0 24 24'} width={'24'} />
             )}
           </div>
         )}
