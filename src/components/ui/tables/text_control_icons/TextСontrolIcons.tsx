@@ -1,4 +1,4 @@
-import { CreateIcons } from '@/components/ui/tables/text control icons/CreateIcons'
+import { CreateIcons } from '@/components/ui/tables/text_control_icons/CreateIcons'
 
 import t from '../Tables.module.scss'
 

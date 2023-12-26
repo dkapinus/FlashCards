@@ -3,7 +3,7 @@ type RefIconsProps = {
   edit: () => void
   remove: () => void
 }
-export const RefIcons = ({ edit, remove }: RefIconsProps) => {
+export const CreateIcons = ({ edit, remove }: RefIconsProps) => {
   const editHandler = () => edit()
   const removeHandler = () => remove()
 
