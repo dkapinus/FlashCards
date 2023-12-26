@@ -60,7 +60,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       <Typography variant={'body2'}>{label}</Typography>
       <div className={`${s.inputWrapper} ${errorMessage ? s.error : ''} `} tabIndex={0}>
         {type === 'search' && (
-          <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
+          <div className={s.magnifier}>
+            <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
+          </div>
         )}
         <input
           className={`${s.input}  ${errorMessage ? s.errorText : ''}`}
@@ -73,7 +75,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         />
 
         {type === 'password' && (
-          <div onClick={handleClickShowPassword}>
+          <div className={s.eye} onClick={handleClickShowPassword}>
             {showPassword ? (
               <Icon height={'24'} iconId={'open_eye'} viewBox={'0 0 24 24'} width={'24'} />
             ) : (
@@ -82,7 +84,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           </div>
         )}
 
-        {type === 'search' && changeValue && (
+        {type !== 'password' && changeValue && (
           <span className={s.cross} onClick={handleClickClearField}>
             <Icon height={'24'} iconId={'cross'} viewBox={'0 0 24 24'} width={'24'} />
           </span>

@@ -32,7 +32,6 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .inputWrapper {
-  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -85,6 +84,21 @@ input[type='search']::-webkit-search-decoration {
   align-items: center;
   justify-content: center;
   justify-self: flex-start;
+
+  &:active {
+    color: var(--color-light-100);
+    background-color: var(--color-light-100);
+  }
+
+  &:focus-within {
+    color: var(--color-light-100);
+    background-color: var(--color-light-100);
+  }
+
+  &:focus.active {
+    color: var(--color-light-100);
+    background-color: var(--color-light-100);
+  }
 }
 
 .cross {
@@ -92,7 +106,4 @@ input[type='search']::-webkit-search-decoration {
   align-items: center;
   justify-content: center;
   justify-self: flex-end;
-
-  width: 30px;
-  height: 50px;
 }
