@@ -1,4 +1,4 @@
-import { RefIcons } from '@/components/ui/tables/text control icons/RefIcons'
+import { CreateIcons } from '@/components/ui/tables/text control icons/CreateIcons'
 
 import t from '../Tables.module.scss'
 
@@ -14,7 +14,7 @@ export const TextControlIcons = ({ edit, name, remove }: TextWithManagementIcons
   return (
     <div className={t.ComponentsClass}>
       <span>{name}</span>
-      <RefIcons edit={editHandler} remove={removeHandler} />
+      <CreateIcons edit={editHandler} remove={removeHandler} />
     </div>
   )
 }

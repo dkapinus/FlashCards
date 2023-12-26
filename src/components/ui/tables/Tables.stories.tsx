@@ -14,6 +14,7 @@ type Story = StoryObj<typeof meta>
 
 export const TablesStory: Story = {
   args: {
+    checked: data => console.log(data),
     edit: () => console.log('edit'),
     learn: () => console.log('learn'),
     remove: () => console.log('remove'),
