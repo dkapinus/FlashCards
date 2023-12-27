@@ -3,9 +3,9 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
 
-import s from '@/components/auth/fogot_password/Fogot_Password.module.scss'
+import s from '@/components/auth/forgot_password/Forgot_Password.module.scss'
 
-export const Fogot_password = () => {
+export const Forgot_password = () => {
   const onclickInstructionsHandler = () => {
     console.log('Send Instructions to email: example.email')
   }
@@ -23,13 +23,13 @@ export const Fogot_password = () => {
         </Typography>
       </div>
       <div className={s.buttonAndLink}>
-        <Button onClick={onclickInstructionsHandler} variant={'primary'}>
+        <Button fullWidth onClick={onclickInstructionsHandler} variant={'primary'}>
           {'Send Instructions'}
         </Button>
         <Typography className={s.rememberPassword} variant={'body2'}>
           {'Did you remember your password?'}
         </Typography>
-        <Button fullWidth onClick={onclickTryLoginHandler} variant={'link'}>
+        <Button onClick={onclickTryLoginHandler} variant={'link'}>
           {'Try logging in'}
         </Button>
       </div>
