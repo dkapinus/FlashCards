@@ -57,7 +57,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   return (
     <div>
-      <Typography variant={'body2'}>{label}</Typography>
+      <Typography className={s.label} variant={'body2'}>
+        {label}
+      </Typography>
       <div className={`${s.inputWrapper} ${errorMessage ? s.error : ''} `} tabIndex={0}>
         {type === 'search' && (
           <div className={s.magnifier}>
@@ -75,7 +77,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         />
 
         {type === 'password' && (
-          <div className={s.eye} onClick={handleClickShowPassword}>
+          <div className={s.eye && disabled ? s.disabled : s.eye} onClick={handleClickShowPassword}>
             {showPassword ? (
               <Icon height={'24'} iconId={'open_eye'} viewBox={'0 0 24 24'} width={'24'} />
             ) : (
