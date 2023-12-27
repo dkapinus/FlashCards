@@ -23,5 +23,5 @@ export const Controlled_Input = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <Input id={name} label={'password'} onValueChange={onChange} value={value} {...props} />
+  return <Input id={name} onValueChange={onChange} value={value} {...props} />
 }

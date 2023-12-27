@@ -31,11 +31,13 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .inputWrapper {
+  position: relative;
+
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  width: 300px;
+  width: 350px;
   height: 36px;
   padding: 0 12px;
 
