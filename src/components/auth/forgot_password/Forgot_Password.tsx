@@ -1,38 +1,72 @@
+import { useForm } from 'react-hook-form'
+
+import { Controlled_Input } from '@/components/controlled/controlled_input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
+import { DevTool } from '@hookform/devtools'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import s from '@/components/auth/forgot_password/Forgot_Password.module.scss'
 
+const FogotPasswordSchema = z.object({
+  email: z.string().email(),
+})
+
+type FormValues = z.infer<typeof FogotPasswordSchema>
 export const Forgot_password = () => {
-  const onclickInstructionsHandler = () => {
-    console.log('Send Instructions to email: example.email')
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+    },
+    resolver: zodResolver(FogotPasswordSchema),
+  })
+  const onSubmit = (data: FormValues) => {
+    console.log(data)
   }
   const onclickTryLoginHandler = () => {
-    console.log('Redirect to <Login/>')
+    console.log('Redirect to <SignIn/>')
   }
 
   return (
-    <Card style={{ height: '456px' }}>
-      <Typography variant={'large'}>{'Forgot your password?'}</Typography>
-      <div className={s.inputAndInstruction}>
-        <Input className={s.input} label={'Email'} />
-        <Typography variant={'body2'}>
-          {'Enter your email address and we will send you further instructions'}
-        </Typography>
-      </div>
-      <div className={s.buttonAndLink}>
-        <Button fullWidth onClick={onclickInstructionsHandler} variant={'primary'}>
-          {'Send Instructions'}
-        </Button>
-        <Typography className={s.rememberPassword} variant={'body2'}>
-          {'Did you remember your password?'}
-        </Typography>
-        <Button onClick={onclickTryLoginHandler} variant={'link'}>
-          {'Try logging in'}
-        </Button>
-      </div>
-    </Card>
+    <>
+      <DevTool control={control} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Header isLoginIn={false} name={'user'} />
+        <Card className={s.container}>
+          <Typography variant={'large'}>{'Forgot your password?'}</Typography>
+          <div className={s.inputAndInstruction}>
+            <Controlled_Input
+              className={s.input}
+              control={control}
+              errorMessage={errors.email?.message}
+              label={'Email'}
+              name={'email'}
+              type={'email'}
+            />
+            <Typography variant={'body2'}>
+              {'Enter your email address and we will send you further instructions'}
+            </Typography>
+          </div>
+          <div className={s.buttonAndLink}>
+            <Button fullWidth variant={'primary'}>
+              {'Send Instructions'}
+            </Button>
+            <Typography className={s.rememberPassword} variant={'body2'}>
+              {'Did you remember your password?'}
+            </Typography>
+            <Button as={'a'} onClick={onclickTryLoginHandler} variant={'link'}>
+              {'Try logging in'}
+            </Button>
+          </div>
+        </Card>
+      </form>
+    </>
   )
 }
