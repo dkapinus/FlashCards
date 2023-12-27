@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 
-import { Controlled_Checkbox } from '@/components/controlled/controlled_checkbox'
 import { Controlled_Input } from '@/components/controlled/controlled_input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -10,27 +9,32 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './Sign_In.module.scss'
+import s from './Sign_Up.module.scss'
 
-const signInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(3),
-  rememberMe: z.boolean().default(false),
-})
+const signUpSchema = z
+  .object({
+    confirmPassword: z.string().trim(),
+    email: z.string().email('Enter valid email').trim(),
+    password: z.string().min(3, 'Min 3').trim(),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Password mismatch',
+    path: ['confirmPassword'],
+  })
 
-type FormValues = z.infer<typeof signInSchema>
-export const SignIn = () => {
+type FormValues = z.infer<typeof signUpSchema>
+export const SignUp = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
     defaultValues: {
+      confirmPassword: '',
       email: '',
       password: '',
-      rememberMe: false,
     },
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(signUpSchema),
   })
   const onSubmit = (data: FormValues) => {
     console.log(data)
@@ -43,7 +47,7 @@ export const SignIn = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card className={s.container}>
           <Typography as={'h2'} variant={'large'}>
-            Sign In
+            Sign Up
           </Typography>
           <Controlled_Input
             className={s.input}
@@ -61,22 +65,21 @@ export const SignIn = () => {
             name={'password'}
             type={'password'}
           />
-          <Controlled_Checkbox
-            className={s.checkbox}
+          <Controlled_Input
+            className={s.input}
             control={control}
-            label={'remember me'}
-            name={'rememberMe'}
+            errorMessage={errors.confirmPassword?.message}
+            label={'Confirm Password'}
+            name={'confirmPassword'}
+            type={'password'}
           />
-          <Typography as={'a'} className={s.forgot} variant={'body2'}>
-            Forgot Password?
-          </Typography>
           <Button className={s.signInBtn} fullWidth type={'submit'} variant={'primary'}>
-            <Typography variant={'subtitle2'}>Sign In</Typography>
+            <Typography variant={'subtitle2'}>Sign Up</Typography>
           </Button>
           <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
-            Don't have an account?
+            Already have an account?
           </Typography>
-          <Button variant={'link'}>Sign Up</Button>
+          <Button variant={'link'}>Sign In</Button>
         </Card>
       </form>
     </>
