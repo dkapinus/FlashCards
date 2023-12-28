@@ -7,9 +7,15 @@ import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import cn from 'classnames'
 import { z } from 'zod'
 
 import s from './Sign_Up.module.scss'
+
+type Props = {
+  className?: string
+  onSubmit: (data: FormValues) => void
+}
 
 const signUpSchema = z
   .object({
@@ -23,7 +29,7 @@ const signUpSchema = z
   })
 
 type FormValues = z.infer<typeof signUpSchema>
-export const SignUp = () => {
+export const SignUp = ({ className, onSubmit }: Props) => {
   const {
     control,
     formState: { errors },
@@ -36,16 +42,13 @@ export const SignUp = () => {
     },
     resolver: zodResolver(signUpSchema),
   })
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-  }
 
   return (
     <>
       <DevTool control={control} />
       <Header isLoginIn={false} name={'user'} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Card className={s.container}>
+        <Card className={cn(s.container, className)}>
           <Typography as={'h2'} variant={'large'}>
             Sign Up
           </Typography>

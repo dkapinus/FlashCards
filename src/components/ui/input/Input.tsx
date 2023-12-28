@@ -56,8 +56,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   }
 
   return (
-    <div>
-      <Typography className={`${s.label} ${className}`} variant={'body2'}>
+    <div className={className}>
+      <Typography className={`${s.label} `} variant={'body2'}>
         {label}
       </Typography>
       <div className={`${s.inputWrapper} ${errorMessage ? s.error : ''}  `} tabIndex={0}>
