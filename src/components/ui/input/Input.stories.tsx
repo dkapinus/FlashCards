@@ -1,39 +1,87 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { ChangeEvent, useState } from 'react'
 
-import { Input } from './'
+import { Input, InputProps } from '@/components/ui/input/Input'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
-  argTypes: {},
   component: Input,
+  parameters: {
+    layout: 'centered',
+  },
   tags: ['autodocs'],
-  title: 'Components/Input',
+  title: 'Components/TextField',
 } satisfies Meta<typeof Input>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const InputWithoutIcons: Story = {
+export const DefaultTextField: Story = {}
+
+export const ErrorTextField: Story = {
   args: {
-    disabled: false,
-    errorMessage: '',
-    label: 'Input',
-    placeholder: 'Input',
+    errorMessage: 'Some error',
+    type: 'text',
   },
 }
-export const InputWithIconsRight: Story = {
+
+export const DisabledTextField: Story = {
   args: {
-    disabled: false,
-    errorMessage: '',
+    disabled: true,
     label: 'Input',
-    placeholder: 'Input',
-    type: 'password',
+    placeholder: 'Disabled ',
+    type: 'text',
+    value: 'Disabled',
   },
 }
-export const InputSearch: Story = {
+
+export const SearchTextField: Story = {
   args: {
-    disabled: false,
-    errorMessage: '',
-    placeholder: 'Input search',
+    label: 'Search',
+    type: 'search',
+    value: 'Search',
+  },
+}
+
+const Component = (args: InputProps) => {
+  const [value, setValue] = useState('')
+
+  const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value)
+  }
+
+  const handlePressOnEnter = () => {
+    setValue('')
+  }
+
+  const handleChangeValue = (value: string) => {
+    setValue(value)
+  }
+
+  return (
+    <Input
+      {...args}
+      onChange={onChangeValueHandler}
+      onPressEnter={handlePressOnEnter}
+      onValueChange={handleChangeValue}
+      value={value}
+    />
+  )
+}
+
+export const DefaultControlled: Story = {
+  render: () => <Component />,
+}
+export const SearchControlled: Story = {
+  args: {
+    label: 'Search input',
     type: 'search',
   },
+  render: (args: InputProps) => <Component {...args} />,
+}
+export const PasswordControlled: Story = {
+  args: {
+    label: 'Password',
+    type: 'password',
+  },
+  render: (args: InputProps) => <Component {...args} />,
 }
