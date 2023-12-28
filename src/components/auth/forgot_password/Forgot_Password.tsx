@@ -11,12 +11,16 @@ import { z } from 'zod'
 
 import s from '@/components/auth/forgot_password/Forgot_Password.module.scss'
 
+type ForgotPasswordType = {
+  onSubmit: (data: FormValues) => void
+}
+
 const ForgotPasswordSchema = z.object({
   email: z.string().email(),
 })
 
 type FormValues = z.infer<typeof ForgotPasswordSchema>
-export const Forgot_password = () => {
+export const Forgot_password = ({ onSubmit }: ForgotPasswordType) => {
   const {
     control,
     formState: { errors },
@@ -27,9 +31,9 @@ export const Forgot_password = () => {
     },
     resolver: zodResolver(ForgotPasswordSchema),
   })
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-  }
+  // const onSubmit = (data: FormValues) => {
+  //   console.log(data)
+  // }
   const onclickTryLoginHandler = () => {
     console.log('Redirect to <SignIn/>')
   }
