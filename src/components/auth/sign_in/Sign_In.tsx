@@ -76,7 +76,9 @@ export const SignIn = () => {
           <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
             Don't have an account?
           </Typography>
-          <Button variant={'link'}>Sign Up</Button>
+          <Button as={'a'} onClick={() => console.log('navigate to Sign in form')} variant={'link'}>
+            Sign Up
+          </Button>
         </Card>
       </form>
     </>
