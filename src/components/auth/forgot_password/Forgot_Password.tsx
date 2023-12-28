@@ -11,11 +11,11 @@ import { z } from 'zod'
 
 import s from '@/components/auth/forgot_password/Forgot_Password.module.scss'
 
-const FogotPasswordSchema = z.object({
+const ForgotPasswordSchema = z.object({
   email: z.string().email(),
 })
 
-type FormValues = z.infer<typeof FogotPasswordSchema>
+type FormValues = z.infer<typeof ForgotPasswordSchema>
 export const Forgot_password = () => {
   const {
     control,
@@ -25,7 +25,7 @@ export const Forgot_password = () => {
     defaultValues: {
       email: '',
     },
-    resolver: zodResolver(FogotPasswordSchema),
+    resolver: zodResolver(ForgotPasswordSchema),
   })
   const onSubmit = (data: FormValues) => {
     console.log(data)
@@ -50,7 +50,7 @@ export const Forgot_password = () => {
               name={'email'}
               type={'email'}
             />
-            <Typography variant={'body2'}>
+            <Typography className={s.rememberPassword} variant={'body2'}>
               {'Enter your email address and we will send you further instructions'}
             </Typography>
           </div>
