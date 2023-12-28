@@ -7,20 +7,19 @@ import { Typography } from '@/components/ui/typography'
 
 import h from './Header.module.scss'
 
-export type RadioGroupProps<T extends ElementType = 'div'> = {
+export type HeaderProps<T extends ElementType = 'header'> = {
   as?: T
-  className?: string
   isLoginIn: boolean
   name: string
 } & ComponentPropsWithoutRef<T>
 
-export const Header = <T extends ElementType = 'div'>(
-  props: RadioGroupProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof RadioGroupProps<T>>
+export const Header = <T extends ElementType = 'header'>(
+  props: HeaderProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof HeaderProps<T>>
 ) => {
-  const { active, as: Component = 'div', className, disabled, isLoginIn, name, ...rest } = props
+  const { active, as: Component = 'header', isLoginIn, name, ...rest } = props
 
   return (
-    <div {...rest} className={h.container}>
+    <header {...rest} className={h.container}>
       <div className={h.wrapper}>
         <Icon height={'36'} iconId={'incubator'} viewBox={'0 0 157 36'} width={'157'} />
         <div className={h.singWrapper}>
@@ -33,6 +32,6 @@ export const Header = <T extends ElementType = 'div'>(
           )}
         </div>
       </div>
-    </div>
+    </header>
   )
 }
