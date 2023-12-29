@@ -9,7 +9,7 @@ export type RadioGroupProps<T extends ElementType = 'input'> = {
   as?: T
   disabled?: boolean
   onChange: (e: string) => void
-  options: { title: string; value: string }[]
+  options: { id: number; title: string; value: string }[]
 } & ComponentPropsWithoutRef<T>
 
 export const RadioGroup = <T extends ElementType = 'input'>(
@@ -29,11 +29,11 @@ export const RadioGroup = <T extends ElementType = 'input'>(
     >
       {options.map(i => {
         return (
-          <div className={r.RadioGroupWrapper} key={i.value}>
-            <Radio.Item className={r.RadioGroupItem} id={`r${i.value}`} value={i.value}>
+          <div className={r.RadioGroupWrapper} key={i.id}>
+            <Radio.Item className={r.RadioGroupItem} id={`r${i.id}`} value={i.value}>
               <Radio.Indicator className={r.RadioGroupIndicator} />
             </Radio.Item>
-            <label className={r.Label} htmlFor={`r${i.value}`}>
+            <label className={r.Label} htmlFor={`r${i.id}`}>
               <Typography variant={'body2'}>{i.title}</Typography>
             </label>
           </div>
