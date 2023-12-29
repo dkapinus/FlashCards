@@ -16,11 +16,11 @@ export const Radio: Story = {
     disabled: false,
     onChange: (e: string) => console.log(e),
     options: [
-      { title: 'Did not know', value: '1' },
-      { title: 'Forgot', value: '2' },
-      { title: 'A lot of though', value: '3' },
-      { title: 'Confused', value: '4' },
-      { title: 'Know the answer', value: '5' },
+      { id: 1, title: 'Did not know', value: '1' },
+      { id: 2, title: 'Forgot', value: '2' },
+      { id: 3, title: 'A lot of though', value: '3' },
+      { id: 4, title: 'Confused', value: '4' },
+      { id: 5, title: 'Know the answer', value: '5' },
     ],
   },
 }
