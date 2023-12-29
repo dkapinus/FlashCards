@@ -13,9 +13,14 @@ type Story = StoryObj<typeof meta>
 
 export const Radio: Story = {
   args: {
-    active: true,
-    changeValue: e => console.log(e),
     disabled: false,
-    title: ['Radio', 'Radio2', 'Radio3', 'Radio4', 'Radio5'],
+    onChange: (e: string) => console.log(e),
+    options: [
+      { title: 'Did not know', value: '1' },
+      { title: 'Forgot', value: '2' },
+      { title: 'A lot of though', value: '3' },
+      { title: 'Confused', value: '4' },
+      { title: 'Know the answer', value: '5' },
+    ],
   },
 }
