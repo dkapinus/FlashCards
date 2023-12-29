@@ -1,46 +1,66 @@
 import { ChangeEvent, ComponentPropsWithoutRef, KeyboardEvent, forwardRef, useState } from 'react'
 
 import { Icon } from '@/components/ui/icon/Icon'
-import { Typography } from '@/components/ui/typography'
+import cn from 'classnames'
 
 import s from './Input.module.scss'
 
+import { Typography } from '../typography'
+
 export type InputProps = {
   errorMessage?: string
+  inputClassName?: string
   label?: string
   onPressEnter?: ComponentPropsWithoutRef<'input'>['onKeyDown']
-  onValueChange?: (e: string) => void
+  onValueChange?: (value: string) => void
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
+    children,
     className,
     disabled,
     errorMessage,
+    inputClassName,
     label,
+    name,
     onChange,
     onPressEnter,
     onValueChange,
     type,
     value,
-    ...rest
+    ...restProps
   } = props
-
-  const [changeValue, setChangeValue] = useState(value)
-
-  const [types, setType] = useState(type)
-
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => {
     setShowPassword(prev => !prev)
-    if (!showPassword) {
-      setType('')
-    } else {
-      setType('password')
-    }
   }
-  const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setChangeValue(e.currentTarget.value)
+  const inputType = type === 'password' && showPassword ? 'text' : type
+  const isShowCrossIcon = type === 'search' && value
+  const cnStyle = {
+    input: cn(
+      s.input,
+      {
+        [s.active]: !!value,
+        [s.error]: !!errorMessage,
+        [s.isLeftIcon]: type === 'search',
+        [s.isRightIcon]: type === 'password' || isShowCrossIcon,
+      },
+      inputClassName
+    ),
+    inputWrapper: s.inputWrapper,
+    label: cn(s.label, { [s.disabled]: disabled }),
+    labelError: cn({ [s.error]: errorMessage }),
+    leftIcon: s.left,
+    rightIcon: s.right,
+    root: cn(s.root, className),
+  }
+
+  const handleClickClearField = () => {
+    onValueChange?.('')
+  }
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e)
     onValueChange?.(e.currentTarget.value)
   }
@@ -51,49 +71,50 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     }
   }
 
-  const handleClickClearField = () => {
-    setChangeValue('')
-  }
-
   return (
-    <div className={className}>
-      <Typography className={`${s.label} `} variant={'body2'}>
-        {label}
-      </Typography>
-      <div className={`${s.inputWrapper} ${errorMessage ? s.error : ''}  `} tabIndex={0}>
+    <div className={cnStyle.root}>
+      {label && (
+        <Typography as={'label'} className={cnStyle.label} variant={'body2'}>
+          {label}
+        </Typography>
+      )}
+      <div className={cnStyle.inputWrapper}>
         {type === 'search' && (
-          <div className={s.magnifier}>
+          <div className={cnStyle.leftIcon}>
             <Icon height={'20'} iconId={'magnifier'} viewBox={'0 0 20 20'} width={'20'} />
           </div>
         )}
         <input
-          className={`${s.input}  ${errorMessage ? s.errorText : ''} `}
-          onChange={onchangeHandler}
+          className={cnStyle.input}
+          disabled={disabled}
+          onChange={handleChange}
           onKeyDown={handlePressOnEnter}
           ref={ref}
-          type={types}
-          value={changeValue}
-          {...rest}
+          type={inputType}
+          value={value}
+          {...restProps}
         />
-
+        {isShowCrossIcon && (
+          <div className={cnStyle.rightIcon} onClick={handleClickClearField}>
+            <Icon height={'20'} iconId={'cross'} viewBox={'0 0 20 20'} width={'20'} />
+          </div>
+        )}
         {type === 'password' && (
-          <div className={s.eye && disabled ? s.disabled : s.eye} onClick={handleClickShowPassword}>
+          <div onClick={handleClickShowPassword}>
             {showPassword ? (
-              <Icon height={'24'} iconId={'open_eye'} viewBox={'0 0 24 24'} width={'24'} />
+              <span className={cnStyle.rightIcon}>
+                <Icon height={'24'} iconId={'open_eye'} viewBox={'0 0 24 24'} width={'24'} />
+              </span>
             ) : (
-              <Icon height={'24'} iconId={'close_eye'} viewBox={'0 0 24 24'} width={'24'} />
+              <span className={cnStyle.rightIcon}>
+                <Icon height={'24'} iconId={'close_eye'} viewBox={'0 0 24 24'} width={'24'} />
+              </span>
             )}
           </div>
         )}
-
-        {type == 'search' && changeValue && (
-          <span className={s.cross} onClick={handleClickClearField}>
-            <Icon height={'24'} iconId={'cross'} viewBox={'0 0 24 24'} width={'24'} />
-          </span>
-        )}
       </div>
-      {errorMessage && (
-        <Typography className={s.errorText} variant={'caption'}>
+      {!!errorMessage && (
+        <Typography as={'span'} className={cnStyle.labelError} variant={'caption'}>
           {errorMessage}
         </Typography>
       )}
