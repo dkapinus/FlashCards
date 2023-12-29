@@ -1,10 +1,8 @@
-import { Forgot_password } from '@/components/auth/forgot_password/Forgot_Password'
 import { Layout } from '@/components/ui/layout/Layout'
 
 export function App() {
   return (
     <Layout>
-      <Forgot_password />
       <div>s</div>
       <div>s</div>
       <div>s</div>
