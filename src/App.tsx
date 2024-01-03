@@ -1,5 +1,12 @@
-import { Layout } from '@/components/ui/layout/Layout'
+import { Provider } from 'react-redux'
+
+import { Router } from '@/Router'
+import { store } from '@/services/Store'
 
 export function App() {
-  return <Layout isLoginIn>Hello</Layout>
+  return (
+    <Provider store={store}>
+      <Router />
+    </Provider>
+  )
 }

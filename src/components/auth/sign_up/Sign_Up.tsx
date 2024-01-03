@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Controlled_Input } from '@/components/controlled/controlled_input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Header } from '@/components/ui/header'
+import { Layout } from '@/components/ui/layout/Layout'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -46,47 +46,48 @@ export const SignUp = ({ className, onSubmit }: Props) => {
   return (
     <>
       <DevTool control={control} />
-      <Header isLoginIn={false} name={'user'} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Card className={cn(s.container, className)}>
-          <Typography as={'h2'} variant={'large'}>
-            Sign Up
-          </Typography>
-          <Controlled_Input
-            className={s.input}
-            control={control}
-            errorMessage={errors.email?.message}
-            label={'Email'}
-            name={'email'}
-            type={'email'}
-          />
-          <Controlled_Input
-            className={s.input}
-            control={control}
-            errorMessage={errors.password?.message}
-            label={'Password'}
-            name={'password'}
-            type={'password'}
-          />
-          <Controlled_Input
-            className={s.input}
-            control={control}
-            errorMessage={errors.confirmPassword?.message}
-            label={'Confirm Password'}
-            name={'confirmPassword'}
-            type={'password'}
-          />
-          <Button className={s.signInBtn} fullWidth type={'submit'} variant={'primary'}>
-            <Typography variant={'subtitle2'}>Sign Up</Typography>
-          </Button>
-          <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
-            Already have an account?
-          </Typography>
-          <Button as={'a'} onClick={() => 'navigate to Sign up form'} variant={'link'}>
-            Sign In
-          </Button>
-        </Card>
-      </form>
+      <Layout isLoginIn>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Card className={cn(s.container, className)}>
+            <Typography as={'h2'} variant={'large'}>
+              Sign Up
+            </Typography>
+            <Controlled_Input
+              className={s.input}
+              control={control}
+              errorMessage={errors.email?.message}
+              label={'Email'}
+              name={'email'}
+              type={'email'}
+            />
+            <Controlled_Input
+              className={s.input}
+              control={control}
+              errorMessage={errors.password?.message}
+              label={'Password'}
+              name={'password'}
+              type={'password'}
+            />
+            <Controlled_Input
+              className={s.input}
+              control={control}
+              errorMessage={errors.confirmPassword?.message}
+              label={'Confirm Password'}
+              name={'confirmPassword'}
+              type={'password'}
+            />
+            <Button className={s.signInBtn} fullWidth type={'submit'} variant={'primary'}>
+              <Typography variant={'subtitle2'}>Sign Up</Typography>
+            </Button>
+            <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
+              Already have an account?
+            </Typography>
+            <Button as={'a'} onClick={() => 'navigate to Sign up form'} variant={'link'}>
+              Sign In
+            </Button>
+          </Card>
+        </form>
+      </Layout>
     </>
   )
 }

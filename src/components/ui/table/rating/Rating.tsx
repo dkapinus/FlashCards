@@ -1,6 +1,6 @@
 import { Icon } from '@/components/ui/icon/Icon'
 
-import t from '../Tables.module.scss'
+import t from '../Table.module.scss'
 
 export const Rating = () => {
   return (

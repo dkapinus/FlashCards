@@ -1,65 +1,72 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
-import { useForm } from 'react-hook-form'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Controlled_Checkbox } from '@/components/controlled/controlled_checkbox'
-import { BackgroundWText } from '@/components/ui/tables/background_text/BackgroundWText'
-import { ControlIcons } from '@/components/ui/tables/control_icons/СontrolIcons'
-import { Corner } from '@/components/ui/tables/corner/Corner'
-import { Rating } from '@/components/ui/tables/rating/Rating'
-import { ScreenCard } from '@/components/ui/tables/screen_card/ScreenCard'
-import { TextControlIcons } from '@/components/ui/tables/text_control_icons/TextСontrolIcons'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { Typography } from '@/components/ui/typography'
+import cn from 'classnames'
 
-import t from './Tables.module.scss'
+import s from './Tables.module.scss'
 
-const loginSchema = z.object({
-  rememberMe: z.boolean().default(false),
-})
-
-type FormValues = z.infer<typeof loginSchema>
-
-export type TablesProps<T extends ElementType = 'div'> = {
-  as?: T
-  checked: (data: FormValues) => void
-  edit: () => void
-  learn: () => void
-  remove: () => void
-  text: string
-} & ComponentPropsWithoutRef<T>
-
-export const Tables = <T extends ElementType = 'div'>(
-  props: TablesProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TablesProps<T>>
-) => {
-  const { as: Component = 'div', checked, className, edit, learn, remove, text, ...rest } = props
-
-  const { control, handleSubmit } = useForm<FormValues>({
-    defaultValues: {
-      rememberMe: false,
-    },
-    resolver: zodResolver(loginSchema),
-  })
-
-  const onSubmit = (data: FormValues) => {
-    checked(data)
-    console.log(data)
+const Root = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRef<'table'>>(
+  ({ children, className, ...restProps }, ref) => {
+    return (
+      <table className={cn(s.root, className)} ref={ref} {...restProps}>
+        {children}
+      </table>
+    )
   }
+)
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={t.Container} {...rest}>
-        <BackgroundWText text={text} />
-        <div className={t.ComponentsClass}>{text}</div>
-        <Controlled_Checkbox control={control} label={text} name={'rememberMe'} />
-        <TextControlIcons edit={edit} name={text} remove={remove} />
-        <ControlIcons edit={edit} learn={learn} remove={remove} />
-        <Rating />
-        <ScreenCard text={text} />
-        <div className={t.ComponentsClass}>
-          <Controlled_Checkbox control={control} name={'rememberMe'} />
-        </div>
-        <Corner name={text} />
-      </div>
-    </form>
-  )
-}
+const Head = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
+  ({ children, className, ...restProps }, ref) => {
+    return (
+      <thead className={cn(s.thead, className)} ref={ref} {...restProps}>
+        {children}
+      </thead>
+    )
+  }
+)
+
+const Body = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRef<'tbody'>>(
+  ({ children, className, ...restProps }, ref) => {
+    return (
+      <tbody className={cn(s.body, className)} ref={ref} {...restProps}>
+        {children}
+      </tbody>
+    )
+  }
+)
+
+const Row = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
+  ({ children, className, ...restProps }, ref) => {
+    return (
+      <tr className={cn(s.row, className)} ref={ref} {...restProps}>
+        {children}
+      </tr>
+    )
+  }
+)
+
+const TitleCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
+  ({ children, className, ...restProps }, ref) => {
+    return (
+      <th className={cn(s.title, className)} ref={ref} {...restProps}>
+        <Typography as={'span'} variant={'subtitle2'}>
+          {children}
+        </Typography>
+      </th>
+    )
+  }
+)
+
+const Cell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
+  ({ children, className, ...restProps }, ref) => {
+    return (
+      <td className={cn(s.cell, className)} ref={ref} {...restProps}>
+        <Typography as={'span'} variant={'body2'}>
+          {children}
+        </Typography>
+      </td>
+    )
+  }
+)
+
+export const Tables = { Body, Cell, Head, Root, Row, TitleCell }

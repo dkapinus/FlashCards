@@ -1,6 +1,6 @@
 import s from '@/assets/images/screen.png'
 
-import t from '../Tables.module.scss'
+import t from '../Table.module.scss'
 type ScreenCardProps = {
   text: string
 }
