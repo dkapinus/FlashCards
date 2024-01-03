@@ -1,6 +1,6 @@
-import { CreateIcons } from '@/components/ui/tables/text_control_icons/CreateIcons'
+import { CreateIcons } from '@/components/ui/table/text_control_icons/CreateIcons'
 
-import t from '../Tables.module.scss'
+import t from '../Table.module.scss'
 
 type TextWithManagementIconsProps = {
   edit: () => void

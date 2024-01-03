@@ -1,4 +1,4 @@
-import t from '@/components/ui/tables/Tables.module.scss'
+import t from '../Table.module.scss'
 
 type BackgroundWTextProps = {
   text: string
