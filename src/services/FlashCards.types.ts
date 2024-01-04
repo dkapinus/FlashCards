@@ -1,9 +1,24 @@
-export interface GetDecksResponseItemsAuthor {
+export interface GetDecksResponse {
   items: Item[]
   maxCardsCount: number
   pagination: Pagination
 }
 
+export type GetDecksArgs = {
+  authorId?: string
+  currentPage?: number
+  itemsPerPage?: number
+  maxCardsCount?: number
+  minCardsCount?: number
+  name?: string
+  orderBy?: string
+}
+
+export type CreateDecksArg = {
+  cover?: string
+  isPrivate?: boolean
+  name: string
+}
 export interface Item {
   author: Author
   cardsCount: number
