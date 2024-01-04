@@ -1,5 +1,6 @@
 import { baseApi } from '@/services/Base-Api'
 import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query/react'
 
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
@@ -8,5 +9,6 @@ export const store = configureStore({
   },
 })
 
+setupListeners(store.dispatch)
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
