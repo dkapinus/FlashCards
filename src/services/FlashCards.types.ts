@@ -19,6 +19,10 @@ export type CreateDecksArg = {
   isPrivate?: boolean
   name: string
 }
+
+export type DeleteDecksArg = {
+  id: string
+}
 export interface Item {
   author: Author
   cardsCount: number

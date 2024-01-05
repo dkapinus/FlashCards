@@ -23,7 +23,6 @@ export const Slider = <T extends ElementType = 'input'>(
 
   return (
     <div>
-      <p className={s.theme}>Dark Theme</p>
       <div className={s.container}>
         <span>
           <Typography className={s.value} variant={'body1'}>
