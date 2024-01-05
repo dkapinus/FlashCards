@@ -5,26 +5,41 @@ import * as Tabs from '@radix-ui/react-tabs'
 
 import s from '@/components/ui/tabSwitcher/TabSwitcher.module.scss'
 
-export type TabSwitcherProps<T extends ElementType = 'button'> = {
-  as?: T
+export type TabType = {
   disabled?: boolean
-  name: string
+  title: string
+  /** A unique value that associates the trigger with a content. */
+  value: string
+}
+
+type CommonTabsProps<T extends ElementType = 'button'> = {
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  tabs: TabType[]
+  value?: string
 } & ComponentPropsWithoutRef<T>
+
 export const TabSwitcher = <T extends ElementType = 'button'>(
-  props: TabSwitcherProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TabSwitcherProps<T>>
+  props: CommonTabsProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CommonTabsProps<T>>
 ) => {
-  const { disabled, name } = props
+  const { tabs, ...rest } = props
 
   return (
-    <Tabs.Root className={`${s.tabsRoot}`} defaultValue={'tab1'}>
-      <Tabs.List aria-label={'Manage your account'} className={s.tabsList}>
+    <Tabs.Root className={`${s.tabsRoot}`} defaultValue={tabs[0].value} {...rest}>
+      <Tabs.List aria-label={'Tabs list'} className={s.tabsList}>
         <Typography variant={'body1'}>
-          <Tabs.Trigger
-            className={`${s.switcher} ${disabled ? s.disabledSwitcher : null}`}
-            value={'tab1'}
-          >
-            {name}
-          </Tabs.Trigger>{' '}
+          {tabs.map((tab, index) => {
+            return (
+              <Tabs.Trigger
+                className={`${s.tabTrigger} ${tab.disabled ? s.disabledTrigger : null}`}
+                disabled={tab.disabled}
+                key={index}
+                value={tab.value}
+              >
+                {tab.title}
+              </Tabs.Trigger>
+            )
+          })}
         </Typography>
       </Tabs.List>
     </Tabs.Root>
