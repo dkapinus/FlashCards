@@ -74,8 +74,12 @@ export const Decks = () => {
             type={'search'}
             value={name}
           />
-          <TabSwitcher name={'My Cards'} />
-          <TabSwitcher name={'All Cards'} />
+          <TabSwitcher
+            tabs={[
+              { title: 'My Cards', value: 'My Cards' },
+              { title: 'All Cards', value: 'All Cards' },
+            ]}
+          />
           <Slider propsValue={[0, 10]} valueChange={() => ''} />
           <Button variant={'secondary'}>
             <>

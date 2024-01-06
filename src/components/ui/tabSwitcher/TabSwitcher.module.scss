@@ -1,9 +1,8 @@
-/* reset */
-//button,
-//fieldset,
-//input {
-//  all: unset;
-//}
+button,
+fieldset,
+input {
+  all: unset;
+}
 
 .button {
   &:disabled {
@@ -17,7 +16,7 @@
   justify-content: flex-start;
 }
 
-.switcher {
+.tabTrigger {
   cursor: pointer;
 
   display: inline-flex;
@@ -31,27 +30,31 @@
 
   border: 1px solid var(--color-dark-300);
   border-radius: 2px;
+
+  &[data-state='active'] {
+    background-color: var(--color-accent-500);
+  }
 }
 
-.switcher:not(.disabledSwitcher):hover {
+.tabTrigger:not(:disabled):hover {
   color: var(--color-light-900);
   background-color: var(--color-dark-300);
   border: 1px solid var(--color-dark-100);
 }
 
-.switcher:not(.disabledSwitcher):focus-visible {
+.tabTrigger:not(:disabled):focus-visible {
   color: var(--color-light-100);
   background-color: var(--color-dark-700);
   border: 2px solid var(--color-info-900);
 }
 
-.switcher:not(.disabledSwitcher):active {
+.tabTrigger:not(:disabled):active {
   color: var(--color-light-100);
   background-color: var(--color-accent-500);
   border: 1px solid var(--color-accent-500);
 }
 
-.disabledSwitcher {
+.disabledTrigger {
   cursor: default;
   color: var(--color-dark-300);
   background-color: var(--color-dark-700);
