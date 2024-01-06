@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/Icon'
 
 import t from '../Table.module.scss'
@@ -14,15 +15,15 @@ export const ControlIcons = ({ edit, learn, remove }: ControlIconsProps) => {
 
   return (
     <div className={t.ComponentsClass}>
-      <span onClick={learnHandler}>
+      <Button className={t.ButtonWithIcons} onClick={learnHandler} variant={'secondary'}>
         <Icon height={'16'} iconId={'learn'} viewBox={' 0 0 16 16'} width={'16'} />
-      </span>
-      <span onClick={editHandler}>
+      </Button>
+      <Button className={t.ButtonWithIcons} onClick={editHandler} variant={'secondary'}>
         <Icon height={'16'} iconId={'edit'} viewBox={' 0 0 16 16'} width={'16'} />
-      </span>
-      <span onClick={removeHandler}>
+      </Button>
+      <Button className={t.ButtonWithIcons} onClick={removeHandler} variant={'secondary'}>
         <Icon height={'16'} iconId={'delete'} viewBox={' 0 0 16 16'} width={'16'} />
-      </span>
+      </Button>
     </div>
   )
 }
