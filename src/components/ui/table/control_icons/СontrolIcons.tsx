@@ -1,29 +1,31 @@
-import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon/Icon'
+import { Delete } from '@/components/ui/modal_icons/Delete'
+import { Edit } from '@/components/ui/modal_icons/Edit'
+import { Learn } from '@/components/ui/modal_icons/Learn'
 
 import t from '../Table.module.scss'
-
+import i from '@/components/ui/modal_icons/Modul_Icons.module.scss'
 type ControlIconsProps = {
-  edit: () => void
-  learn: () => void
-  remove: () => void
+  disabledDelete?: boolean
+  disabledEdit?: boolean
+  disabledLearn?: boolean
+  text?: string
 }
-export const ControlIcons = ({ edit, learn, remove }: ControlIconsProps) => {
-  const learnHandler = () => learn()
-  const editHandler = () => edit()
-  const removeHandler = () => remove()
-
+export const ControlIcons = ({
+  disabledDelete,
+  disabledEdit,
+  disabledLearn,
+}: ControlIconsProps) => {
   return (
     <div className={t.ComponentsClass}>
-      <Button className={t.ButtonWithIcons} onClick={learnHandler} variant={'secondary'}>
-        <Icon height={'16'} iconId={'learn'} viewBox={' 0 0 16 16'} width={'16'} />
-      </Button>
-      <Button className={t.ButtonWithIcons} onClick={editHandler} variant={'secondary'}>
-        <Icon height={'16'} iconId={'edit'} viewBox={' 0 0 16 16'} width={'16'} />
-      </Button>
-      <Button className={t.ButtonWithIcons} onClick={removeHandler} variant={'secondary'}>
-        <Icon height={'16'} iconId={'delete'} viewBox={' 0 0 16 16'} width={'16'} />
-      </Button>
+      <Learn className={i.ButtonWithIcons} disabled={disabledLearn} variant={'secondary'}>
+        <div>Hello3</div>
+      </Learn>
+      <Edit className={i.ButtonWithIcons} disabled={disabledEdit} variant={'secondary'}>
+        <div>Hello2</div>
+      </Edit>
+      <Delete className={i.ButtonWithIcons} disabled={disabledDelete} variant={'secondary'}>
+        <div>Hello1</div>
+      </Delete>
     </div>
   )
 }

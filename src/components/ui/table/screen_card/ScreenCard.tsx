@@ -1,8 +1,9 @@
 import s from '@/assets/images/screen.png'
 
 import t from '../Table.module.scss'
+
 type ScreenCardProps = {
-  text: string
+  text?: string
 }
 export const ScreenCard = ({ text }: ScreenCardProps) => {
   return (
