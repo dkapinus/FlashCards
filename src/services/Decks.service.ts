@@ -4,6 +4,7 @@ import {
   DeleteDecksArg,
   GetDecksArgs,
   GetDecksResponse,
+  UpdateDeckArg,
 } from '@/services/FlashCards.types'
 
 const decksService = baseApi.injectEndpoints({
@@ -37,8 +38,23 @@ const decksService = baseApi.injectEndpoints({
           }
         },
       }),
+      updateDecks: builder.mutation<void, UpdateDeckArg & DeleteDecksArg>({
+        invalidatesTags: ['Decks'],
+        query: ({ id, ...arg }) => {
+          return {
+            body: arg,
+            method: 'PATCH',
+            url: `v1/decks/${id}`,
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useCreateDecksMutation, useDeleteDecksMutation, useGetDecksQuery } = decksService
+export const {
+  useCreateDecksMutation,
+  useDeleteDecksMutation,
+  useGetDecksQuery,
+  useUpdateDecksMutation,
+} = decksService

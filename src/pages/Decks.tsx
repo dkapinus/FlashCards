@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Input } from '@/components/ui/input'
 import { Layout } from '@/components/ui/layout/Layout'
+import { Modals } from '@/components/ui/modals'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tabSwitcher'
@@ -13,6 +15,7 @@ import {
   useCreateDecksMutation,
   useDeleteDecksMutation,
   useGetDecksQuery,
+  useUpdateDecksMutation,
 } from '@/services/Decks.service'
 
 import s from './Decks.module.scss'
@@ -21,6 +24,7 @@ export const Decks = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
+  const [createPack, setCreatePack] = useState('')
 
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
@@ -32,12 +36,26 @@ export const Decks = () => {
     setInputValue(value)
   }
 
+  const onClickCreatePack = () => {
+    createDeck({ name: createPack })
+    setCreatePack('')
+  }
+
   const { data, error, isLoading } = useGetDecksQuery({ currentPage, name })
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
+  const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
 
   const DeletePack = () => {
     deletePack({ id: 'clkyc7rlm0020yb2qwnggodrn' })
+  }
+
+  const UpDatePack = () => {
+    updatePack({ id: 'clr1lzlqb0480zk2vrn1kvjik', name: 'лфмасутра' })
+  }
+
+  const onChangeNamePack = (value: string) => {
+    setCreatePack(value)
   }
 
   if (isLoading) {
@@ -58,13 +76,21 @@ export const Decks = () => {
       <div className={s.container}>
         <div className={s.caption}>
           <Typography variant={'large'}>Packs list</Typography>
-          <Button
-            disabled={deckCreationStatus.isLoading}
-            onClick={() => createDeck({ name: 'abraham' })}
-            variant={'primary'}
-          >
+          <Modals buttonTitle={'Add New Pack'}>
             <Typography variant={'subtitle2'}>Add New Pack</Typography>
-          </Button>
+            <Input onValueChange={onChangeNamePack} />
+            <Checkbox label={'Private pack'} />
+            <Button onClick={() => onChangeNamePack('')} variant={'secondary'}>
+              Cancel
+            </Button>
+            <Button
+              disabled={deckCreationStatus.isLoading}
+              onClick={onClickCreatePack}
+              variant={'primary'}
+            >
+              Add New Pack
+            </Button>
+          </Modals>
         </div>
         <div className={s.sectionSearch}>
           <Input
@@ -117,8 +143,8 @@ export const Decks = () => {
                     </Button>
                     <Button
                       className={s.button}
-                      disabled={deckDeleteStatus.isLoading}
-                      onClick={DeletePack}
+                      disabled={deckUpdateStatus.isLoading}
+                      onClick={UpDatePack}
                       variant={'secondary'}
                     >
                       <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
