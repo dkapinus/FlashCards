@@ -1,4 +1,4 @@
-import { ComponentProps, useState } from 'react'
+import { ComponentProps, ReactNode, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
@@ -8,20 +8,36 @@ import { Cross2Icon } from '@radix-ui/react-icons'
 import s from '@/components/ui/modals/Modals.module.scss'
 
 export type ModalsProps = {
-  buttonTitle: string
+  buttonIcon?: ReactNode
+  buttonTitle?: string
+  className?: string
   defaultOpen?: boolean
+  disabled?: boolean
   modalTitle?: string
   showCloseButton?: boolean
+  variant?: 'link' | 'secondary' | 'tertiary'
 } & ComponentProps<'div'>
 export const Modals = (props: ModalsProps) => {
-  const { buttonTitle, children, defaultOpen, modalTitle, showCloseButton } = props
+  const {
+    buttonIcon,
+    buttonTitle,
+    children,
+    className,
+    defaultOpen,
+    disabled,
+    modalTitle,
+    showCloseButton,
+    variant = 'primary',
+  } = props
 
   const [open, setOpen] = useState(defaultOpen ? true : false)
 
   return (
     <Dialog.Root onOpenChange={setOpen} open={open}>
       <Dialog.Trigger asChild>
-        <Button variant={'primary'}>{buttonTitle}</Button>
+        <Button className={className} disabled={disabled} variant={variant}>
+          {buttonTitle || buttonIcon}
+        </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={s.dialogOverlay} />

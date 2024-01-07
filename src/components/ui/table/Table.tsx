@@ -14,7 +14,7 @@ import { z } from 'zod'
 import t from './Table.module.scss'
 
 const loginSchema = z.object({
-  rememberMe: z.boolean().default(false),
+  checked: z.boolean().default(false),
 })
 
 type FormValues = z.infer<typeof loginSchema>
@@ -35,13 +35,13 @@ export const Table = <T extends ElementType = 'div'>(
 
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
-      rememberMe: false,
+      checked: false,
     },
     resolver: zodResolver(loginSchema),
   })
 
   const onSubmit = (data: FormValues) => {
-    checked(data)
+    // checked(data)
     console.log(data)
   }
 
@@ -50,13 +50,13 @@ export const Table = <T extends ElementType = 'div'>(
       <div className={t.Container} {...rest}>
         <BackgroundWText text={text} />
         <div className={t.ComponentsClass}>{text}</div>
-        <Controlled_Checkbox control={control} label={text} name={'rememberMe'} />
-        <TextControlIcons edit={edit} name={text} remove={remove} />
-        <ControlIcons edit={edit} learn={learn} remove={remove} />
+        <Controlled_Checkbox control={control} label={text} name={'checked'} />
+        <TextControlIcons text={text || ''} />
+        <ControlIcons />
         <Rating />
         <ScreenCard text={text} />
         <div className={t.ComponentsClass}>
-          <Controlled_Checkbox control={control} name={'rememberMe'} />
+          <Controlled_Checkbox control={control} name={'checked'} />
         </div>
         <Corner name={text} />
       </div>
