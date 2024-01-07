@@ -1,5 +1,4 @@
-import { ComponentProps, ReactNode, useState } from 'react'
-import { ComponentProps, useEffect, useState } from 'react'
+import { ComponentProps, ReactNode, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
@@ -13,8 +12,8 @@ export type ModalsProps = {
   buttonTitle?: string
   className?: string
   defaultOpen?: boolean
-  isModalOpen?: boolean
   disabled?: boolean
+  isModalOpen?: boolean
   modalTitle?: string
   openState?: boolean
   setOpenCallback?: () => void
@@ -23,26 +22,19 @@ export type ModalsProps = {
 } & ComponentProps<'div'>
 export const Modals = (props: ModalsProps) => {
   const {
-    buttonTitle,
-    children,
-    defaultOpen,
-    isModalOpen,
-    modalTitle,
-    setOpenCallback,
-    showCloseButton,
-  } = props
-  const [open, setOpen] = useState(isModalOpen)
-  const {
     buttonIcon,
     buttonTitle,
     children,
     className,
     defaultOpen,
     disabled,
+    isModalOpen,
     modalTitle,
+    setOpenCallback,
     showCloseButton,
     variant = 'primary',
   } = props
+  const [open, setOpen] = useState(isModalOpen)
 
   useEffect(() => {
     setOpen(isModalOpen)
