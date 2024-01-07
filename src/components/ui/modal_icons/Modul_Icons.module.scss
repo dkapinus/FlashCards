@@ -1,0 +1,16 @@
+.ButtonWithIcons {
+  width: 16px;
+  height: 16px;
+  padding: 5px;
+
+  background-color: rgb(0 0 0 / 0%);
+  box-shadow: none;
+
+  :hover {
+    background-color: var(--color-dark-100);
+  }
+}
+
+.ButtonWithIcons:hover {
+  background-color: var(--color-dark-100);
+}

@@ -19,12 +19,3 @@ export const Layout = forwardRef<ElementRef<'div'>, LayoutProps>(
     )
   }
 )
-
-// export const Layout: React.FC<LayoutProps> = ({ children }) => {
-//   return (
-//     <div className={l.main}>
-//       <Header isLoginIn name={'User'} />
-//       {children}
-//     </div>
-//   )
-// }
