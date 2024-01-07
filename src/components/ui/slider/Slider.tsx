@@ -8,13 +8,14 @@ import s from './Slider.module.scss'
 export type RangeSliderProps<T extends ElementType = 'input'> = {
   as?: T
   propsValue: number[]
+  title?: string
   valueChange: (e: number[]) => void
 } & ComponentPropsWithoutRef<T>
 
 export const Slider = <T extends ElementType = 'input'>(
   props: RangeSliderProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof RangeSliderProps<T>>
 ) => {
-  const { max, propsValue, step, valueChange, ...rest } = props
+  const { max, propsValue, step, title, valueChange, ...rest } = props
   const [value, setValue] = useState<number[]>(propsValue)
   const onValueChange = (e: number[]) => {
     setValue(e)
@@ -22,7 +23,12 @@ export const Slider = <T extends ElementType = 'input'>(
   }
 
   return (
-    <div>
+    <div className={s.titleWrapper}>
+      {title && (
+        <Typography className={s.title} variant={'body2'}>
+          Number of cards
+        </Typography>
+      )}
       <div className={s.container}>
         <span>
           <Typography className={s.value} variant={'body1'}>
