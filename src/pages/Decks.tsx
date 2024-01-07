@@ -25,7 +25,7 @@ export const Decks = () => {
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
   const [createPack, setCreatePack] = useState('')
-
+  const [isModalOpen, setModalOpen] = useState(false)
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
       setCurrentPage(currentPage)
@@ -39,6 +39,7 @@ export const Decks = () => {
   const onClickCreatePack = () => {
     createDeck({ name: createPack })
     setCreatePack('')
+    setModalOpen(false)
   }
 
   const { data, error, isLoading } = useGetDecksQuery({ currentPage, name })
@@ -56,6 +57,13 @@ export const Decks = () => {
 
   const onChangeNamePack = (value: string) => {
     setCreatePack(value)
+  }
+  const cancelAddNewPack = () => {
+    setCreatePack('')
+    setModalOpen(false)
+  }
+  const handleOpenCallback = () => {
+    setModalOpen(!isModalOpen)
   }
 
   if (isLoading) {
@@ -76,20 +84,29 @@ export const Decks = () => {
       <div className={s.container}>
         <div className={s.caption}>
           <Typography variant={'large'}>Packs list</Typography>
-          <Modals buttonTitle={'Add New Pack'}>
-            <Typography variant={'subtitle2'}>Add New Pack</Typography>
-            <Input onValueChange={onChangeNamePack} />
-            <Checkbox label={'Private pack'} />
-            <Button onClick={() => onChangeNamePack('')} variant={'secondary'}>
-              Cancel
-            </Button>
-            <Button
-              disabled={deckCreationStatus.isLoading}
-              onClick={onClickCreatePack}
-              variant={'primary'}
-            >
-              Add New Pack
-            </Button>
+          <Modals
+            buttonTitle={'Add New Pack'}
+            isModalOpen={isModalOpen}
+            modalTitle={'Add New Pack'}
+            setOpenCallback={handleOpenCallback}
+            showCloseButton
+          >
+            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+            <div>
+              <Checkbox label={'Private pack'} />
+            </div>
+            <div>
+              <Button onClick={cancelAddNewPack} variant={'secondary'}>
+                Cancel
+              </Button>
+              <Button
+                disabled={deckCreationStatus.isLoading}
+                onClick={onClickCreatePack}
+                variant={'primary'}
+              >
+                Add New Pack
+              </Button>
+            </div>
           </Modals>
         </div>
         <div className={s.sectionSearch}>

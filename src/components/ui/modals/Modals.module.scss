@@ -3,17 +3,13 @@
 @import '@radix-ui/colors/mauve.css';
 @import '@radix-ui/colors/violet.css';
 
-/* reset */
-button,
-fieldset,
-input {
-  //all: unset;
-}
-
 .dialogOverlay {
   position: fixed;
   inset: 0;
-  background-color: var(--color-dark-300);
+
+  opacity: 0.8;
+  background-color: var(--color-dark-500);
+
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -73,5 +69,11 @@ input {
 }
 
 .dialogDescription {
-  margin: 10px;
+  margin: 20px 10px;
+}
+
+.dialogDescription > * + * {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
 }
