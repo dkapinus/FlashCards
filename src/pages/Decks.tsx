@@ -25,7 +25,9 @@ export const Decks = () => {
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
   const [createPack, setCreatePack] = useState('')
-  const [isModalOpen, setModalOpen] = useState(false)
+  const [minCardsCount, setMinCardsCount] = useState(0)
+  const [maxCardsCount, setMaxCardsCount] = useState(0)
+
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
       setCurrentPage(currentPage)
@@ -39,14 +41,22 @@ export const Decks = () => {
   const onClickCreatePack = () => {
     createDeck({ name: createPack })
     setCreatePack('')
-    setModalOpen(false)
   }
 
-  const { data, error, isLoading } = useGetDecksQuery({ currentPage, name })
+  const { data, error, isLoading } = useGetDecksQuery({
+    currentPage,
+    maxCardsCount,
+    minCardsCount,
+    name,
+  })
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
   const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
 
+  const filterCards = (e: number[]) => {
+    setMinCardsCount(e[0])
+    setMaxCardsCount(e[1])
+  }
   const DeletePack = () => {
     deletePack({ id: 'clkyc7rlm0020yb2qwnggodrn' })
   }
@@ -57,13 +67,6 @@ export const Decks = () => {
 
   const onChangeNamePack = (value: string) => {
     setCreatePack(value)
-  }
-  const cancelAddNewPack = () => {
-    setCreatePack('')
-    setModalOpen(false)
-  }
-  const handleOpenCallback = () => {
-    setModalOpen(!isModalOpen)
   }
 
   if (isLoading) {
@@ -84,29 +87,20 @@ export const Decks = () => {
       <div className={s.container}>
         <div className={s.caption}>
           <Typography variant={'large'}>Packs list</Typography>
-          <Modals
-            buttonTitle={'Add New Pack'}
-            isModalOpen={isModalOpen}
-            modalTitle={'Add New Pack'}
-            setOpenCallback={handleOpenCallback}
-            showCloseButton
-          >
-            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
-            <div>
-              <Checkbox label={'Private pack'} />
-            </div>
-            <div>
-              <Button onClick={cancelAddNewPack} variant={'secondary'}>
-                Cancel
-              </Button>
-              <Button
-                disabled={deckCreationStatus.isLoading}
-                onClick={onClickCreatePack}
-                variant={'primary'}
-              >
-                Add New Pack
-              </Button>
-            </div>
+          <Modals buttonTitle={'Add New Pack'}>
+            <Typography variant={'subtitle2'}>Add New Pack</Typography>
+            <Input onValueChange={onChangeNamePack} />
+            <Checkbox label={'Private pack'} />
+            <Button onClick={() => onChangeNamePack('')} variant={'secondary'}>
+              Cancel
+            </Button>
+            <Button
+              disabled={deckCreationStatus.isLoading}
+              onClick={onClickCreatePack}
+              variant={'primary'}
+            >
+              Add New Pack
+            </Button>
           </Modals>
         </div>
         <div className={s.sectionSearch}>
@@ -117,13 +111,23 @@ export const Decks = () => {
             type={'search'}
             value={name}
           />
-          <TabSwitcher
-            tabs={[
-              { title: 'My Cards', value: 'My Cards' },
-              { title: 'All Cards', value: 'All Cards' },
-            ]}
+          <div>
+            <Typography className={s.TabSwitcherTitle} variant={'body2'}>
+              Show packs cards
+            </Typography>
+            <TabSwitcher
+              tabs={[
+                { title: 'My Cards', value: 'My Cards' },
+                { title: 'All Cards', value: 'All Cards' },
+              ]}
+            />
+          </div>
+          <Slider
+            max={data && data.maxCardsCount}
+            propsValue={[minCardsCount, data ? data.maxCardsCount : 100]}
+            title={'Number of cards'}
+            valueChange={filterCards}
           />
-          <Slider propsValue={[0, 10]} valueChange={() => ''} />
           <Button variant={'secondary'}>
             <>
               <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
