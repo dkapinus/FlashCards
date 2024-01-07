@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useState } from 'react'
+import { ComponentProps, ReactNode, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
@@ -13,7 +13,10 @@ export type ModalsProps = {
   className?: string
   defaultOpen?: boolean
   disabled?: boolean
+  isModalOpen?: boolean
   modalTitle?: string
+  openState?: boolean
+  setOpenCallback?: () => void
   showCloseButton?: boolean
   variant?: 'link' | 'secondary' | 'tertiary'
 } & ComponentProps<'div'>
@@ -25,15 +28,20 @@ export const Modals = (props: ModalsProps) => {
     className,
     defaultOpen,
     disabled,
+    isModalOpen,
     modalTitle,
+    setOpenCallback,
     showCloseButton,
     variant = 'primary',
   } = props
+  const [open, setOpen] = useState(isModalOpen)
 
-  const [open, setOpen] = useState(defaultOpen ? true : false)
+  useEffect(() => {
+    setOpen(isModalOpen)
+  }, [isModalOpen])
 
   return (
-    <Dialog.Root onOpenChange={setOpen} open={open}>
+    <Dialog.Root defaultOpen={defaultOpen} onOpenChange={setOpenCallback} open={open}>
       <Dialog.Trigger asChild>
         <Button className={className} disabled={disabled} variant={variant}>
           {buttonTitle || buttonIcon}
