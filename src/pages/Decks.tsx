@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -28,7 +29,11 @@ export const Decks = () => {
   const [minCardsCount, setMinCardsCount] = useState(0)
   const [maxCardsCount, setMaxCardsCount] = useState(0)
   const [isModalOpen, setModalOpen] = useState(false)
+  const [openCards, setOpenCards] = useState(false)
 
+  const onClickCards = () => {
+    setOpenCards(true)
+  }
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
       setCurrentPage(currentPage)
@@ -59,12 +64,12 @@ export const Decks = () => {
     setMinCardsCount(e[0])
     setMaxCardsCount(e[1])
   }
-  const DeletePack = () => {
-    deletePack({ id: 'clkyc7rlm0020yb2qwnggodrn' })
+  const DeletePack = (id: string) => {
+    deletePack({ id: id })
   }
 
-  const UpDatePack = () => {
-    updatePack({ id: 'clr1lzlqb0480zk2vrn1kvjik', name: 'лфмасутра' })
+  const UpDatePack = (id: string) => {
+    updatePack({ id: id, name: 'масутра' })
   }
 
   const onChangeNamePack = (value: string) => {
@@ -167,7 +172,10 @@ export const Decks = () => {
             {data?.items?.slice(0, +view).map(deck => {
               return (
                 <Tables.Row key={deck?.id}>
-                  <Tables.Cell>{deck?.name}</Tables.Cell>
+                  <Tables.Cell className={s.name} onClick={onClickCards}>
+                    {deck?.name}
+                    {openCards && <Navigate to={'/cards/' + deck.id} />}
+                  </Tables.Cell>
                   <Tables.Cell>{deck?.cardsCount}</Tables.Cell>
                   <Tables.Cell>{new Date(deck?.updated).toLocaleDateString()}</Tables.Cell>
                   <Tables.Cell>{deck?.author.name}</Tables.Cell>
@@ -175,7 +183,7 @@ export const Decks = () => {
                     <Button
                       className={s.button}
                       disabled={deckDeleteStatus.isLoading}
-                      onClick={DeletePack}
+                      onClick={() => DeletePack(deck.id)}
                       variant={'secondary'}
                     >
                       <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
@@ -183,7 +191,7 @@ export const Decks = () => {
                     <Button
                       className={s.button}
                       disabled={deckUpdateStatus.isLoading}
-                      onClick={UpDatePack}
+                      onClick={() => UpDatePack(deck.id)}
                       variant={'secondary'}
                     >
                       <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
@@ -200,7 +208,10 @@ export const Decks = () => {
           onChangePage={setPage}
           onValueChange={setView}
           options={[
-            { title: '1', value: '1' },
+            {
+              title: '1',
+              value: '1',
+            },
             { title: '2', value: '2' },
             { title: '3', value: '3' },
             { title: '5', value: '5' },

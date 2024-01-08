@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import Decks from '@/pages/Decks'
+import Cards from '@/pages/cards/Cards'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -19,6 +20,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <Decks />,
     path: '/',
+  },
+  {
+    element: <Cards />,
+    path: '/cards/:userId?',
   },
 ]
 
