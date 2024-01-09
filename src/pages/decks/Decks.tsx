@@ -25,7 +25,7 @@ export const Decks = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
-  const [createPack, setCreatePack] = useState('')
+  const [packName, setPackName] = useState('')
   const [minCardsCount, setMinCardsCount] = useState(0)
   const [maxCardsCount, setMaxCardsCount] = useState(0)
 
@@ -48,8 +48,8 @@ export const Decks = () => {
   }
 
   const onClickCreatePack = () => {
-    createDeck({ name: createPack })
-    setCreatePack('')
+    createDeck({ name: packName })
+    setPackName('')
   }
 
   const { data, error, isLoading } = useGetDecksQuery({
@@ -71,14 +71,14 @@ export const Decks = () => {
   }
 
   const UpDatePack = (id: string) => {
-    updatePack({ id: id, name: 'Rome' })
+    updatePack({ id: id, name: packName })
   }
 
   const onChangeNamePack = (value: string) => {
-    setCreatePack(value)
+    setPackName(value)
   }
   const cancelDecksModal = () => {
-    setCreatePack('')
+    setPackName('')
   }
 
   if (isLoading) {
@@ -175,6 +175,13 @@ export const Decks = () => {
                   <Tables.Cell>{new Date(deck?.updated).toLocaleDateString()}</Tables.Cell>
                   <Tables.Cell>{deck?.author.name}</Tables.Cell>
                   <Tables.Cell>
+                    <Button
+                      className={s.button}
+                      onClick={() => onClickLearn(deck.id)}
+                      variant={'secondary'}
+                    >
+                      <Icon height={'16'} iconId={'learn'} viewBox={'0 0 16 16'} width={'16'} />
+                    </Button>
                     <Modals
                       buttonIcon={
                         <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
@@ -185,7 +192,7 @@ export const Decks = () => {
                         </Button>,
                         <Button
                           disabled={deckDeleteStatus.isLoading}
-                          onClick={DeletePack}
+                          onClick={() => DeletePack(deck.id)}
                           variant={'primary'}
                         >
                           Delete Pack
@@ -209,7 +216,7 @@ export const Decks = () => {
                         </Button>,
                         <Button
                           disabled={deckUpdateStatus.isLoading}
-                          onClick={UpDatePack}
+                          onClick={() => UpDatePack(deck.id)}
                           variant={'primary'}
                         >
                           Save Changes
