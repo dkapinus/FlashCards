@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useEffect, useState } from 'react'
+import { ComponentProps, ReactNode } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
@@ -10,13 +10,12 @@ import s from '@/components/ui/modals/Modals.module.scss'
 export type ModalsProps = {
   buttonIcon?: ReactNode
   buttonTitle?: string
+  buttonsInFooter?: any[]
   className?: string
   defaultOpen?: boolean
   disabled?: boolean
-  isModalOpen?: boolean
   modalTitle?: string
   openState?: boolean
-  setOpenCallback?: () => void
   showCloseButton?: boolean
   variant?: 'link' | 'secondary' | 'tertiary'
 } & ComponentProps<'div'>
@@ -24,24 +23,18 @@ export const Modals = (props: ModalsProps) => {
   const {
     buttonIcon,
     buttonTitle,
+    buttonsInFooter,
     children,
     className,
     defaultOpen,
     disabled,
-    isModalOpen,
     modalTitle,
-    setOpenCallback,
     showCloseButton,
     variant = 'primary',
   } = props
-  const [open, setOpen] = useState(isModalOpen)
-
-  useEffect(() => {
-    setOpen(isModalOpen)
-  }, [isModalOpen])
 
   return (
-    <Dialog.Root defaultOpen={defaultOpen} onOpenChange={setOpenCallback} open={open}>
+    <Dialog.Root defaultOpen={defaultOpen}>
       <Dialog.Trigger asChild>
         <Button className={className} disabled={disabled} variant={variant}>
           {buttonTitle || buttonIcon}
@@ -62,7 +55,12 @@ export const Modals = (props: ModalsProps) => {
               )}
             </Dialog.Title>
           )}
-          <Dialog.Description className={s.dialogDescription}>{children}</Dialog.Description>
+          <Dialog.Description className={s.dialogDescription}>
+            {children}
+            <Dialog.Close className={s.buttonsInFooter}>
+              {buttonsInFooter?.map((button, index) => <div key={index}>{button}</div>)}
+            </Dialog.Close>
+          </Dialog.Description>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

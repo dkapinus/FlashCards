@@ -27,7 +27,6 @@ export const Decks = () => {
   const [createPack, setCreatePack] = useState('')
   const [minCardsCount, setMinCardsCount] = useState(0)
   const [maxCardsCount, setMaxCardsCount] = useState(0)
-  const [isModalOpen, setModalOpen] = useState(false)
 
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
@@ -42,7 +41,6 @@ export const Decks = () => {
   const onClickCreatePack = () => {
     createDeck({ name: createPack })
     setCreatePack('')
-    setModalOpen(false)
   }
 
   const { data, error, isLoading } = useGetDecksQuery({
@@ -60,22 +58,18 @@ export const Decks = () => {
     setMaxCardsCount(e[1])
   }
   const DeletePack = () => {
-    deletePack({ id: 'clkyc7rlm0020yb2qwnggodrn' })
+    deletePack({ id: 'clr5e3t0g063wzk2vo8meoog1' })
   }
 
   const UpDatePack = () => {
-    updatePack({ id: 'clr1lzlqb0480zk2vrn1kvjik', name: 'лфмасутра' })
+    updatePack({ id: 'clr5e3t0g063wzk2vo8meoog1', name: createPack })
   }
 
   const onChangeNamePack = (value: string) => {
     setCreatePack(value)
   }
-  const cancelAddNewPack = () => {
+  const cancelDecksModal = () => {
     setCreatePack('')
-    setModalOpen(false)
-  }
-  const handleOpenCallback = () => {
-    setModalOpen(!isModalOpen)
   }
 
   if (isLoading) {
@@ -98,26 +92,24 @@ export const Decks = () => {
           <Typography variant={'large'}>Packs list</Typography>
           <Modals
             buttonTitle={'Add New Pack'}
-            isModalOpen={isModalOpen}
-            modalTitle={'Add New Pack'}
-            setOpenCallback={handleOpenCallback}
-            showCloseButton
-          >
-            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
-            <div>
-              <Checkbox label={'Private pack'} />
-            </div>
-            <div>
-              <Button onClick={cancelAddNewPack} variant={'secondary'}>
+            buttonsInFooter={[
+              <Button onClick={cancelDecksModal} variant={'secondary'}>
                 Cancel
-              </Button>
+              </Button>,
               <Button
                 disabled={deckCreationStatus.isLoading}
                 onClick={onClickCreatePack}
                 variant={'primary'}
               >
                 Add New Pack
-              </Button>
+              </Button>,
+            ]}
+            modalTitle={'Add New Pack'}
+            showCloseButton
+          >
+            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+            <div>
+              <Checkbox label={'Private pack'} />
             </div>
           </Modals>
         </div>
@@ -172,22 +164,57 @@ export const Decks = () => {
                   <Tables.Cell>{new Date(deck?.updated).toLocaleDateString()}</Tables.Cell>
                   <Tables.Cell>{deck?.author.name}</Tables.Cell>
                   <Tables.Cell>
-                    <Button
+                    <Modals
+                      buttonIcon={
+                        <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
+                      }
+                      buttonsInFooter={[
+                        <Button onClick={cancelDecksModal} variant={'secondary'}>
+                          Cancel
+                        </Button>,
+                        <Button
+                          disabled={deckDeleteStatus.isLoading}
+                          onClick={DeletePack}
+                          variant={'primary'}
+                        >
+                          Delete Pack
+                        </Button>,
+                      ]}
                       className={s.button}
                       disabled={deckDeleteStatus.isLoading}
-                      onClick={DeletePack}
+                      modalTitle={'Delete Pack'}
+                      showCloseButton
                       variant={'secondary'}
                     >
-                      <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
-                    </Button>
-                    <Button
+                      <div>Do you really want to remove Pack Name? All cards will be deleted.</div>
+                    </Modals>
+                    <Modals
+                      buttonIcon={
+                        <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
+                      }
+                      buttonsInFooter={[
+                        <Button onClick={cancelDecksModal} variant={'secondary'}>
+                          Cancel
+                        </Button>,
+                        <Button
+                          disabled={deckUpdateStatus.isLoading}
+                          onClick={UpDatePack}
+                          variant={'primary'}
+                        >
+                          Save Changes
+                        </Button>,
+                      ]}
                       className={s.button}
                       disabled={deckUpdateStatus.isLoading}
-                      onClick={UpDatePack}
+                      modalTitle={'Edit Pack'}
+                      showCloseButton
                       variant={'secondary'}
                     >
-                      <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
-                    </Button>
+                      <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+                      <div>
+                        <Checkbox label={'Private pack'} />
+                      </div>
+                    </Modals>
                   </Tables.Cell>
                 </Tables.Row>
               )
