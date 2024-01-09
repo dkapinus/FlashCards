@@ -31,3 +31,16 @@ export type CreateCardArg = {
   id?: string
   question?: string
 }
+
+export type DeleteCardsArg = {
+  id: string
+}
+
+export type UpdateCardsArgs = {
+  answer?: string
+  answerImg?: string
+  answerVideo?: string
+  question?: string
+  questionImg?: string
+  questionVideo?: string
+}

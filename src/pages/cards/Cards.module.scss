@@ -10,3 +10,15 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.modals {
+  height: 36px;
+  background-color: rgb(0 0 0/0%);
+  box-shadow: none;
+}
+
+.infoText {
+  margin-top: 4rem;
+  color: var(--color-dark-100);
+  text-align: center;
+}
