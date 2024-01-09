@@ -25,10 +25,9 @@ export const Decks = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
-  const [createPack, setCreatePack] = useState('')
+  const [packName, setPackName] = useState('')
   const [minCardsCount, setMinCardsCount] = useState(0)
   const [maxCardsCount, setMaxCardsCount] = useState(0)
-  const [isModalOpen, setModalOpen] = useState(false)
 
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
@@ -49,9 +48,8 @@ export const Decks = () => {
   }
 
   const onClickCreatePack = () => {
-    createDeck({ name: createPack })
-    setCreatePack('')
-    setModalOpen(false)
+    createDeck({ name: packName })
+    setPackName('')
   }
 
   const { data, error, isLoading } = useGetDecksQuery({
@@ -73,18 +71,14 @@ export const Decks = () => {
   }
 
   const UpDatePack = (id: string) => {
-    updatePack({ id: id, name: 'Rome' })
+    updatePack({ id: id, name: packName })
   }
 
   const onChangeNamePack = (value: string) => {
-    setCreatePack(value)
+    setPackName(value)
   }
-  const cancelAddNewPack = () => {
-    setCreatePack('')
-    setModalOpen(false)
-  }
-  const handleOpenCallback = () => {
-    setModalOpen(!isModalOpen)
+  const cancelDecksModal = () => {
+    setPackName('')
   }
 
   if (isLoading) {
@@ -107,26 +101,24 @@ export const Decks = () => {
           <Typography variant={'large'}>Packs list</Typography>
           <Modals
             buttonTitle={'Add New Pack'}
-            isModalOpen={isModalOpen}
-            modalTitle={'Add New Pack'}
-            setOpenCallback={handleOpenCallback}
-            showCloseButton
-          >
-            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
-            <div>
-              <Checkbox label={'Private pack'} />
-            </div>
-            <div>
-              <Button onClick={cancelAddNewPack} variant={'secondary'}>
+            buttonsInFooter={[
+              <Button onClick={cancelDecksModal} variant={'secondary'}>
                 Cancel
-              </Button>
+              </Button>,
               <Button
                 disabled={deckCreationStatus.isLoading}
                 onClick={onClickCreatePack}
                 variant={'primary'}
               >
                 Add New Pack
-              </Button>
+              </Button>,
+            ]}
+            modalTitle={'Add New Pack'}
+            showCloseButton
+          >
+            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+            <div>
+              <Checkbox label={'Private pack'} />
             </div>
           </Modals>
         </div>
@@ -190,22 +182,57 @@ export const Decks = () => {
                     >
                       <Icon height={'16'} iconId={'learn'} viewBox={'0 0 16 16'} width={'16'} />
                     </Button>
-                    <Button
+                    <Modals
+                      buttonIcon={
+                        <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
+                      }
+                      buttonsInFooter={[
+                        <Button onClick={cancelDecksModal} variant={'secondary'}>
+                          Cancel
+                        </Button>,
+                        <Button
+                          disabled={deckDeleteStatus.isLoading}
+                          onClick={() => DeletePack(deck.id)}
+                          variant={'primary'}
+                        >
+                          Delete Pack
+                        </Button>,
+                      ]}
                       className={s.button}
                       disabled={deckDeleteStatus.isLoading}
-                      onClick={() => DeletePack(deck.id)}
+                      modalTitle={'Delete Pack'}
+                      showCloseButton
                       variant={'secondary'}
                     >
-                      <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
-                    </Button>
-                    <Button
+                      <div>Do you really want to remove Pack Name? All cards will be deleted.</div>
+                    </Modals>
+                    <Modals
+                      buttonIcon={
+                        <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
+                      }
+                      buttonsInFooter={[
+                        <Button onClick={cancelDecksModal} variant={'secondary'}>
+                          Cancel
+                        </Button>,
+                        <Button
+                          disabled={deckUpdateStatus.isLoading}
+                          onClick={() => UpDatePack(deck.id)}
+                          variant={'primary'}
+                        >
+                          Save Changes
+                        </Button>,
+                      ]}
                       className={s.button}
                       disabled={deckUpdateStatus.isLoading}
-                      onClick={() => UpDatePack(deck.id)}
+                      modalTitle={'Edit Pack'}
+                      showCloseButton
                       variant={'secondary'}
                     >
-                      <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
-                    </Button>
+                      <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+                      <div>
+                        <Checkbox label={'Private pack'} />
+                      </div>
+                    </Modals>
                   </Tables.Cell>
                 </Tables.Row>
               )
@@ -218,10 +245,7 @@ export const Decks = () => {
           onChangePage={setPage}
           onValueChange={setView}
           options={[
-            {
-              title: '1',
-              value: '1',
-            },
+            { title: '1', value: '1' },
             { title: '2', value: '2' },
             { title: '3', value: '3' },
             { title: '5', value: '5' },
