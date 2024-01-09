@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -17,7 +17,7 @@ import {
   useDeleteDecksMutation,
   useGetDecksQuery,
   useUpdateDecksMutation,
-} from '@/services/Decks.service'
+} from '@/services/decks_Api/Decks.service'
 
 import s from './Decks.module.scss'
 
@@ -29,10 +29,14 @@ export const Decks = () => {
   const [minCardsCount, setMinCardsCount] = useState(0)
   const [maxCardsCount, setMaxCardsCount] = useState(0)
   const [isModalOpen, setModalOpen] = useState(false)
-  const [openCards, setOpenCards] = useState(false)
 
-  const onClickCards = () => {
-    setOpenCards(true)
+  const navigate = useNavigate()
+  const onClickCards = (deckId: string) => {
+    navigate('/cards/' + deckId)
+  }
+
+  const onClickLearn = (deckId: string) => {
+    navigate('/learnCards/' + deckId)
   }
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
@@ -69,7 +73,7 @@ export const Decks = () => {
   }
 
   const UpDatePack = (id: string) => {
-    updatePack({ id: id, name: 'масутра' })
+    updatePack({ id: id, name: 'Rome' })
   }
 
   const onChangeNamePack = (value: string) => {
@@ -172,14 +176,20 @@ export const Decks = () => {
             {data?.items?.slice(0, +view).map(deck => {
               return (
                 <Tables.Row key={deck?.id}>
-                  <Tables.Cell className={s.name} onClick={onClickCards}>
+                  <Tables.Cell className={s.name} onClick={() => onClickCards(deck.id)}>
                     {deck?.name}
-                    {openCards && <Navigate to={'/cards/' + deck.id} />}
                   </Tables.Cell>
                   <Tables.Cell>{deck?.cardsCount}</Tables.Cell>
                   <Tables.Cell>{new Date(deck?.updated).toLocaleDateString()}</Tables.Cell>
                   <Tables.Cell>{deck?.author.name}</Tables.Cell>
                   <Tables.Cell>
+                    <Button
+                      className={s.button}
+                      onClick={() => onClickLearn(deck.id)}
+                      variant={'secondary'}
+                    >
+                      <Icon height={'16'} iconId={'learn'} viewBox={'0 0 16 16'} width={'16'} />
+                    </Button>
                     <Button
                       className={s.button}
                       disabled={deckDeleteStatus.isLoading}
