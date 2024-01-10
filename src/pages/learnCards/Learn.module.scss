@@ -6,6 +6,33 @@
 }
 
 .img {
-  width: 400px;
+  width: 350px;
   height: 200px;
+  margin: 20px 36px;
+}
+
+.conditions {
+  color: var(--Dark-100, #808080);
+}
+
+.radioGroup {
+  margin: 20px 36px;
+}
+
+.question {
+  margin: 20px 36px;
+}
+
+.answer {
+  margin: 20px 36px;
+}
+
+.rate_yourself {
+  margin: 20px 36px;
+}
+
+.infoText {
+  margin-top: 4rem;
+  color: var(--color-dark-100);
+  text-align: center;
 }

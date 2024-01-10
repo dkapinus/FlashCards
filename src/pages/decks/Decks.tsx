@@ -26,9 +26,10 @@ export const Decks = () => {
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
   const [packName, setPackName] = useState('')
-  const [isPrivatePack, setIsPrivatePack] = useState(false)
-  const [minCardsCount, setMinCardsCount] = useState(0)
-  const [maxCardsCount, setMaxCardsCount] = useState(0)
+  const [isPrivatePack, setIsPrivatePack] = useState<boolean>(false)
+  const [minCardsCount, setMinCardsCount] = useState<number>(0)
+  const [maxCardsCount, setMaxCardsCount] = useState<number>(0)
+  const [authorId, setAuthorId] = useState('')
 
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
@@ -57,6 +58,7 @@ export const Decks = () => {
   }
 
   const { data, error, isLoading } = useGetDecksQuery({
+    authorId: authorId,
     currentPage,
     maxCardsCount,
     minCardsCount,
@@ -65,6 +67,10 @@ export const Decks = () => {
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
   const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
+
+  const onFilterMyCard = () => {
+    setAuthorId('f2be95b9-4d07-4751-a775-bd612fc9553a')
+  }
 
   const filterCards = (e: number[]) => {
     setMinCardsCount(e[0])
@@ -140,6 +146,7 @@ export const Decks = () => {
               Show packs cards
             </Typography>
             <TabSwitcher
+              onClick={onFilterMyCard}
               tabs={[
                 { title: 'My Cards', value: 'My Cards' },
                 { title: 'All Cards', value: 'All Cards' },
