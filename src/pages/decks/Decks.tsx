@@ -26,6 +26,7 @@ export const Decks = () => {
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
   const [packName, setPackName] = useState('')
+  const [isPrivatePack, setIsPrivatePack] = useState(false)
   const [minCardsCount, setMinCardsCount] = useState(0)
   const [maxCardsCount, setMaxCardsCount] = useState(0)
 
@@ -46,10 +47,13 @@ export const Decks = () => {
   const setInputSearch = (value: string) => {
     setInputValue(value)
   }
-
+  const onclickPrivatePack = () => {
+    setIsPrivatePack(!isPrivatePack)
+  }
   const onClickCreatePack = () => {
-    createDeck({ name: packName })
+    createDeck({ isPrivate: isPrivatePack, name: packName })
     setPackName('')
+    setIsPrivatePack(false)
   }
 
   const { data, error, isLoading } = useGetDecksQuery({
@@ -70,8 +74,9 @@ export const Decks = () => {
     deletePack({ id: id })
   }
 
-  const UpDatePack = (id: string) => {
-    updatePack({ id: id, name: packName })
+  const UpDatePack = (id: string, deckName: string) => {
+    updatePack({ id: id, isPrivate: isPrivatePack, name: packName === '' ? deckName : packName })
+    setIsPrivatePack(false)
   }
 
   const onChangeNamePack = (value: string) => {
@@ -118,7 +123,7 @@ export const Decks = () => {
           >
             <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
             <div>
-              <Checkbox label={'Private pack'} />
+              <Checkbox label={'Private pack'} onClick={onclickPrivatePack} />
             </div>
           </Modals>
         </div>
@@ -216,7 +221,7 @@ export const Decks = () => {
                         </Button>,
                         <Button
                           disabled={deckUpdateStatus.isLoading}
-                          onClick={() => UpDatePack(deck.id)}
+                          onClick={() => UpDatePack(deck.id, deck.name)}
                           variant={'primary'}
                         >
                           Save Changes
@@ -228,9 +233,17 @@ export const Decks = () => {
                       showCloseButton
                       variant={'secondary'}
                     >
-                      <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+                      <Input
+                        defaultValue={deck.name}
+                        label={'Name Pack'}
+                        onValueChange={onChangeNamePack}
+                      />
                       <div>
-                        <Checkbox label={'Private pack'} />
+                        <Checkbox
+                          defaultChecked={deck.isPrivate}
+                          label={'Private pack'}
+                          onCheckedChange={() => setIsPrivatePack(!deck.isPrivate)}
+                        />
                       </div>
                     </Modals>
                   </Tables.Cell>
