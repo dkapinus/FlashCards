@@ -68,8 +68,8 @@ export const Decks = () => {
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
   const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
 
-  const onFilterMyCard = () => {
-    setAuthorId('f2be95b9-4d07-4751-a775-bd612fc9553a')
+  const sortByAuthor = (value: string) => {
+    value === 'My Cards' ? setAuthorId('f2be95b9-4d07-4751-a775-bd612fc9553a') : setAuthorId('')
   }
 
   const filterCards = (e: number[]) => {
@@ -146,7 +146,8 @@ export const Decks = () => {
               Show packs cards
             </Typography>
             <TabSwitcher
-              onClick={onFilterMyCard}
+              defaultValue={'All Cards'}
+              onValueChange={value => sortByAuthor(value)}
               tabs={[
                 { title: 'My Cards', value: 'My Cards' },
                 { title: 'All Cards', value: 'All Cards' },
