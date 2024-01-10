@@ -16,6 +16,7 @@ import {
   useGetCardsQuery,
   useUpdateCardsMutation,
 } from '@/services/cards_Api/Cards.service'
+import { useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
 
 import s from './Cards.module.scss'
 
@@ -30,16 +31,17 @@ const Cards = () => {
 
   const params = useParams()
 
-  const userId = params.id
+  const deckId = params.id
 
-  const { data } = useGetCardsQuery({ currentPage, id: userId })
+  const { data } = useGetCardsQuery({ currentPage, id: deckId })
 
+  const { data: deck } = useGetDecksByIdQuery({ id: deckId })
+
+  const userId = deck?.userId
   const [createCard, cardCreationStatus] = useCreateCardsMutation({})
 
   const isEmpty = data && data.pagination.totalItems === 0
-  const isOwner = data?.items.filter(
-    owner => owner.userId === 'f2be95b9-4d07-4751-a775-bd612fc9553a'
-  )
+  const isOwner = userId === 'f2be95b9-4d07-4751-a775-bd612fc9553a'
 
   const DeleteCard = (id: string) => {
     deleteCard({ id: id })
@@ -73,7 +75,7 @@ const Cards = () => {
   }
 
   const onClickCreatePack = () => {
-    createCard({ answer: createPackAnswer, id: userId, question: createPackQuestion })
+    createCard({ answer: createPackAnswer, id: deckId, question: createPackQuestion })
   }
 
   return (

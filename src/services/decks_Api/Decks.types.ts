@@ -55,3 +55,17 @@ export interface Pagination {
   totalItems: number
   totalPages: number
 }
+
+export interface GetDeckById {
+  cardsCount: number
+  cover?: any
+  created: string
+  id: string
+  isBlocked?: any
+  isDeleted?: any
+  isPrivate: boolean
+  name: string
+  shots: number
+  updated: string
+  userId: string
+}
