@@ -9,10 +9,12 @@ import {
 import Cards from '@/pages/cards/Cards'
 import Decks from '@/pages/decks/Decks'
 import LearnCards from '@/pages/learnCards/LearnCards'
+import { SignInPage } from '@/pages/sign_in_page'
+import { useMeQuery } from '@/services/auth/auth.service'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <SignInPage />,
     path: '/login',
   },
 ]
@@ -33,7 +35,12 @@ const privateRoutes: RouteObject[] = [
 ]
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { isError, isLoading } = useMeQuery()
+
+  if (isLoading) {
+    return <div> Loading...</div>
+  }
+  const isAuthenticated = !isError
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }
@@ -47,5 +54,11 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const { isLoading } = useMeQuery()
+
+  if (isLoading) {
+    return <div> Loading...</div>
+  }
+
   return <RouterProvider router={router} />
 }
