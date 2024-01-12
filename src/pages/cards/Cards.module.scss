@@ -6,8 +6,17 @@
   margin: 24px 0;
 }
 
+.name_Pack {
+  margin-top: 30px;
+
+  img {
+    width: 170px;
+    height: 110px;
+  }
+}
+
 .button_link {
-  margin: 12px 112px;
+  margin: 24px -26px;
 }
 
 .button {
@@ -15,11 +24,11 @@
   justify-content: flex-end;
 }
 
-.button_empty_owner {
+.modal_empty_owner {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
+  margin: 36px;
 }
 
 .modals {
@@ -29,7 +38,6 @@
 }
 
 .infoText {
-  margin-top: 4rem;
   color: var(--color-dark-100);
   text-align: center;
 }
@@ -38,10 +46,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 70px;
 }
 
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 1.5rem;
+}
+
+.question {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: start;
+
+  img {
+    height: 50px;
+  }
+}
+
+.answer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: start;
+
+  img {
+    height: 50px;
+  }
 }

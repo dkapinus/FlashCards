@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/Icon'
@@ -20,10 +20,12 @@ import { useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
 
 import s from './Cards.module.scss'
 
+import deckPhoto from '../../assets/images/deckPhoto.svg'
+
 const Cards = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
-  const [name, setInputValue] = useState('')
+  const [questionSearch, setInputValue] = useState('')
   const [createPackAnswer, setCreatePackAnswer] = useState('')
   const [createPackQuestion, setCreatePackQuestion] = useState('')
   const [deleteCard, cardDeleteStatus] = useDeleteCardsMutation()
@@ -33,7 +35,9 @@ const Cards = () => {
 
   const deckId = params.id
 
-  const { data } = useGetCardsQuery({ currentPage, id: deckId })
+  const navigate = useNavigate()
+
+  const { data } = useGetCardsQuery({ currentPage, id: deckId, question: questionSearch })
 
   const { data: deck } = useGetDecksByIdQuery({ id: deckId })
 
@@ -78,21 +82,33 @@ const Cards = () => {
     createCard({ answer: createPackAnswer, id: deckId, question: createPackQuestion })
   }
 
+  const onClickLearnCards = () => {
+    navigate('/learnCards/' + deckId)
+  }
+
   return (
     <>
       <Layout isLoginIn>
         <div className={s.container}>
-          <Button as={'a'} href={'/'} variant={'link'}>
-            <Icon height={'24'} iconId={'arrow-back'} viewBox={'0 0 24 24'} width={'24'} />
-            Back to Packs List
-          </Button>
+          <div className={s.button_link}>
+            <Button as={'a'} href={'/'} variant={'link'}>
+              <Icon height={'24'} iconId={'arrow-back'} viewBox={'0 0 24 24'} width={'24'} />
+              Back to Packs List
+            </Button>
+          </div>
+          <div className={s.name_Pack}>
+            <Typography variant={'large'}>Name Pack: {deck?.name}</Typography>
+            <div> {deck?.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}</div>
+          </div>
           {isEmpty ? (
-            <div className={s.infoBlock}>
-              <Typography className={s.infoText} variant={'body2'}>
-                This pack is empty.{isOwner && ' Click add new card to fill this pack'}
-              </Typography>
+            <div>
+              <div className={s.infoBlock_button}>
+                <Typography className={s.infoText} variant={'body2'}>
+                  This pack is empty.{isOwner && ' Click add new card to fill this pack'}
+                </Typography>
+              </div>
               {isOwner && (
-                <div className={s.button_empty_owner}>
+                <div className={s.modal_empty_owner}>
                   <Modals
                     buttonTitle={'Add New Card'}
                     buttonsInFooter={[
@@ -121,35 +137,42 @@ const Cards = () => {
           ) : (
             <>
               <div className={s.button}>
-                <Modals
-                  buttonTitle={'Add New Card'}
-                  buttonsInFooter={[
-                    <Button onClick={cancelModals} variant={'secondary'}>
-                      Cancel
-                    </Button>,
-                    <Button
-                      disabled={cardCreationStatus.isLoading}
-                      onClick={onClickCreatePack}
-                      variant={'primary'}
-                    >
-                      Add New Card
-                    </Button>,
-                  ]}
-                  modalTitle={'Add New Card'}
-                  showCloseButton
-                >
-                  <Input label={'Question'} onValueChange={onChangeQuestion} />
-                  <div>
-                    <Input label={'Answer'} onValueChange={onChangeAnswer} />
-                  </div>
-                </Modals>
+                {isOwner ? (
+                  <Modals
+                    buttonTitle={'Add New Card'}
+                    buttonsInFooter={[
+                      <Button onClick={cancelModals} variant={'secondary'}>
+                        Cancel
+                      </Button>,
+                      <Button
+                        disabled={cardCreationStatus.isLoading}
+                        onClick={onClickCreatePack}
+                        variant={'primary'}
+                      >
+                        Add New Card
+                      </Button>,
+                    ]}
+                    modalTitle={'Add New Card'}
+                    showCloseButton
+                  >
+                    <Input label={'Question'} onValueChange={onChangeQuestion} />
+                    <div>
+                      <Input label={'Answer'} onValueChange={onChangeAnswer} />
+                    </div>
+                  </Modals>
+                ) : (
+                  <Button onClick={onClickLearnCards} variant={'primary'}>
+                    Learn Cards
+                  </Button>
+                )}
               </div>
               <div>
                 <Input
                   className={s.input}
                   onValueChange={setInputSearch}
+                  placeholder={'search question'}
                   type={'search'}
-                  value={name}
+                  value={questionSearch}
                 />
               </div>
               <Tables.Root>
@@ -167,8 +190,18 @@ const Cards = () => {
                     return (
                       <>
                         <Tables.Row key={card.id}>
-                          <Tables.Cell>{card?.question}</Tables.Cell>
-                          <Tables.Cell>{card?.answer}</Tables.Cell>
+                          <Tables.Cell>
+                            <div className={s.question}>
+                              {card?.question}
+                              <img src={card?.questionImg} />
+                            </div>
+                          </Tables.Cell>
+                          <Tables.Cell>
+                            <div className={s.answer}>
+                              {card?.answer}
+                              <img src={card?.answerImg} />
+                            </div>
+                          </Tables.Cell>
                           <Tables.Cell>{new Date(card?.updated).toLocaleDateString()}</Tables.Cell>
                           <Tables.Cell>{<Rating />}</Tables.Cell>
                           <Tables.Cell>
@@ -231,11 +264,14 @@ const Cards = () => {
                                 showCloseButton
                                 variant={'secondary'}
                               >
-                                <Input
-                                  defaultValue={card.question}
-                                  label={'Question'}
-                                  onValueChange={onChangeQuestion}
-                                />
+                                <div>
+                                  <Input
+                                    defaultValue={card.question}
+                                    label={'Question'}
+                                    onValueChange={onChangeQuestion}
+                                  />
+                                </div>
+
                                 <div>
                                   <Input
                                     defaultValue={card.answer}

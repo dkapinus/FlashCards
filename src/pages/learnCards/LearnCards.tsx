@@ -12,6 +12,8 @@ import { useGetLearnCardsQuery } from '@/services/learn_Api/LearnCards.service'
 
 import s from './Learn.module.scss'
 
+import deckPhoto from '../../assets/images/deckPhoto.svg'
+
 const LearnCards = () => {
   const [openAnswer, setOpenAnswer] = useState(false)
 
@@ -51,6 +53,9 @@ const LearnCards = () => {
             <Typography className={s.name} variant={'large'}>
               Learn "{nameDeck}"
             </Typography>
+            <div className={s.coverPack}>
+              {deck?.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}
+            </div>
             <Typography className={s.question} variant={'subtitle1'}>
               Question: {data?.question}
             </Typography>

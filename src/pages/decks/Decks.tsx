@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
@@ -21,6 +21,8 @@ import {
 
 import s from './Decks.module.scss'
 
+import deckPhoto from '../../assets/images/deckPhoto.svg'
+
 export const Decks = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
@@ -30,6 +32,9 @@ export const Decks = () => {
   const [minCardsCount, setMinCardsCount] = useState<number>(0)
   const [maxCardsCount, setMaxCardsCount] = useState<number>(0)
   const [authorId, setAuthorId] = useState('')
+  const [photo, setPhoto] = useState<File>()
+
+  const dataString = JSON.stringify(photo)
 
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
@@ -52,7 +57,18 @@ export const Decks = () => {
     setIsPrivatePack(!isPrivatePack)
   }
   const onClickCreatePack = () => {
-    createDeck({ isPrivate: isPrivatePack, name: packName })
+    const formData = new FormData()
+
+    if (photo) {
+      formData.append('cover', photo)
+    }
+    if (isPrivatePack) {
+      formData.append('isPrivate', String(isPrivatePack))
+    }
+
+    formData.append('name', packName)
+
+    createDeck(formData)
     setPackName('')
     setIsPrivatePack(false)
   }
@@ -75,6 +91,12 @@ export const Decks = () => {
   const filterCards = (e: number[]) => {
     setMinCardsCount(e[0])
     setMaxCardsCount(e[1])
+  }
+
+  const onUploadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0]
+
+    setPhoto(file)
   }
   const DeletePack = (id: string) => {
     deletePack({ id: id })
@@ -127,7 +149,15 @@ export const Decks = () => {
             modalTitle={'Add New Pack'}
             showCloseButton
           >
-            <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+            <div>
+              {' '}
+              {dataString ? <img src={dataString} /> : <img src={deckPhoto} />}
+              <Input onChange={onUploadPhoto} type={'file'} />
+            </div>
+            <div>
+              <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
+            </div>
+
             <div>
               <Checkbox label={'Private pack'} onClick={onclickPrivatePack} />
             </div>
@@ -181,8 +211,11 @@ export const Decks = () => {
             {data?.items?.slice(0, +view).map(deck => {
               return (
                 <Tables.Row key={deck?.id}>
-                  <Tables.Cell className={s.name} onClick={() => onClickCards(deck.id)}>
-                    {deck?.name}
+                  <Tables.Cell onClick={() => onClickCards(deck.id)}>
+                    <div className={s.name}>
+                      {deck.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}
+                      <Typography variant={'body1'}> {deck?.name}</Typography>
+                    </div>
                   </Tables.Cell>
                   <Tables.Cell>{deck?.cardsCount}</Tables.Cell>
                   <Tables.Cell>{new Date(deck?.updated).toLocaleDateString()}</Tables.Cell>
@@ -241,11 +274,17 @@ export const Decks = () => {
                       showCloseButton
                       variant={'secondary'}
                     >
-                      <Input
-                        defaultValue={deck.name}
-                        label={'Name Pack'}
-                        onValueChange={onChangeNamePack}
-                      />
+                      <div className={s.cover}>
+                        <img src={deckPhoto} />
+                      </div>
+                      <div>
+                        <Input
+                          defaultValue={deck.name}
+                          label={'Name Pack'}
+                          onValueChange={onChangeNamePack}
+                        />
+                      </div>
+
                       <div>
                         <Checkbox
                           defaultChecked={deck.isPrivate}

@@ -16,6 +16,10 @@ const decksService = baseApi.injectEndpoints({
         query: arg => {
           return {
             body: arg,
+            formData: true,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
             method: 'POST',
             url: `v1/decks`,
           }
