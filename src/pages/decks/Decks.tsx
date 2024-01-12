@@ -147,7 +147,7 @@ export const Decks = () => {
             </Typography>
             <TabSwitcher
               defaultValue={'All Cards'}
-              onValueChange={value => sortByAuthor(value)}
+              onValueChange={sortByAuthor}
               tabs={[
                 { title: 'My Cards', value: 'My Cards' },
                 { title: 'All Cards', value: 'All Cards' },
