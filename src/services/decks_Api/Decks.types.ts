@@ -14,18 +14,14 @@ export type GetDecksArgs = {
   orderBy?: string
 }
 
-export type CreateDecksArg = {
-  cover?: string
-  isPrivate?: boolean
-  name: string
-}
+export type CreateDecksArg = FormData
 
 export type DeleteDecksArg = {
   id: string
 }
 
 export type UpdateDeckArg = {
-  cover?: string
+  cover?: FormData
   isPrivate?: boolean
   name: string
 }
@@ -54,4 +50,18 @@ export interface Pagination {
   itemsPerPage: number
   totalItems: number
   totalPages: number
+}
+
+export interface GetDeckById {
+  cardsCount: number
+  cover?: any
+  created: string
+  id: string
+  isBlocked?: any
+  isDeleted?: any
+  isPrivate: boolean
+  name: string
+  shots: number
+  updated: string
+  userId: string
 }

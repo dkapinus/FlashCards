@@ -2,6 +2,7 @@ import { baseApi } from '@/services/base_Api/Base-Api'
 import {
   CreateDecksArg,
   DeleteDecksArg,
+  GetDeckById,
   GetDecksArgs,
   GetDecksResponse,
   UpdateDeckArg,
@@ -15,6 +16,10 @@ const decksService = baseApi.injectEndpoints({
         query: arg => {
           return {
             body: arg,
+            formData: true,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
             method: 'POST',
             url: `v1/decks`,
           }
@@ -35,6 +40,14 @@ const decksService = baseApi.injectEndpoints({
           return {
             params: args ?? {},
             url: `v1/decks`,
+          }
+        },
+      }),
+      getDecksById: builder.query<GetDeckById, any>({
+        providesTags: ['Decks'],
+        query: ({ id }) => {
+          return {
+            url: `v1/decks/${id}`,
           }
         },
       }),
@@ -72,6 +85,7 @@ const decksService = baseApi.injectEndpoints({
 export const {
   useCreateDecksMutation,
   useDeleteDecksMutation,
+  useGetDecksByIdQuery,
   useGetDecksQuery,
   useUpdateDecksMutation,
 } = decksService

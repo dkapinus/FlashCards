@@ -22,10 +22,15 @@ type CommonTabsProps<T extends ElementType = 'button'> = {
 export const TabSwitcher = <T extends ElementType = 'button'>(
   props: CommonTabsProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CommonTabsProps<T>>
 ) => {
-  const { tabs, ...rest } = props
+  const { defaultValue, onValueChange, tabs, ...rest } = props
 
   return (
-    <Tabs.Root className={`${s.tabsRoot}`} defaultValue={tabs[0].value} {...rest}>
+    <Tabs.Root
+      className={`${s.tabsRoot}`}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+      {...rest}
+    >
       <Tabs.List aria-label={'Tabs list'} className={s.tabsList}>
         <Typography variant={'body1'}>
           {tabs.map((tab, index) => {

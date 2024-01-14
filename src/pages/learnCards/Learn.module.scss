@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  max-width: 26.25rem;
+  max-width: 36.25rem;
   margin: 36px auto;
   padding: 2.062rem 2.25rem 1.75rem;
 }
@@ -9,6 +9,10 @@
   width: 350px;
   height: 200px;
   margin: 20px 36px;
+}
+
+.button_link {
+  margin: 12px 112px;
 }
 
 .conditions {
@@ -27,12 +31,15 @@
   margin: 20px 36px;
 }
 
-.rate_yourself {
-  margin: 20px 36px;
-}
-
 .infoText {
   margin-top: 4rem;
   color: var(--color-dark-100);
   text-align: center;
+}
+
+.coverPack {
+  img {
+    width: 480px;
+    height: 120px;
+  }
 }

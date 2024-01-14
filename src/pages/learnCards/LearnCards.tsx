@@ -7,10 +7,12 @@ import { Icon } from '@/components/ui/icon/Icon'
 import { Layout } from '@/components/ui/layout/Layout'
 import { RadioGroup } from '@/components/ui/radioGroup'
 import { Typography } from '@/components/ui/typography'
-import { useGetDecksQuery } from '@/services/decks_Api/Decks.service'
+import { useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
 import { useGetLearnCardsQuery } from '@/services/learn_Api/LearnCards.service'
 
 import s from './Learn.module.scss'
+
+import deckPhoto from '../../assets/images/deckPhoto.svg'
 
 const LearnCards = () => {
   const [openAnswer, setOpenAnswer] = useState(false)
@@ -21,9 +23,9 @@ const LearnCards = () => {
 
   const { data } = useGetLearnCardsQuery({ id: userId })
 
-  const { data: decks } = useGetDecksQuery({})
+  const { data: deck } = useGetDecksByIdQuery({ id: userId })
 
-  const namePack = decks?.items.find(deck => deck.id === userId)?.name
+  const nameDeck = deck?.name
 
   const isEmpty = data === undefined
 
@@ -38,7 +40,7 @@ const LearnCards = () => {
   return (
     <>
       <Layout isLoginIn>
-        <Button as={'a'} href={'/'} variant={'link'}>
+        <Button as={'a'} className={s.button_link} href={'/'} variant={'link'}>
           <Icon height={'24'} iconId={'arrow-back'} viewBox={'0 0 24 24'} width={'24'} />
           Back to Packs List
         </Button>
@@ -48,7 +50,12 @@ const LearnCards = () => {
           </Typography>
         ) : (
           <Card className={s.container}>
-            <Typography variant={'large'}>Learn "{namePack}"</Typography>
+            <Typography className={s.name} variant={'large'}>
+              Learn "{nameDeck}"
+            </Typography>
+            <div className={s.coverPack}>
+              {deck?.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}
+            </div>
             <Typography className={s.question} variant={'subtitle1'}>
               Question: {data?.question}
             </Typography>
@@ -58,7 +65,7 @@ const LearnCards = () => {
             {data?.questionImg && <img className={s.img} src={data?.questionImg} />}
 
             {openAnswer ? (
-              <div>
+              <>
                 <Typography className={s.answer} variant={'subtitle1'}>
                   Answer:{' '}
                   <Typography as={'span'} variant={'body1'}>
@@ -66,10 +73,7 @@ const LearnCards = () => {
                   </Typography>
                 </Typography>
                 {data?.answerImg && <img className={s.img} src={data?.answerImg} />}
-
-                <Typography className={s.rate_yourself} variant={'subtitle1'}>
-                  Rate yourself:
-                </Typography>
+                <Typography variant={'subtitle1'}>Rate yourself:</Typography>
                 <RadioGroup
                   className={s.radioGroup}
                   onChange={() => ''}
@@ -81,10 +85,11 @@ const LearnCards = () => {
                     { id: 0, title: 'Knew the answer', value: '5' },
                   ]}
                 />
+
                 <Button fullWidth onClick={onClickNext} variant={'primary'}>
                   Next Question
                 </Button>
-              </div>
+              </>
             ) : (
               <Button fullWidth onClick={onClickAnswer} variant={'primary'}>
                 <Typography variant={'subtitle2'}>Show Answer</Typography>
