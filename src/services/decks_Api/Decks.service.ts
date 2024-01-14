@@ -40,6 +40,23 @@ const decksService = baseApi.injectEndpoints({
       }),
       updateDecks: builder.mutation<void, UpdateDeckArg & DeleteDecksArg>({
         invalidatesTags: ['Decks'],
+        // async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
+        //   const state = getState() as RootState
+        //
+        //   console.log(state)
+        //   const minCardsCount = state.decks.minCardsCount
+        //   const patchResult = dispatch(
+        //     decksService.util.updateQueryData('getDecks', minCardsCount, draft => {
+        //       Object.assign(draft, patch)
+        //     })
+        //   )
+        //
+        //   try {
+        //     await queryFulfilled
+        //   } catch {
+        //     patchResult.undo()
+        //   }
+        // },
         query: ({ id, ...arg }) => {
           return {
             body: arg,

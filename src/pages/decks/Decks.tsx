@@ -12,6 +12,7 @@ import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tabSwitcher'
 import { Tables } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { useMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateDecksMutation,
   useDeleteDecksMutation,
@@ -64,12 +65,19 @@ export const Decks = () => {
     minCardsCount,
     name,
   })
+  const userData = useMeQuery()
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
   const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
 
   const sortByAuthor = (value: string) => {
-    value === 'My Cards' ? setAuthorId('f2be95b9-4d07-4751-a775-bd612fc9553a') : setAuthorId('')
+    if (value === 'My Cards') {
+      const authorId = userData.data?.id || ''
+
+      setAuthorId(authorId)
+    } else {
+      setAuthorId('')
+    }
   }
 
   const filterCards = (e: number[]) => {
