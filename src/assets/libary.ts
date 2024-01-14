@@ -8,3 +8,4 @@
 // to add hookform/devtools - pnpm i -D @hookform/devtools
 // to add react-router-dom - pnpm i react-router-dom
 //to add RTK Query - pnpm i @reduxjs/toolkit react-redux
+// for authorisation - pnpm i async-mutex

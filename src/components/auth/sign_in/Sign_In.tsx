@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Controlled_Checkbox } from '@/components/controlled/controlled_checkbox'
 import { Controlled_Input } from '@/components/controlled/controlled_input'
@@ -38,6 +39,7 @@ export const SignIn = ({ className, onSubmit }: Props) => {
     },
     resolver: zodResolver(signInSchema),
   })
+  const navigate = useNavigate()
 
   return (
     <>
@@ -79,11 +81,7 @@ export const SignIn = ({ className, onSubmit }: Props) => {
             <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
               Don't have an account?
             </Typography>
-            <Button
-              as={'a'}
-              onClick={() => console.log('navigate to Sign in form')}
-              variant={'link'}
-            >
+            <Button as={'a'} onClick={() => navigate('/sign-up')} variant={'link'}>
               Sign Up
             </Button>
           </Card>
