@@ -5,15 +5,17 @@ import { Header } from '@/components/ui/header'
 import l from './Layout.module.scss'
 
 type LayoutProps = ComponentPropsWithoutRef<'div'> & {
+  avatar?: string
   isLoginIn: boolean
   marginTop?: CSSProperties['marginTop']
+  name?: string
 }
 
 export const Layout = forwardRef<ElementRef<'div'>, LayoutProps>(
-  ({ children, isLoginIn, ...rest }, ref) => {
+  ({ avatar, children, isLoginIn, name, ...rest }, ref) => {
     return (
       <div className={l.main} ref={ref} {...rest}>
-        <Header isLoginIn={isLoginIn} name={'User'} />
+        <Header avatar={avatar ? avatar : ''} isLoginIn={isLoginIn} name={name ? name : ''} />
         {children}
       </div>
     )

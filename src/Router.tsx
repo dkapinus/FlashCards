@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { EditProfile } from '@/components/auth/edit_profile'
 import Cards from '@/pages/cards/Cards'
 import Decks from '@/pages/decks/Decks'
 import LearnCards from '@/pages/learnCards/LearnCards'
@@ -36,6 +37,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <LearnCards />,
     path: '/learnCards/:id',
+  },
+  {
+    element: <EditProfile />,
+    path: '/profile',
   },
 ]
 

@@ -14,8 +14,6 @@ export type GetDecksArgs = {
   orderBy?: string
 }
 
-export type CreateDecksArg = FormData
-
 export type DeleteDecksArg = {
   id: string
 }

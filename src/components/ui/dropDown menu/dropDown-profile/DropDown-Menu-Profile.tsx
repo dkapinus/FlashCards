@@ -9,10 +9,11 @@ import d from './DropDown-Menu-Profile.module.scss'
 
 export type DropDownMenuProps<T extends ElementType = 'button'> = {
   as?: T
-  child: ReactElement
+  avatar: string
+  child?: ReactElement
   mail: string
-  onClickProfile: () => void
-  singOut: () => void
+  onClickProfile?: () => void
+  singOut?: () => void
   userName: string
 } & ComponentPropsWithoutRef<T>
 
@@ -21,6 +22,7 @@ export const DropDownMenu = <T extends ElementType = 'button'>(
 ) => {
   const {
     as: Component = 'button',
+    avatar,
     child,
     mail,
     onClickProfile,
@@ -28,9 +30,6 @@ export const DropDownMenu = <T extends ElementType = 'button'>(
     userName,
     ...rest
   } = props
-  const onClickProfileHandler = () => onClickProfile()
-
-  const singOutHandler = () => singOut()
 
   return (
     <DropdownMenu.Root {...rest}>
@@ -40,7 +39,7 @@ export const DropDownMenu = <T extends ElementType = 'button'>(
       <DropdownMenu.Portal>
         <DropdownMenu.Content className={d.DropdownMenuContent} sideOffset={5}>
           <div className={d.User}>
-            <Avatar />
+            <Avatar avatar={avatar} />
             <div className={d.UserInfo}>
               <Typography variant={'subtitle2'}>{userName}</Typography>
               <Typography className={d.UserMail} variant={'caption'}>
@@ -49,14 +48,14 @@ export const DropDownMenu = <T extends ElementType = 'button'>(
             </div>
           </div>
           <hr className={d.Line} />
-          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={onClickProfileHandler}>
+          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={onClickProfile}>
             <span className={d.Icon}>
               <Icon height={'16'} iconId={'user'} viewBox={'0 0 16 16'} width={'16'} />
             </span>
             <Typography variant={'caption'}>My Profile</Typography>
           </DropdownMenu.Item>
           <hr className={d.Line} />
-          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={singOutHandler}>
+          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={singOut}>
             <span className={d.Icon}>
               <Icon height={'16'} iconId={'log-out'} viewBox={'0 0 16 16'} width={'16'} />
             </span>

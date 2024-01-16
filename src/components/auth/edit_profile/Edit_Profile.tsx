@@ -11,8 +11,8 @@ import { Typography } from '@/components/ui/typography'
 
 import e from './Edit_Profile.module.scss'
 type Edit = {
-  email: string
-  userName: string
+  email?: string
+  userName?: string
 }
 export const EditProfile: React.FC<Edit> = ({ email, userName }) => {
   const [edit, setEdit] = useState(true)
