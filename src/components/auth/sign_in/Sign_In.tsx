@@ -44,7 +44,7 @@ export const SignIn = ({ className, onSubmit }: Props) => {
   return (
     <>
       <DevTool control={control} />
-      <Layout isLoginIn>
+      <Layout isLoginIn={false}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Card className={cn(s.container, className)}>
             <Typography as={'h2'} variant={'large'}>
@@ -79,6 +79,7 @@ export const SignIn = ({ className, onSubmit }: Props) => {
               <Typography variant={'subtitle2'}>Sign In</Typography>
             </Button>
             <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Don't have an account?
             </Typography>
             <Button as={'a'} onClick={() => navigate('/sign-up')} variant={'link'}>

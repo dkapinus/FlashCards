@@ -81,14 +81,14 @@ export const Decks = () => {
     minCardsCount,
     name,
   })
-  const userData = useMeQuery()
+  const { data: userData, isError } = useMeQuery()
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
   const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
 
   const sortByAuthor = (value: string) => {
     if (value === 'My Cards') {
-      const authorId = userData.data?.id || ''
+      const authorId = userData?.id || ''
 
       setAuthorId(authorId)
     } else {
@@ -135,8 +135,10 @@ export const Decks = () => {
     )
   }
 
+  const isLoginIn = !isError
+
   return (
-    <Layout isLoginIn>
+    <Layout avatar={userData?.avatar || ''} isLoginIn={isLoginIn} name={userData?.name || ''}>
       <div className={s.container}>
         <div className={s.caption}>
           <Typography variant={'large'}>Packs list</Typography>
@@ -158,7 +160,6 @@ export const Decks = () => {
             showCloseButton
           >
             <div>
-              {' '}
               {dataString ? <img src={dataString} /> : <img src={deckPhoto} />}
               <Input onChange={onUploadPhoto} type={'file'} />
             </div>

@@ -10,6 +10,7 @@ import { Pagination } from '@/components/ui/pagination'
 import { Rating } from '@/components/ui/table/rating/Rating'
 import { Tables } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { useMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateCardsMutation,
   useDeleteCardsMutation,
@@ -41,11 +42,13 @@ const Cards = () => {
 
   const { data: deck } = useGetDecksByIdQuery({ id: deckId })
 
+  const { data: userData, isError } = useMeQuery()
+
   const userId = deck?.userId
   const [createCard, cardCreationStatus] = useCreateCardsMutation({})
 
   const isEmpty = data && data.pagination.totalItems === 0
-  const isOwner = userId === 'f2be95b9-4d07-4751-a775-bd612fc9553a'
+  const isOwner = userId === userData?.id
 
   const DeleteCard = (id: string) => {
     deleteCard({ id: id })
@@ -85,10 +88,11 @@ const Cards = () => {
   const onClickLearnCards = () => {
     navigate('/learnCards/' + deckId)
   }
+  const isLoginIn = !isError
 
   return (
     <>
-      <Layout isLoginIn>
+      <Layout avatar={userData?.avatar || ''} isLoginIn={isLoginIn} name={userData?.name || ''}>
         <div className={s.container}>
           <div className={s.button_link}>
             <Button as={'a'} href={'/'} variant={'link'}>
