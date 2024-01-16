@@ -7,13 +7,14 @@ import l from './Layout.module.scss'
 type LayoutProps = ComponentPropsWithoutRef<'div'> & {
   isLoginIn: boolean
   marginTop?: CSSProperties['marginTop']
+  name: string
 }
 
 export const Layout = forwardRef<ElementRef<'div'>, LayoutProps>(
-  ({ children, isLoginIn, ...rest }, ref) => {
+  ({ children, isLoginIn, name, ...rest }, ref) => {
     return (
       <div className={l.main} ref={ref} {...rest}>
-        <Header isLoginIn={isLoginIn} name={'User'} />
+        <Header isLoginIn={isLoginIn} name={name} />
         {children}
       </div>
     )
