@@ -26,6 +26,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/themes": "^2.0.2",
     "@reduxjs/toolkit": "^2.0.1",
+    "async-mutex": "^0.4.0",
     "classnames": "^2.3.2",
     "clsx": "^2.0.0",
     "json2ts": "^0.0.7",

@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Controlled_Input } from '@/components/controlled/controlled_input'
 import { Button } from '@/components/ui/button'
@@ -29,6 +30,7 @@ const signUpSchema = z
   })
 
 type FormValues = z.infer<typeof signUpSchema>
+
 export const SignUp = ({ className, onSubmit }: Props) => {
   const {
     control,
@@ -42,6 +44,7 @@ export const SignUp = ({ className, onSubmit }: Props) => {
     },
     resolver: zodResolver(signUpSchema),
   })
+  const navigate = useNavigate()
 
   return (
     <>
@@ -82,7 +85,7 @@ export const SignUp = ({ className, onSubmit }: Props) => {
             <Typography as={'a'} className={s.linkAccount} variant={'body2'}>
               Already have an account?
             </Typography>
-            <Button as={'a'} onClick={() => 'navigate to Sign up form'} variant={'link'}>
+            <Button as={'a'} onClick={() => navigate('/login')} variant={'link'}>
               Sign In
             </Button>
           </Card>
