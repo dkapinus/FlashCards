@@ -209,82 +209,84 @@ const Cards = () => {
                           <Tables.Cell>{new Date(card?.updated).toLocaleDateString()}</Tables.Cell>
                           <Tables.Cell>{<Rating />}</Tables.Cell>
                           <Tables.Cell>
-                            <div>
-                              <Modals
-                                buttonIcon={
-                                  <Icon
-                                    height={'16'}
-                                    iconId={'delete'}
-                                    viewBox={'0 0 16 16'}
-                                    width={'16'}
-                                  />
-                                }
-                                buttonsInFooter={[
-                                  <Button onClick={cancelModals} variant={'secondary'}>
-                                    Cancel
-                                  </Button>,
-                                  <Button
-                                    disabled={cardDeleteStatus.isLoading}
-                                    onClick={() => DeleteCard(card.id)}
-                                    variant={'primary'}
-                                  >
-                                    Delete Pack
-                                  </Button>,
-                                ]}
-                                className={s.modals}
-                                disabled={cardDeleteStatus.isLoading}
-                                modalTitle={'Delete Card'}
-                                showCloseButton
-                                variant={'secondary'}
-                              >
-                                <div>
-                                  Do you really want to remove Card Name? Card will be deleted.
-                                </div>
-                              </Modals>
-                              <Modals
-                                buttonIcon={
-                                  <Icon
-                                    height={'16'}
-                                    iconId={'edit'}
-                                    viewBox={'0 0 16 16'}
-                                    width={'16'}
-                                  />
-                                }
-                                buttonsInFooter={[
-                                  <Button onClick={cancelModals} variant={'secondary'}>
-                                    Cancel
-                                  </Button>,
-                                  <Button
-                                    disabled={deckUpdateStatus.isLoading}
-                                    onClick={() => UpDatePack(card.id)}
-                                    variant={'primary'}
-                                  >
-                                    Save Changes
-                                  </Button>,
-                                ]}
-                                className={s.modals}
-                                disabled={deckUpdateStatus.isLoading}
-                                modalTitle={'Edit Pack'}
-                                showCloseButton
-                                variant={'secondary'}
-                              >
-                                <div>
-                                  <Input
-                                    defaultValue={card.question}
-                                    label={'Question'}
-                                    onValueChange={onChangeQuestion}
-                                  />
-                                </div>
+                            {isOwner && (
+                              <div>
+                                <Modals
+                                  buttonIcon={
+                                    <Icon
+                                      height={'16'}
+                                      iconId={'delete'}
+                                      viewBox={'0 0 16 16'}
+                                      width={'16'}
+                                    />
+                                  }
+                                  buttonsInFooter={[
+                                    <Button onClick={cancelModals} variant={'secondary'}>
+                                      Cancel
+                                    </Button>,
+                                    <Button
+                                      disabled={cardDeleteStatus.isLoading}
+                                      onClick={() => DeleteCard(card.id)}
+                                      variant={'primary'}
+                                    >
+                                      Delete Pack
+                                    </Button>,
+                                  ]}
+                                  className={s.modals}
+                                  disabled={cardDeleteStatus.isLoading}
+                                  modalTitle={'Delete Card'}
+                                  showCloseButton
+                                  variant={'secondary'}
+                                >
+                                  <div>
+                                    Do you really want to remove Card Name? Card will be deleted.
+                                  </div>
+                                </Modals>
+                                <Modals
+                                  buttonIcon={
+                                    <Icon
+                                      height={'16'}
+                                      iconId={'edit'}
+                                      viewBox={'0 0 16 16'}
+                                      width={'16'}
+                                    />
+                                  }
+                                  buttonsInFooter={[
+                                    <Button onClick={cancelModals} variant={'secondary'}>
+                                      Cancel
+                                    </Button>,
+                                    <Button
+                                      disabled={deckUpdateStatus.isLoading}
+                                      onClick={() => UpDatePack(card.id)}
+                                      variant={'primary'}
+                                    >
+                                      Save Changes
+                                    </Button>,
+                                  ]}
+                                  className={s.modals}
+                                  disabled={deckUpdateStatus.isLoading}
+                                  modalTitle={'Edit Pack'}
+                                  showCloseButton
+                                  variant={'secondary'}
+                                >
+                                  <div>
+                                    <Input
+                                      defaultValue={card.question}
+                                      label={'Question'}
+                                      onValueChange={onChangeQuestion}
+                                    />
+                                  </div>
 
-                                <div>
-                                  <Input
-                                    defaultValue={card.answer}
-                                    label={'Answer'}
-                                    onValueChange={onChangeAnswer}
-                                  />
-                                </div>
-                              </Modals>
-                            </div>
+                                  <div>
+                                    <Input
+                                      defaultValue={card.answer}
+                                      label={'Answer'}
+                                      onValueChange={onChangeAnswer}
+                                    />
+                                  </div>
+                                </Modals>
+                              </div>
+                            )}
                           </Tables.Cell>
                         </Tables.Row>
                       </>

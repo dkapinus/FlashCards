@@ -26,6 +26,13 @@
   padding: 0;
 }
 
+.avatar {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50px;
+}
+
 .avatarWrapper {
   position: relative;
 }

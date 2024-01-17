@@ -35,8 +35,6 @@ export const Decks = () => {
   const [authorId, setAuthorId] = useState('')
   const [photo, setPhoto] = useState<File>()
 
-  const dataString = JSON.stringify(photo)
-
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
     navigate('/cards/' + deckId)
@@ -85,6 +83,8 @@ export const Decks = () => {
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
   const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
   const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
+
+  const isOwner = userData?.id
 
   const sortByAuthor = (value: string) => {
     if (value === 'My Cards') {
@@ -159,8 +159,9 @@ export const Decks = () => {
             modalTitle={'Add New Pack'}
             showCloseButton
           >
+            <img className={s.createPhoto} src={deckPhoto} />
+
             <div>
-              {dataString ? <img src={dataString} /> : <img src={deckPhoto} />}
               <Input onChange={onUploadPhoto} type={'file'} />
             </div>
             <div>
@@ -237,71 +238,87 @@ export const Decks = () => {
                     >
                       <Icon height={'16'} iconId={'learn'} viewBox={'0 0 16 16'} width={'16'} />
                     </Button>
-                    <Modals
-                      buttonIcon={
-                        <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
-                      }
-                      buttonsInFooter={[
-                        <Button onClick={cancelDecksModal} variant={'secondary'}>
-                          Cancel
-                        </Button>,
-                        <Button
+                    {isOwner === deck.userId && (
+                      <>
+                        <Modals
+                          buttonIcon={
+                            <Icon
+                              height={'16'}
+                              iconId={'delete'}
+                              viewBox={'0 0 16 16'}
+                              width={'16'}
+                            />
+                          }
+                          buttonsInFooter={[
+                            <Button onClick={cancelDecksModal} variant={'secondary'}>
+                              Cancel
+                            </Button>,
+                            <Button
+                              disabled={deckDeleteStatus.isLoading}
+                              onClick={() => DeletePack(deck.id)}
+                              variant={'primary'}
+                            >
+                              Delete Pack
+                            </Button>,
+                          ]}
+                          className={s.button}
                           disabled={deckDeleteStatus.isLoading}
-                          onClick={() => DeletePack(deck.id)}
-                          variant={'primary'}
+                          modalTitle={'Delete Pack'}
+                          showCloseButton
+                          variant={'secondary'}
                         >
-                          Delete Pack
-                        </Button>,
-                      ]}
-                      className={s.button}
-                      disabled={deckDeleteStatus.isLoading}
-                      modalTitle={'Delete Pack'}
-                      showCloseButton
-                      variant={'secondary'}
-                    >
-                      <div>Do you really want to remove Pack Name? All cards will be deleted.</div>
-                    </Modals>
-                    <Modals
-                      buttonIcon={
-                        <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
-                      }
-                      buttonsInFooter={[
-                        <Button onClick={cancelDecksModal} variant={'secondary'}>
-                          Cancel
-                        </Button>,
-                        <Button
+                          <div>
+                            Do you really want to remove Pack Name? All cards will be deleted.
+                          </div>
+                        </Modals>
+                        <Modals
+                          buttonIcon={
+                            <Icon
+                              height={'16'}
+                              iconId={'edit'}
+                              viewBox={'0 0 16 16'}
+                              width={'16'}
+                            />
+                          }
+                          buttonsInFooter={[
+                            <Button onClick={cancelDecksModal} variant={'secondary'}>
+                              Cancel
+                            </Button>,
+                            <Button
+                              disabled={deckUpdateStatus.isLoading}
+                              onClick={() => UpDatePack(deck.id, deck.name)}
+                              variant={'primary'}
+                            >
+                              Save Changes
+                            </Button>,
+                          ]}
+                          className={s.button}
                           disabled={deckUpdateStatus.isLoading}
-                          onClick={() => UpDatePack(deck.id, deck.name)}
-                          variant={'primary'}
+                          modalTitle={'Edit Pack'}
+                          showCloseButton
+                          variant={'secondary'}
                         >
-                          Save Changes
-                        </Button>,
-                      ]}
-                      className={s.button}
-                      disabled={deckUpdateStatus.isLoading}
-                      modalTitle={'Edit Pack'}
-                      showCloseButton
-                      variant={'secondary'}
-                    >
-                      <div className={s.cover}>
-                        <img src={deckPhoto} />
-                      </div>
-                      <div>
-                        <Input
-                          defaultValue={deck.name}
-                          label={'Name Pack'}
-                          onValueChange={onChangeNamePack}
-                        />
-                      </div>
+                          <div>
+                            <img className={s.createPhoto} src={deck.cover || deckPhoto} />
+                          </div>
+                          <div>
+                            <Input
+                              defaultValue={deck.name}
+                              label={'Name Pack'}
+                              onValueChange={onChangeNamePack}
+                            />
+                          </div>
 
-                      <div>
-                        <Checkbox
-                          defaultChecked={deck.isPrivate}
-                          label={'Private pack'}
-                          onCheckedChange={() => setIsPrivatePack(!deck.isPrivate)}
-                        />
-                      </div>
-                    </Modals>
+                          <div>
+                            <Checkbox
+                              defaultChecked={deck.isPrivate}
+                              label={'Private pack'}
+                              onCheckedChange={() => setIsPrivatePack(!deck.isPrivate)}
+                            />
+                          </div>
+                        </Modals>
+                      </>
+                    )}
                   </Tables.Cell>
                 </Tables.Row>
               )
