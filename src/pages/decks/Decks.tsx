@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
@@ -101,6 +101,11 @@ export const Decks = () => {
     setMaxCardsCount(e[1])
   }
 
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const selectFileHandler = () => {
+    inputRef && inputRef.current?.click()
+  }
   const onUploadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0]
 
@@ -160,10 +165,20 @@ export const Decks = () => {
             showCloseButton
           >
             <img className={s.createPhoto} src={deckPhoto} />
-
             <div>
-              <Input onChange={onUploadPhoto} type={'file'} />
+              <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
+                Change cover
+              </Button>
+              <div>
+                <Input
+                  onChange={onUploadPhoto}
+                  ref={inputRef}
+                  style={{ display: 'none', height: '0' }}
+                  type={'file'}
+                />
+              </div>
             </div>
+
             <div>
               <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
             </div>
