@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { EditName } from '@/components/auth/edit_profile/edit_name/Edit_Name'
 import { Name } from '@/components/auth/edit_profile/name/Name'
@@ -8,53 +9,82 @@ import { Avatar } from '@/components/ui/header/user/avatar/Avatar'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Layout } from '@/components/ui/layout/Layout'
 import { Typography } from '@/components/ui/typography'
+import { useLogoutMutation, useMeQuery, useUpdateMeMutation } from '@/services/auth/auth.service'
 
 import e from './Edit_Profile.module.scss'
-type Edit = {
-  email?: string
-  userName?: string
-}
-export const EditProfile: React.FC<Edit> = ({ email, userName }) => {
+
+export const EditProfile = () => {
+  const { data } = useMeQuery()
+  const [logout] = useLogoutMutation()
+  const [update] = useUpdateMeMutation()
+
   const [edit, setEdit] = useState(true)
-  const [name, setName] = useState(userName)
+  const [editPhoto, setEditPhoto] = useState(false)
+  const [name, setName] = useState(data?.name || '')
+
+  const navigate = useNavigate()
   const onChange = (e: string) => {
     setName(e)
   }
   const editName = () => {
-    console.log('edit')
     setEdit(false)
   }
   const saveChanges = () => {
     setEdit(true)
-    console.log('saveChanges')
+    const formData = new FormData()
+
+    formData.append('name', name)
+    update(formData)
   }
-  const editPhoto = () => {
-    console.log('editPhoto')
+  const pushNewPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0]
+
+    const formData = new FormData()
+
+    if (file) {
+      formData.append('avatar', file)
+
+      update(formData)
+    }
+    setEditPhoto(false)
   }
-  const logout = () => {
-    console.log('logout')
+  const editPhotoS = () => {
+    setEditPhoto(true)
+  }
+  const onClickLogout = () => {
+    logout()
+    navigate('/login')
   }
 
   return (
-    <Layout isLoginIn>
+    <Layout avatar={data?.avatar ? data.avatar : ''} isLoginIn name={data?.name}>
       <Card className={edit ? e.editContainer : e.container}>
         <Typography variant={'large'}>Personal Information</Typography>
 
         <div className={e.avatarContainer}>
           <div className={e.avatarWrapper} style={{ position: 'relative' }}>
-            <Avatar height={'96px'} width={'96px'} />
+            {data?.avatar ? (
+              <img className={e.avatar} src={data.avatar} />
+            ) : (
+              <Avatar height={'96px'} width={'96px'} />
+            )}
+
             <span className={e.editPhotoWrapper}>
-              {edit ? (
-                <Button className={e.editPhoto} onClick={editPhoto} variant={'secondary'}>
+              {edit && (
+                <Button className={e.editPhoto} onClick={editPhotoS} variant={'secondary'}>
                   <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
                 </Button>
-              ) : (
-                <></>
               )}
             </span>
           </div>
+          {editPhoto && <input onChange={pushNewPhoto} type={'file'} />}
           {edit ? (
-            <Name email={email} logout={logout} name={name} onClick={editName} />
+            <Name
+              email={data?.email || ''}
+              logout={onClickLogout}
+              name={data?.name || ''}
+              onClick={editName}
+            />
           ) : (
             <EditName name={name} onValueChange={onChange} save={saveChanges} />
           )}

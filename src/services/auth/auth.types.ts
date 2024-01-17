@@ -29,3 +29,7 @@ export type SignUpResponse = {
   name: string
   updated: string
 }
+
+export type UpdateUser = {
+  name: string
+}
