@@ -20,7 +20,7 @@ export const Page_404 = () => {
         <Typography className={s.message} variant={'body1'}>
           Sorry! Page not found!
         </Typography>
-        <Button as={'a'} fullWidth={false} onClick={() => navigate('/')} variant={'primary'}>
+        <Button as={'a'} onClick={() => navigate('/')} variant={'primary'}>
           Back to home page
         </Button>
       </div>
