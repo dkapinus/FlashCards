@@ -16,10 +16,13 @@
 }
 
 .conditions {
-  color: var(--Dark-100, #808080);
+  color: var(--dark-100, #808080);
 }
 
 .radioGroup {
+  display: flex;
+  align-items: start;
+  justify-content: start;
   margin: 20px 36px;
 }
 
@@ -35,11 +38,4 @@
   margin-top: 4rem;
   color: var(--color-dark-100);
   text-align: center;
-}
-
-.coverPack {
-  img {
-    width: 480px;
-    height: 120px;
-  }
 }
