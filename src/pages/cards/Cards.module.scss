@@ -10,8 +10,8 @@
   margin-top: 30px;
 
   img {
-    width: 170px;
-    height: 110px;
+    max-width: 170px;
+    max-height: 110px;
   }
 }
 
@@ -62,7 +62,7 @@
   justify-content: start;
 
   img {
-    height: 50px;
+    max-height: 50px;
   }
 }
 
@@ -73,6 +73,6 @@
   justify-content: start;
 
   img {
-    height: 50px;
+    max-height: 50px;
   }
 }

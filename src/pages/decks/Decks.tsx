@@ -164,7 +164,7 @@ export const Decks = () => {
             modalTitle={'Add New Pack'}
             showCloseButton
           >
-            <img className={s.createPhoto} src={deckPhoto} />
+            <img alt={''} className={s.createPhoto} src={deckPhoto} />
             <div>
               <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
                 Change cover
@@ -238,7 +238,7 @@ export const Decks = () => {
                 <Tables.Row key={deck?.id}>
                   <Tables.Cell onClick={() => onClickCards(deck.id)}>
                     <div className={s.name}>
-                      {deck.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}
+                      {deck.cover ? <img alt={''} src={deck?.cover} /> : <img src={deckPhoto} />}
                       <Typography variant={'body1'}> {deck?.name}</Typography>
                     </div>
                   </Tables.Cell>

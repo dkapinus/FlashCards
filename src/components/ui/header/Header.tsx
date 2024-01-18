@@ -34,11 +34,17 @@ export const Header = <T extends ElementType = 'header'>(
   const onClickProfile = () => {
     navigate('/profile')
   }
+  const onClickRedirect = () => {
+    navigate('/')
+  }
 
   return (
     <header {...rest} className={h.container}>
       <div className={h.wrapper}>
-        <Icon height={'36'} iconId={'incubator'} viewBox={'0 0 157 36'} width={'157'} />
+        <div className={h.redirect} onClick={onClickRedirect}>
+          {' '}
+          <Icon height={'36'} iconId={'incubator'} viewBox={'0 0 157 36'} width={'157'} />
+        </div>
         <div className={h.singWrapper}>
           {isLoginIn ? (
             <DropDownMenu

@@ -1,14 +1,25 @@
-export interface LearnResponse {
+export type UpdateGrade = {
+  cardId: string
+  grade: number
+  id: string
+}
+
+export interface Card {
   answer: string
-  answerImg?: any
-  answerVideo?: any
+  answerImg: null | string
+  answerVideo: null | string
   created: string
   deckId: string
   grade: number
   id: string
   question: string
-  questionImg?: any
-  questionVideo?: any
+  questionImg: null | string
+  questionVideo: null | string
   shots: number
-  updated: string
+  updated: Date
+}
+
+export interface GetRandomCardArgs {
+  id: string
+  previousCardId?: string
 }
