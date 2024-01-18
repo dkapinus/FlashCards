@@ -10,6 +10,7 @@ import { EditProfile } from '@/components/auth/edit_profile'
 import Cards from '@/pages/cards/Cards'
 import Decks from '@/pages/decks/Decks'
 import LearnCards from '@/pages/learnCards/LearnCards'
+import { Page_404 } from '@/pages/page_404/Page_404'
 import { SignInPage } from '@/pages/sign_in_page'
 import { SignUpPage } from '@/pages/sign_up_page'
 import { useMeQuery } from '@/services/auth/auth.service'
@@ -22,6 +23,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <SignUpPage />,
     path: '/sign-up',
+  },
+  {
+    element: <Page_404 />,
+    path: '/404',
   },
 ]
 
