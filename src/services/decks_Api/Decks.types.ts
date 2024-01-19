@@ -63,3 +63,5 @@ export interface GetDeckById {
   updated: string
   userId: string
 }
+
+export type Tab = 'all' | 'my'

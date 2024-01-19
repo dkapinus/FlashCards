@@ -24,7 +24,7 @@ const LearnCards = () => {
 
   const userId = params.id!
 
-  const { data } = useGetLearnCardsQuery({ id: userId })
+  const { data } = useGetLearnCardsQuery({ id: userId, previousCardId: userId })
 
   const { data: deck } = useGetDecksByIdQuery({ id: userId })
 
@@ -33,8 +33,6 @@ const LearnCards = () => {
   const [updateGrade] = usePostGradeCardMutation({})
 
   const nameDeck = deck?.name
-
-  const NotLearnCard = data?.grade !== undefined && data?.grade < 5 ? data : null
 
   const isEmpty = data === undefined
 
@@ -66,25 +64,25 @@ const LearnCards = () => {
         ) : (
           <Card className={s.container}>
             <Typography className={s.name} variant={'large'}>
-              Learn "{nameDeck}"
+              Learn &quot;{nameDeck}&ldquo;
             </Typography>
             <Typography className={s.question} variant={'subtitle1'}>
-              Question: {NotLearnCard?.question}
+              Question: {data?.question}
             </Typography>
             <Typography className={s.conditions} variant={'body2'}>
               Количество попыток ответов на вопрос: 10
             </Typography>
-            {NotLearnCard?.questionImg && <img className={s.img} src={NotLearnCard?.questionImg} />}
+            {data?.questionImg && <img className={s.img} src={data?.questionImg} />}
 
             {openAnswer ? (
               <>
                 <Typography className={s.answer} variant={'subtitle1'}>
                   Answer:{' '}
                   <Typography as={'span'} variant={'body1'}>
-                    {NotLearnCard?.question}
+                    {data?.answer}
                   </Typography>
                 </Typography>
-                {NotLearnCard?.answerImg && <img className={s.img} src={NotLearnCard?.answerImg} />}
+                {data?.answerImg && <img className={s.img} src={data?.answerImg} />}
                 <Typography variant={'subtitle1'}>Rate yourself:</Typography>
                 <RadioGroup
                   className={s.radioGroup}

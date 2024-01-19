@@ -1,4 +1,5 @@
 import { ChangeEvent, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
@@ -13,6 +14,7 @@ import { TabSwitcher } from '@/components/ui/tabSwitcher'
 import { Tables } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
+import { selectDecksCurrentPage } from '@/services/decks_Api/Decks.selectors'
 import {
   useCreateDecksMutation,
   useDeleteDecksMutation,
@@ -25,7 +27,6 @@ import s from './Decks.module.scss'
 import deckPhoto from '../../assets/images/deckPhoto.svg'
 
 export const Decks = () => {
-  const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [name, setInputValue] = useState('')
   const [packName, setPackName] = useState('')
@@ -34,6 +35,7 @@ export const Decks = () => {
   const [maxCardsCount, setMaxCardsCount] = useState<number>(0)
   const [authorId, setAuthorId] = useState('')
   const [photo, setPhoto] = useState<File>()
+  const [currentPage, setCurrentPage] = useState(useSelector(selectDecksCurrentPage))
 
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
@@ -342,7 +344,7 @@ export const Decks = () => {
         </Tables.Root>
         <Pagination
           className={s.pagination}
-          currentPage={data?.pagination.currentPage ?? 1}
+          currentPage={currentPage}
           onChangePage={setPage}
           onValueChange={setView}
           options={[

@@ -5,6 +5,14 @@ const learnService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       getLearnCards: builder.query<Card, GetRandomCardArgs>({
+        providesTags: ['Learn'],
+        query: ({ id, previousCardId }) => ({
+          params: { previousCardId },
+          url: `v1/decks/${id}/learn`,
+        }),
+      }),
+      postGradeCard: builder.mutation<Card, UpdateGrade>({
+        invalidatesTags: ['Learn'],
         async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
           try {
             const { data: nextCard } = await queryFulfilled
@@ -14,14 +22,6 @@ const learnService = baseApi.injectEndpoints({
             console.log(error)
           }
         },
-        providesTags: ['Learn'],
-        query: ({ id, previousCardId }) => ({
-          params: { previousCardId },
-          url: `v1/decks/${id}/learn`,
-        }),
-      }),
-      postGradeCard: builder.mutation<Card, UpdateGrade>({
-        invalidatesTags: ['Learn'],
         query: ({ id, ...args }) => {
           return {
             body: args,
