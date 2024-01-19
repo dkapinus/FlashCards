@@ -7,12 +7,18 @@
 }
 
 .name_Pack {
+  display: flex;
+  justify-content: flex-start;
   margin-top: 30px;
+}
 
-  img {
-    max-width: 170px;
-    max-height: 110px;
-  }
+.dropDownIcon {
+  margin-left: 10px;
+}
+
+.deckImage img {
+  max-width: 170px;
+  max-height: 110px;
 }
 
 .button_link {

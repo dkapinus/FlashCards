@@ -9,26 +9,38 @@ import d from './DropDown-Menu-Options.module.scss'
 export type DropDownMenuOptionsProps<T extends ElementType = 'button'> = {
   as?: T
   child: ReactElement
+  className?: string
   edit: () => void
   learn: () => void
-  mail: string
+  mail?: string
   remove: () => void
-  userName: string
+  userName?: string
 } & ComponentPropsWithoutRef<T>
 
 export const DropDownMenuOptions = <T extends ElementType = 'button'>(
   props: DropDownMenuOptionsProps<T> &
     Omit<ComponentPropsWithoutRef<T>, keyof DropDownMenuOptionsProps<T>>
 ) => {
-  const { as: Component = 'button', child, edit, learn, mail, remove, userName, ...rest } = props
+  const {
+    as: Component = 'button',
+    child,
+    className,
+    edit,
+    learn,
+    mail,
+    remove,
+    userName,
+    ...rest
+  } = props
   const onClickLearnHandler = () => learn()
   const onClickEditHandler = () => edit()
   const onClickDeleteHandler = () => remove()
 
   return (
     <DropdownMenu.Root {...rest}>
-      <DropdownMenu.Trigger asChild style={{ marginLeft: '50%' }}>
-        <button className={d.IconButton}>{child}</button>
+      {/*<DropdownMenu.Trigger asChild style={{ marginLeft: '50%' }}>*/}
+      <DropdownMenu.Trigger asChild>
+        <button className={`${d.IconButton} ${className}`}>{child}</button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content className={d.DropdownMenuContent} sideOffset={5}>
