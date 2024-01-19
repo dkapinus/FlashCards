@@ -1,3 +1,4 @@
+import { RootState } from '@/services/Store'
 import { baseApi } from '@/services/base_Api/Base-Api'
 import {
   DeleteDecksArg,
@@ -49,23 +50,41 @@ const decksService = baseApi.injectEndpoints({
       }),
       updateDecks: builder.mutation<void, UpdateDeckArg & DeleteDecksArg>({
         invalidatesTags: ['Decks'],
-        // async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
-        //   const state = getState() as RootState
-        //
-        //   console.log(state)
-        //   const minCardsCount = state.decks.minCardsCount
-        //   const patchResult = dispatch(
-        //     decksService.util.updateQueryData('getDecks', minCardsCount, draft => {
-        //       Object.assign(draft, patch)
-        //     })
-        //   )
-        //
-        //   try {
-        //     await queryFulfilled
-        //   } catch {
-        //     patchResult.undo()
-        //   }
-        // },
+        async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
+          const state = getState() as RootState
+
+          const minCardsCount = state.decks.minCards
+          const search = state.decks.search
+          const currentPage = state.decks.currentPage
+          const maxCardsCount = state.decks.maxCards
+          const authorId = state.decks.authorId
+
+          const patchResult = dispatch(
+            decksService.util.updateQueryData(
+              'getDecks',
+              {
+                authorId,
+                currentPage,
+                maxCardsCount,
+                minCardsCount,
+                name: search,
+              },
+              draft => {
+                const deck = draft.items.find(deck => deck.id === id)
+
+                if (!deck) {
+                  Object.assign({ deck }, { deck, ...patch })
+                }
+              }
+            )
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
         query: ({ id, ...arg }) => {
           return {
             body: arg,

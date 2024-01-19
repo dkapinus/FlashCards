@@ -26,7 +26,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     element: <Page_404 />,
-    path: '/404',
+    path: '/*',
   },
 ]
 
