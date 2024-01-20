@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { RadioGroup } from '@/components/ui/RadioGroup'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Layout } from '@/components/ui/layout/Layout'
+import { RadioGroup } from '@/components/ui/radioGroup'
 import { Typography } from '@/components/ui/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
 import { useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'

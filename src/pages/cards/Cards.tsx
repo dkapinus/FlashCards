@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
+import { DropDownMenuOptions } from '@/components/ui/dropDown menu/dropDown-options'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Input } from '@/components/ui/input'
 import { Layout } from '@/components/ui/layout/Layout'
@@ -88,6 +89,7 @@ const Cards = () => {
   const onClickLearnCards = () => {
     navigate('/learnCards/' + deckId)
   }
+
   const isLoginIn = !isError
 
   return (
@@ -100,9 +102,24 @@ const Cards = () => {
               Back to Packs List
             </Button>
           </div>
-          <div className={s.name_Pack}>
-            <Typography variant={'large'}>Name Pack: {deck?.name}</Typography>
-            <div> {deck?.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}</div>
+          <div>
+            <div className={s.name_Pack}>
+              <Typography variant={'large'}>{deck?.name}</Typography>
+              <DropDownMenuOptions
+                child={
+                  <Icon height={'24'} iconId={'dropDownIcon'} viewBox={'0 0 24 24'} width={'24'} />
+                }
+                className={s.dropDownIcon}
+                edit={() => {}}
+                // edit={<Modals> 1</Modals>}
+                learn={() => {}}
+                remove={() => {}}
+              />
+            </div>
+            <div className={s.deckImage}>
+              {' '}
+              {deck?.cover ? <img src={deck?.cover} /> : <img src={deckPhoto} />}
+            </div>
           </div>
           {isEmpty ? (
             <div>
