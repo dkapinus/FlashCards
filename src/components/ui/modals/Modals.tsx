@@ -33,6 +33,8 @@ export const Modals = (props: ModalsProps) => {
     variant = 'primary',
   } = props
 
+  console.log('modal')
+
   return (
     <Dialog.Root defaultOpen={defaultOpen}>
       <Dialog.Trigger asChild>
