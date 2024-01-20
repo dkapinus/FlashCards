@@ -18,7 +18,7 @@ import {
   useGetCardsQuery,
   useUpdateCardsMutation,
 } from '@/services/cards_Api/Cards.service'
-import { useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
+import { useDeleteDecksMutation, useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
 
 import s from './Cards.module.scss'
 
@@ -47,6 +47,7 @@ const Cards = () => {
 
   const userId = deck?.userId
   const [createCard, cardCreationStatus] = useCreateCardsMutation({})
+  const [deletePack] = useDeleteDecksMutation()
 
   const isEmpty = data && data.pagination.totalItems === 0
   const isOwner = userId === userData?.id
@@ -89,6 +90,24 @@ const Cards = () => {
   const onClickLearnCards = () => {
     navigate('/learnCards/' + deckId)
   }
+  const removePackHandler = () => {
+    if (deckId) {
+      deletePack({ id: deckId })
+    }
+    navigate('/')
+  }
+  const editPackHandler = () => {
+    return (
+      <Modals
+        className={s.button}
+        // buttonIcon={<Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />}
+        defaultOpen
+        modalTitle={'Edit Pack'}
+        showCloseButton
+        variant={'secondary'}
+      ></Modals>
+    )
+  }
 
   const isLoginIn = !isError
 
@@ -110,10 +129,9 @@ const Cards = () => {
                   <Icon height={'24'} iconId={'dropDownIcon'} viewBox={'0 0 24 24'} width={'24'} />
                 }
                 className={s.dropDownIcon}
-                edit={() => {}}
-                // edit={<Modals> 1</Modals>}
+                edit={editPackHandler}
                 learn={() => {}}
-                remove={() => {}}
+                remove={removePackHandler}
               />
             </div>
             <div className={s.deckImage}>

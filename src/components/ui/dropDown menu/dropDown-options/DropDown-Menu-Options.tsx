@@ -32,9 +32,6 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
     userName,
     ...rest
   } = props
-  const onClickLearnHandler = () => learn()
-  const onClickEditHandler = () => edit()
-  const onClickDeleteHandler = () => remove()
 
   return (
     <DropdownMenu.Root {...rest}>
@@ -44,21 +41,21 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content className={d.DropdownMenuContent} sideOffset={5}>
-          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={onClickLearnHandler}>
+          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={learn}>
             <span className={d.Icon}>
               <Icon height={'16'} iconId={'learn'} viewBox={'0 0 16 16'} width={'16'} />
             </span>
             <Typography variant={'caption'}>Learn</Typography>
           </DropdownMenu.Item>
           <hr className={d.Line} />
-          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={onClickEditHandler}>
+          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={edit}>
             <span className={d.Icon}>
               <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
             </span>
             <Typography variant={'caption'}>Edit</Typography>
           </DropdownMenu.Item>
           <hr className={d.Line} />
-          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={onClickDeleteHandler}>
+          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={remove}>
             <span className={d.Icon}>
               <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
             </span>
