@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
@@ -18,8 +18,8 @@ export type ModalsProps = {
   openState?: boolean
   showCloseButton?: boolean
   variant?: 'link' | 'secondary' | 'tertiary'
-} & ComponentProps<'div'>
-export const Modals = (props: ModalsProps) => {
+} & ComponentPropsWithoutRef<typeof Dialog.Root>
+export const Modals = forwardRef<ElementRef<typeof Dialog.Root>, ModalsProps>((props, ref) => {
   const {
     buttonIcon,
     buttonTitle,
@@ -44,7 +44,7 @@ export const Modals = (props: ModalsProps) => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={s.dialogOverlay} />
-        <Dialog.Content className={s.dialogContent}>
+        <Dialog.Content className={s.dialogContent} ref={ref}>
           {modalTitle && (
             <Dialog.Title className={s.dialogTitle}>
               <Typography variant={'h2'}>{modalTitle}</Typography>
@@ -67,4 +67,4 @@ export const Modals = (props: ModalsProps) => {
       </Dialog.Portal>
     </Dialog.Root>
   )
-}
+})

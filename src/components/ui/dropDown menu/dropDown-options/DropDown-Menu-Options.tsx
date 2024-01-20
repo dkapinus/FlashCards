@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType, ReactElement } from 'react'
 
 import { Icon } from '@/components/ui/icon/Icon'
+import { ModalsForOptions } from '@/components/ui/modals/modalsForOptoins/ModalsForOptions'
 import { Typography } from '@/components/ui/typography'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
@@ -10,7 +11,7 @@ export type DropDownMenuOptionsProps<T extends ElementType = 'button'> = {
   as?: T
   child: ReactElement
   className?: string
-  edit: () => void
+  edit: (event: Event) => void
   learn: () => void
   mail?: string
   remove: () => void
@@ -48,11 +49,19 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
             <Typography variant={'caption'}>Learn</Typography>
           </DropdownMenu.Item>
           <hr className={d.Line} />
-          <DropdownMenu.Item className={d.DropdownMenuItem} onClick={edit}>
-            <span className={d.Icon}>
-              <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
-            </span>
-            <Typography variant={'caption'}>Edit</Typography>
+          <DropdownMenu.Item className={d.DropdownMenuItem} onSelect={edit}>
+            <ModalsForOptions
+              buttonTitle={
+                <div className={d.modalTitle}>
+                  <span className={d.Icon}>
+                    <Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />
+                  </span>
+                  <Typography variant={'caption'}>Edit</Typography>
+                </div>
+              }
+              modalTitle={'Edit Pack'}
+              showCloseButton
+            ></ModalsForOptions>
           </DropdownMenu.Item>
           <hr className={d.Line} />
           <DropdownMenu.Item className={d.DropdownMenuItem} onClick={remove}>

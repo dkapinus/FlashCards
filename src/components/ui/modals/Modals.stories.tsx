@@ -6,7 +6,7 @@ const meta = {
   argTypes: {},
   component: Modals,
   tags: ['auto docs'],
-  title: 'Components/Modals',
+  title: 'Components/ModalsForOptions',
 } satisfies Meta<typeof Modals>
 
 type Story = StoryObj<typeof meta>
