@@ -96,18 +96,7 @@ const Cards = () => {
     }
     navigate('/')
   }
-  const editPackHandler = () => {
-    return (
-      <Modals
-        className={s.button}
-        // buttonIcon={<Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />}
-        defaultOpen
-        modalTitle={'Edit Pack'}
-        showCloseButton
-        variant={'secondary'}
-      ></Modals>
-    )
-  }
+  const editPackHandler = (e: Event) => e.preventDefault()
 
   const isLoginIn = !isError
 

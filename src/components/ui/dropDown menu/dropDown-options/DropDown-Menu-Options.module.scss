@@ -33,6 +33,10 @@ button {
   outline: none;
 }
 
+.modalTitle {
+  display: inline-flex;
+}
+
 .DropdownMenuItem[data-disabled] {
   pointer-events: none;
   color: var(--color-dark-100);
