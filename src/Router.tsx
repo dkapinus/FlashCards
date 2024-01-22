@@ -7,9 +7,9 @@ import {
 } from 'react-router-dom'
 
 import { EditProfile } from '@/components/auth/edit_profile'
-import Cards from '@/pages/cards/Cards'
-import Decks from '@/pages/decks/Decks'
+import TableDecks from '@/pages/decks/TableDecks'
 import LearnCards from '@/pages/learnCards/LearnCards'
+import Pack from '@/pages/pack/Pack'
 import { Page_404 } from '@/pages/page_404/Page_404'
 import { SignInPage } from '@/pages/sign_in_page'
 import { SignUpPage } from '@/pages/sign_up_page'
@@ -32,12 +32,12 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <Decks />,
+    element: <TableDecks />,
     path: '/',
   },
   {
-    element: <Cards />,
-    path: '/cards/:id',
+    element: <Pack />,
+    path: '/pack/:id',
   },
   {
     element: <LearnCards />,

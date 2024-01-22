@@ -6,7 +6,7 @@ export const decksSlice = createSlice({
     authorId: undefined as string | undefined,
     currentPage: 1,
     currentTab: 'all' as Tab,
-    maxCards: undefined as number | undefined,
+    maxCards: 100,
     minCards: 0,
     perPage: 10,
     search: '',
@@ -21,7 +21,7 @@ export const decksSlice = createSlice({
       state.currentTab = 'all'
       state.authorId = undefined
       state.minCards = 0
-      state.maxCards = undefined
+      state.maxCards = 100
       state.currentPage = 1
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {

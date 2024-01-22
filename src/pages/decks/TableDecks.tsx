@@ -1,5 +1,4 @@
 import { ChangeEvent, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
@@ -13,33 +12,46 @@ import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tabSwitcher'
 import { Tables } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { useAppDispatch, useAppSelector } from '@/services/Store'
 import { useMeQuery } from '@/services/auth/auth.service'
-import { selectDecksCurrentPage } from '@/services/decks_Api/Decks.selectors'
+import {
+  selectDecksAuthorId,
+  selectDecksCurrentPage,
+  selectDecksCurrentTab,
+  selectDecksMaxCards,
+  selectDecksMinCards,
+  selectDecksSearch,
+} from '@/services/decks_Api/Decks.selectors'
 import {
   useCreateDecksMutation,
   useDeleteDecksMutation,
   useGetDecksQuery,
   useUpdateDecksMutation,
 } from '@/services/decks_Api/Decks.service'
+import { decksSlice } from '@/services/decks_Api/Decks.slice'
 
-import s from './Decks.module.scss'
+import s from './TableDecks.module.scss'
 
 import deckPhoto from '../../assets/images/deckPhoto.svg'
 
-export const Decks = () => {
+export const TableDecks = () => {
+  const dispatch = useAppDispatch()
+
   const [view, setView] = useState('10')
-  const [name, setInputValue] = useState('')
   const [packName, setPackName] = useState('')
   const [isPrivatePack, setIsPrivatePack] = useState<boolean>(false)
-  const [minCardsCount, setMinCardsCount] = useState<number>(0)
-  const [maxCardsCount, setMaxCardsCount] = useState<number>(0)
-  const [authorId, setAuthorId] = useState('')
   const [photo, setPhoto] = useState<File>()
-  const [currentPage, setCurrentPage] = useState(useSelector(selectDecksCurrentPage))
+
+  const nameSearch = useAppSelector(selectDecksSearch)
+  const maxCardsCount = useAppSelector(selectDecksMaxCards)
+  const minCardsCount = useAppSelector(selectDecksMinCards)
+  const currentPage = useAppSelector(selectDecksCurrentPage)
+  const authorId = useAppSelector(selectDecksAuthorId)
+  const tab = useAppSelector(selectDecksCurrentTab)
 
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
-    navigate('/cards/' + deckId)
+    navigate('/pack/' + deckId)
   }
 
   const onClickLearn = (deckId: string) => {
@@ -47,12 +59,12 @@ export const Decks = () => {
   }
   const setPage = (currentPage: number) => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage)
+      dispatch(decksSlice.actions.setCurrentPage(currentPage))
     }
   }
 
   const setInputSearch = (value: string) => {
-    setInputValue(value)
+    dispatch(decksSlice.actions.setSearch(value))
   }
   const onclickPrivatePack = () => {
     setIsPrivatePack(!isPrivatePack)
@@ -79,7 +91,7 @@ export const Decks = () => {
     currentPage,
     maxCardsCount,
     minCardsCount,
-    name,
+    name: nameSearch,
   })
   const { data: userData, isError } = useMeQuery()
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
@@ -89,18 +101,18 @@ export const Decks = () => {
   const isOwner = userData?.id
 
   const sortByAuthor = (value: string) => {
-    if (value === 'My Cards') {
+    if (value === 'My Pack') {
       const authorId = userData?.id || ''
 
-      setAuthorId(authorId)
+      dispatch(decksSlice.actions.setCurrentTab({ authorId: authorId, tab: 'my' }))
     } else {
-      setAuthorId('')
+      dispatch(decksSlice.actions.setCurrentTab({ authorId: '', tab: 'all' }))
     }
   }
 
   const filterCards = (e: number[]) => {
-    setMinCardsCount(e[0])
-    setMaxCardsCount(e[1])
+    dispatch(decksSlice.actions.setMinCards(e[0]))
+    dispatch(decksSlice.actions.setMaxCards(e[1]))
   }
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -196,24 +208,24 @@ export const Decks = () => {
             onPressEnter={() => {}}
             onValueChange={setInputSearch}
             type={'search'}
-            value={name}
+            value={nameSearch}
           />
           <div>
             <Typography className={s.TabSwitcherTitle} variant={'body2'}>
               Show packs cards
             </Typography>
             <TabSwitcher
-              defaultValue={'All Cards'}
+              defaultValue={'All Pack'}
               onValueChange={sortByAuthor}
               tabs={[
-                { title: 'My Cards', value: 'My Cards' },
-                { title: 'All Cards', value: 'All Cards' },
+                { title: 'My Pack', value: 'My Pack' },
+                { title: 'All Pack', value: 'All Pack' },
               ]}
             />
           </div>
           <Slider
             max={data && data.maxCardsCount}
-            propsValue={[minCardsCount, data ? data.maxCardsCount : 100]}
+            propsValue={[minCardsCount, data ? data.maxCardsCount : maxCardsCount]}
             title={'Number of cards'}
             valueChange={filterCards}
           />
@@ -362,4 +374,4 @@ export const Decks = () => {
   )
 }
 
-export default Decks
+export default TableDecks
