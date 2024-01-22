@@ -5,9 +5,10 @@ export const decksSlice = createSlice({
   initialState: {
     authorId: undefined as string | undefined,
     currentPage: 1,
-    currentTab: 'all' as Tab,
-    maxCards: 100,
+    currentTab: 'All Pack' as Tab,
+    maxCards: undefined as number | undefined,
     minCards: 0,
+    name: '',
     perPage: 10,
     search: '',
   },
@@ -18,10 +19,10 @@ export const decksSlice = createSlice({
     },
     resetFilters: state => {
       state.search = ''
-      state.currentTab = 'all'
+      state.currentTab = 'All Pack'
       state.authorId = undefined
       state.minCards = 0
-      state.maxCards = 100
+      state.maxCards = undefined
       state.currentPage = 1
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {
@@ -36,6 +37,9 @@ export const decksSlice = createSlice({
     },
     setMinCards: (state, action: PayloadAction<number>) => {
       state.minCards = action.payload
+    },
+    setName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload
     },
     setPerPage: (state, action: PayloadAction<number>) => {
       state.perPage = action.payload

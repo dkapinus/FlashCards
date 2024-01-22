@@ -20,6 +20,7 @@ import {
   selectDecksCurrentTab,
   selectDecksMaxCards,
   selectDecksMinCards,
+  selectDecksName,
   selectDecksSearch,
 } from '@/services/decks_Api/Decks.selectors'
 import {
@@ -38,7 +39,6 @@ export const TableDecks = () => {
   const dispatch = useAppDispatch()
 
   const [view, setView] = useState('10')
-  const [packName, setPackName] = useState('')
   const [isPrivatePack, setIsPrivatePack] = useState<boolean>(false)
   const [photo, setPhoto] = useState<File>()
 
@@ -47,7 +47,22 @@ export const TableDecks = () => {
   const minCardsCount = useAppSelector(selectDecksMinCards)
   const currentPage = useAppSelector(selectDecksCurrentPage)
   const authorId = useAppSelector(selectDecksAuthorId)
+  const packName = useAppSelector(selectDecksName)
   const tab = useAppSelector(selectDecksCurrentTab)
+
+  const { data, error, isLoading } = useGetDecksQuery({
+    authorId,
+    currentPage,
+    maxCardsCount,
+    minCardsCount,
+    name: nameSearch,
+  })
+  const { data: userData, isError } = useMeQuery()
+  const [createDeck, deckCreationStatus] = useCreateDecksMutation()
+  const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
+  const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
+
+  const isOwner = userData?.id
 
   const navigate = useNavigate()
   const onClickCards = (deckId: string) => {
@@ -82,31 +97,17 @@ export const TableDecks = () => {
     formData.append('name', packName)
 
     createDeck(formData)
-    setPackName('')
+    dispatch(decksSlice.actions.setName(''))
     setIsPrivatePack(false)
   }
-
-  const { data, error, isLoading } = useGetDecksQuery({
-    authorId: authorId,
-    currentPage,
-    maxCardsCount,
-    minCardsCount,
-    name: nameSearch,
-  })
-  const { data: userData, isError } = useMeQuery()
-  const [createDeck, deckCreationStatus] = useCreateDecksMutation()
-  const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
-  const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
-
-  const isOwner = userData?.id
 
   const sortByAuthor = (value: string) => {
     if (value === 'My Pack') {
       const authorId = userData?.id || ''
 
-      dispatch(decksSlice.actions.setCurrentTab({ authorId: authorId, tab: 'my' }))
+      dispatch(decksSlice.actions.setCurrentTab({ authorId: authorId, tab: 'My Pack' }))
     } else {
-      dispatch(decksSlice.actions.setCurrentTab({ authorId: '', tab: 'all' }))
+      dispatch(decksSlice.actions.setCurrentTab({ authorId: '', tab: 'All Pack' }))
     }
   }
 
@@ -116,6 +117,10 @@ export const TableDecks = () => {
   }
 
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const onClickResetFilter = () => {
+    dispatch(decksSlice.actions.resetFilters())
+  }
 
   const selectFileHandler = () => {
     inputRef && inputRef.current?.click()
@@ -135,10 +140,10 @@ export const TableDecks = () => {
   }
 
   const onChangeNamePack = (value: string) => {
-    setPackName(value)
+    dispatch(decksSlice.actions.setName(value))
   }
   const cancelDecksModal = () => {
-    setPackName('')
+    dispatch(decksSlice.actions.setName(''))
   }
 
   if (isLoading) {
@@ -215,21 +220,21 @@ export const TableDecks = () => {
               Show packs cards
             </Typography>
             <TabSwitcher
-              defaultValue={'All Pack'}
               onValueChange={sortByAuthor}
               tabs={[
                 { title: 'My Pack', value: 'My Pack' },
                 { title: 'All Pack', value: 'All Pack' },
               ]}
+              value={tab}
             />
           </div>
           <Slider
             max={data && data.maxCardsCount}
-            propsValue={[minCardsCount, data ? data.maxCardsCount : maxCardsCount]}
+            propsValue={[minCardsCount, data ? data.maxCardsCount : 100]}
             title={'Number of cards'}
             valueChange={filterCards}
           />
-          <Button variant={'secondary'}>
+          <Button onClick={onClickResetFilter} variant={'secondary'}>
             <>
               <Icon height={'16'} iconId={'delete'} viewBox={'0 0 16 16'} width={'16'} />
               Clear Filter

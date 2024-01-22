@@ -54,7 +54,7 @@ const decksService = baseApi.injectEndpoints({
           const state = getState() as RootState
 
           const minCardsCount = state.decks.minCards
-          const search = state.decks.search
+          const nameSearch = state.decks.search
           const currentPage = state.decks.currentPage
           const maxCardsCount = state.decks.maxCards
           const authorId = state.decks.authorId
@@ -67,14 +67,15 @@ const decksService = baseApi.injectEndpoints({
                 currentPage,
                 maxCardsCount,
                 minCardsCount,
-                name: search,
+                name: nameSearch,
               },
               draft => {
                 const deck = draft.items.find(deck => deck.id === id)
 
                 if (!deck) {
-                  Object.assign({ deck }, { deck, ...patch })
+                  return
                 }
+                Object.assign(deck, patch)
               }
             )
           )

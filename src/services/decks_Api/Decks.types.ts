@@ -64,4 +64,4 @@ export interface GetDeckById {
   userId: string
 }
 
-export type Tab = 'all' | 'my'
+export type Tab = 'All Pack' | 'My Pack'

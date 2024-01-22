@@ -13,3 +13,5 @@ export const selectDecksAuthorId = (state: RootState) => state.decks.authorId
 export const selectDecksMinCards = (state: RootState) => state.decks.minCards
 
 export const selectDecksMaxCards = (state: RootState) => state.decks.maxCards
+
+export const selectDecksName = (state: RootState) => state.decks.name
