@@ -20,11 +20,11 @@ import {
 } from '@/services/cards_Api/Cards.service'
 import { useDeleteDecksMutation, useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
 
-import s from './Cards.module.scss'
+import s from './Pack.module.scss'
 
 import deckPhoto from '../../assets/images/deckPhoto.svg'
 
-const Cards = () => {
+const Pack = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [questionSearch, setInputValue] = useState('')
@@ -341,4 +341,4 @@ const Cards = () => {
   )
 }
 
-export default Cards
+export default Pack
