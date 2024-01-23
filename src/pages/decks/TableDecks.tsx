@@ -135,7 +135,19 @@ export const TableDecks = () => {
   }
 
   const UpDatePack = (id: string, deckName: string) => {
-    updatePack({ id: id, isPrivate: isPrivatePack, name: packName === '' ? deckName : packName })
+    const formData = new FormData()
+    const name = packName === '' ? deckName : packName
+
+    if (photo) {
+      formData.append('cover', photo)
+    }
+
+    formData.append('isPrivate', String(isPrivatePack))
+
+    formData.append('name', name)
+
+    // updatePack({ id: id, isPrivate: isPrivatePack, name: packName === '' ? deckName : packName })
+    updatePack({ body: formData, id: id })
     setIsPrivatePack(false)
   }
 
@@ -334,6 +346,25 @@ export const TableDecks = () => {
                         >
                           <div>
                             <img className={s.createPhoto} src={deck.cover || deckPhoto} />
+                          </div>
+                          <div>
+                            <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
+                              <Icon
+                                height={'16'}
+                                iconId={'changeCover'}
+                                viewBox={'0 0 16 16'}
+                                width={'16'}
+                              />
+                              Change cover
+                            </Button>
+                            <div>
+                              <Input
+                                onChange={onUploadPhoto}
+                                ref={inputRef}
+                                style={{ display: 'none', height: '0' }}
+                                type={'file'}
+                              />
+                            </div>
                           </div>
                           <div>
                             <Input

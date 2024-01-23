@@ -113,7 +113,7 @@ const Pack = () => {
           <div>
             <div className={s.name_Pack}>
               <Typography variant={'large'}>{deck?.name}</Typography>
-              {deck && (
+              {deck && isOwner && (
                 <DropDownMenuOptions
                   child={
                     <Icon
