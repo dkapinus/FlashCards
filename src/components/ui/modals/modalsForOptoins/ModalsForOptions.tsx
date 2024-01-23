@@ -30,8 +30,6 @@ export const ModalsForOptions = forwardRef<ElementRef<typeof Dialog.Root>, Modal
       showCloseButton,
     } = props
 
-    console.log('modal')
-
     return (
       <Dialog.Root defaultOpen={defaultOpen}>
         <Dialog.Trigger asChild>
