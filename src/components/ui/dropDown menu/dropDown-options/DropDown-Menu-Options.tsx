@@ -18,13 +18,14 @@ import { GetDeckById } from '@/services/decks_Api/Decks.types'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import d from './DropDown-Menu-Options.module.scss'
-import s from '@/pages/pack/Pack.module.scss'
+
+import deckPhoto from '../../../../assets/images/deckPhoto.svg'
 
 export type DropDownMenuOptionsProps<T extends ElementType = 'button'> = {
   as?: T
   child: ReactElement
   className?: string
-  deck: GetDeckById | undefined
+  deck: GetDeckById
   edit: (event: Event) => void
   learn: () => void
   mail?: string
@@ -49,16 +50,15 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
     ...rest
   } = props
 
+  const [updatePack] = useUpdateDecksMutation({})
+  const [isPrivatePack, setIsPrivatePack] = useState<boolean>(deck.isPrivate)
+  const [packName, setPackName] = useState(deck.name)
+  const [photo, setPhoto] = useState<File>()
+
   const inputRef = useRef<HTMLInputElement>(null)
   const selectFileHandler = () => {
     inputRef && inputRef.current?.click()
   }
-  const [updatePack] = useUpdateDecksMutation({})
-
-  const [isPrivatePack, setIsPrivatePack] = useState<boolean | undefined>(deck?.isPrivate)
-
-  const [packName, setPackName] = useState('')
-  const [photo, setPhoto] = useState<File>()
 
   const onUploadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0]
@@ -70,29 +70,31 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
   }
   const onclickPrivatePack = () => {
     setIsPrivatePack(!isPrivatePack)
-    console.log(`isPrivatePack after onclick: ${isPrivatePack}`)
   }
 
   const UpDatePack = (id: string, deckName: string) => {
     const formData = new FormData()
+    const name = packName === '' ? deckName : packName
 
     if (photo) {
       formData.append('cover', photo)
     }
-    // if (isPrivatePack) {
-    //   formData.append('isPrivate', String(isPrivatePack))
-    // }
-    //
-    // formData.append('name', deckName)
-    //
-    // updatePack(formData)
 
-    updatePack({
-      cover: formData,
-      id: id,
-      isPrivate: isPrivatePack,
-      name: packName === '' ? deckName : packName,
-    })
+    formData.append('isPrivate', String(isPrivatePack))
+
+    formData.append('name', name)
+
+    updatePack({ body: formData, id: id })
+
+    // if (isPrivatePack) {
+    //   updatePack({
+    //     cover: formData,
+    //     id: id,
+    //     isPrivate: isPrivatePack,
+    //     name: packName === '' ? deckName : packName,
+    //   })
+    // }
+
     console.log(formData)
     console.log(`isPrivatePack for server: ${isPrivatePack}`)
   }
@@ -128,9 +130,7 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
                 </Button>,
                 <Button
                   onClick={() => {
-                    if (deck) {
-                      UpDatePack(deck.id, deck.name)
-                    }
+                    UpDatePack(deck.id, deck.name)
                   }}
                   variant={'primary'}
                 >
@@ -140,7 +140,13 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
               modalTitle={'Edit Pack'}
               showCloseButton
             >
-              <img alt={''} className={s.createPhoto} src={deck?.cover} />
+              <div>
+                <img
+                  alt={''}
+                  className={d.createPhoto}
+                  src={deck?.cover ? deck?.cover : deckPhoto}
+                />
+              </div>
               <div>
                 <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
                   Change cover
@@ -156,16 +162,12 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
               </div>
 
               <div>
-                <Input
-                  defaultValue={deck?.name}
-                  label={'Name Pack'}
-                  onValueChange={onChangeNamePack}
-                />
+                <Input label={'Name Pack'} onValueChange={onChangeNamePack} value={packName} />
               </div>
 
               <div>
                 <Checkbox
-                  defaultChecked={deck?.isPrivate}
+                  checked={isPrivatePack}
                   label={'Private pack'}
                   onClick={onclickPrivatePack}
                 />
