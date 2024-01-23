@@ -18,10 +18,9 @@ export type DeleteDecksArg = {
   id: string
 }
 
-export type UpdateDeckArg = {
-  cover?: FormData
-  isPrivate?: boolean
-  name: string
+export type UpdateDeckParamsType = {
+  body: FormData
+  id: string
 }
 export interface Item {
   author: Author

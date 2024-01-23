@@ -113,15 +113,23 @@ const Pack = () => {
           <div>
             <div className={s.name_Pack}>
               <Typography variant={'large'}>{deck?.name}</Typography>
-              <DropDownMenuOptions
-                child={
-                  <Icon height={'24'} iconId={'dropDownIcon'} viewBox={'0 0 24 24'} width={'24'} />
-                }
-                className={s.dropDownIcon}
-                edit={editPackHandler}
-                learn={() => {}}
-                remove={removePackHandler}
-              />
+              {deck && (
+                <DropDownMenuOptions
+                  child={
+                    <Icon
+                      height={'24'}
+                      iconId={'dropDownIcon'}
+                      viewBox={'0 0 24 24'}
+                      width={'24'}
+                    />
+                  }
+                  className={s.dropDownIcon}
+                  deck={deck}
+                  edit={editPackHandler}
+                  learn={onClickLearnCards}
+                  remove={removePackHandler}
+                />
+              )}
             </div>
             <div className={s.deckImage}>
               {' '}

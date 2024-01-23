@@ -5,7 +5,7 @@ import {
   GetDeckById,
   GetDecksArgs,
   GetDecksResponse,
-  UpdateDeckArg,
+  UpdateDeckParamsType,
 } from '@/services/decks_Api/Decks.types'
 
 const decksService = baseApi.injectEndpoints({
@@ -48,9 +48,9 @@ const decksService = baseApi.injectEndpoints({
           }
         },
       }),
-      updateDecks: builder.mutation<void, UpdateDeckArg & DeleteDecksArg>({
+      updateDecks: builder.mutation<void, UpdateDeckParamsType>({
         invalidatesTags: ['Decks'],
-        async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
+        async onQueryStarted({ body, id }, { dispatch, getState, queryFulfilled }) {
           const state = getState() as RootState
 
           const minCardsCount = state.decks.minCards
@@ -75,7 +75,7 @@ const decksService = baseApi.injectEndpoints({
                 if (!deck) {
                   return
                 }
-                Object.assign(deck, patch)
+                Object.assign(deck, body)
               }
             )
           )
@@ -86,9 +86,10 @@ const decksService = baseApi.injectEndpoints({
             patchResult.undo()
           }
         },
-        query: ({ id, ...arg }) => {
+        query: ({ body, id }) => {
           return {
-            body: arg,
+            body,
+            formData: true,
             method: 'PATCH',
             url: `v1/decks/${id}`,
           }
