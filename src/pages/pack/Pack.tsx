@@ -7,17 +7,14 @@ import { Icon } from '@/components/ui/icon/Icon'
 import { Input } from '@/components/ui/input'
 import { Layout } from '@/components/ui/layout/Layout'
 import { Modals } from '@/components/ui/modals'
+import { ModalsAddNewCard } from '@/components/ui/modals/modalsAddNewCard/modalsAddNewCard'
+import { ModalsEditCard } from '@/components/ui/modals/modalsEditCard/modalsEditCard'
 import { Pagination } from '@/components/ui/pagination'
 import { Rating } from '@/components/ui/table/rating/Rating'
 import { Tables } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
-import {
-  useCreateCardsMutation,
-  useDeleteCardsMutation,
-  useGetCardsQuery,
-  useUpdateCardsMutation,
-} from '@/services/cards_Api/Cards.service'
+import { useDeleteCardsMutation, useGetCardsQuery } from '@/services/cards_Api/Cards.service'
 import { useDeleteDecksMutation, useGetDecksByIdQuery } from '@/services/decks_Api/Decks.service'
 
 import s from './Pack.module.scss'
@@ -28,10 +25,10 @@ const Pack = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [questionSearch, setInputValue] = useState('')
-  const [createPackAnswer, setCreatePackAnswer] = useState('')
-  const [createPackQuestion, setCreatePackQuestion] = useState('')
+  // const [createPackAnswer, setCreatePackAnswer] = useState('')
+  // const [createPackQuestion, setCreatePackQuestion] = useState('')
   const [deleteCard, cardDeleteStatus] = useDeleteCardsMutation()
-  const [updatePack, deckUpdateStatus] = useUpdateCardsMutation({})
+  // const [, deckUpdateStatus] = useUpdateCardsMutation({})
 
   const params = useParams()
 
@@ -46,7 +43,6 @@ const Pack = () => {
   const { data: userData, isError } = useMeQuery()
 
   const userId = deck?.userId
-  const [createCard, cardCreationStatus] = useCreateCardsMutation({})
   const [deletePack] = useDeleteDecksMutation()
 
   const isEmpty = data && data.pagination.totalItems === 0
@@ -54,10 +50,6 @@ const Pack = () => {
 
   const DeleteCard = (id: string) => {
     deleteCard({ id: id })
-  }
-
-  const UpDatePack = (id: string) => {
-    updatePack({ answer: createPackAnswer, id: id, question: createPackQuestion })
   }
 
   const setPage = (currentPage: number) => {
@@ -68,23 +60,6 @@ const Pack = () => {
 
   const setInputSearch = (value: string) => {
     setInputValue(value)
-  }
-
-  const onChangeAnswer = (value: string) => {
-    setCreatePackAnswer(value)
-  }
-
-  const onChangeQuestion = (value: string) => {
-    setCreatePackQuestion(value)
-  }
-
-  const cancelModals = () => {
-    setCreatePackAnswer('')
-    setCreatePackQuestion('')
-  }
-
-  const onClickCreatePack = () => {
-    createCard({ answer: createPackAnswer, id: deckId, question: createPackQuestion })
   }
 
   const onClickLearnCards = () => {
@@ -145,28 +120,7 @@ const Pack = () => {
               </div>
               {isOwner && (
                 <div className={s.modal_empty_owner}>
-                  <Modals
-                    buttonTitle={'Add New Card'}
-                    buttonsInFooter={[
-                      <Button onClick={cancelModals} variant={'secondary'}>
-                        Cancel
-                      </Button>,
-                      <Button
-                        disabled={cardCreationStatus.isLoading}
-                        onClick={onClickCreatePack}
-                        variant={'primary'}
-                      >
-                        Add New Card
-                      </Button>,
-                    ]}
-                    modalTitle={'Add New Card'}
-                    showCloseButton
-                  >
-                    <Input label={'Question'} onValueChange={onChangeQuestion} />
-                    <div>
-                      <Input label={'Answer'} onValueChange={onChangeAnswer} />
-                    </div>
-                  </Modals>
+                  <ModalsAddNewCard deck={deck} />
                 </div>
               )}
             </div>
@@ -174,28 +128,7 @@ const Pack = () => {
             <>
               <div className={s.button}>
                 {isOwner ? (
-                  <Modals
-                    buttonTitle={'Add New Card'}
-                    buttonsInFooter={[
-                      <Button onClick={cancelModals} variant={'secondary'}>
-                        Cancel
-                      </Button>,
-                      <Button
-                        disabled={cardCreationStatus.isLoading}
-                        onClick={onClickCreatePack}
-                        variant={'primary'}
-                      >
-                        Add New Card
-                      </Button>,
-                    ]}
-                    modalTitle={'Add New Card'}
-                    showCloseButton
-                  >
-                    <Input label={'Question'} onValueChange={onChangeQuestion} />
-                    <div>
-                      <Input label={'Answer'} onValueChange={onChangeAnswer} />
-                    </div>
-                  </Modals>
+                  <ModalsAddNewCard deck={deck} />
                 ) : (
                   <Button onClick={onClickLearnCards} variant={'primary'}>
                     Learn Cards
@@ -253,9 +186,8 @@ const Pack = () => {
                                     />
                                   }
                                   buttonsInFooter={[
-                                    <Button onClick={cancelModals} variant={'secondary'}>
-                                      Cancel
-                                    </Button>,
+                                    // <Button onClick={cancelModals} variant={'secondary'}>
+                                    <Button variant={'secondary'}>Cancel</Button>,
                                     <Button
                                       disabled={cardDeleteStatus.isLoading}
                                       onClick={() => DeleteCard(card.id)}
@@ -274,49 +206,7 @@ const Pack = () => {
                                     Do you really want to remove Card Name? Card will be deleted.
                                   </div>
                                 </Modals>
-                                <Modals
-                                  buttonIcon={
-                                    <Icon
-                                      height={'16'}
-                                      iconId={'edit'}
-                                      viewBox={'0 0 16 16'}
-                                      width={'16'}
-                                    />
-                                  }
-                                  buttonsInFooter={[
-                                    <Button onClick={cancelModals} variant={'secondary'}>
-                                      Cancel
-                                    </Button>,
-                                    <Button
-                                      disabled={deckUpdateStatus.isLoading}
-                                      onClick={() => UpDatePack(card.id)}
-                                      variant={'primary'}
-                                    >
-                                      Save Changes
-                                    </Button>,
-                                  ]}
-                                  className={s.modals}
-                                  disabled={deckUpdateStatus.isLoading}
-                                  modalTitle={'Edit Pack'}
-                                  showCloseButton
-                                  variant={'secondary'}
-                                >
-                                  <div>
-                                    <Input
-                                      defaultValue={card.question}
-                                      label={'Question'}
-                                      onValueChange={onChangeQuestion}
-                                    />
-                                  </div>
-
-                                  <div>
-                                    <Input
-                                      defaultValue={card.answer}
-                                      label={'Answer'}
-                                      onValueChange={onChangeAnswer}
-                                    />
-                                  </div>
-                                </Modals>
+                                <ModalsEditCard card={card} />
                               </div>
                             )}
                           </Tables.Cell>

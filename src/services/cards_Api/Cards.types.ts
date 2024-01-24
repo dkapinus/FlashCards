@@ -28,8 +28,10 @@ export interface Pagination {
 
 export type CreateCardArg = {
   answer?: string
+  answerImg?: string
   id?: string
   question?: string
+  questionImg?: string
 }
 
 export type DeleteCardsArg = {

@@ -2,6 +2,7 @@ import { ChangeEvent, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
+import { ChangeCoverButton } from '@/components/ui/button/changeCoverButton/changeCoverButton'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Input } from '@/components/ui/input'
@@ -196,19 +197,11 @@ export const TableDecks = () => {
             showCloseButton
           >
             <img alt={''} className={s.createPhoto} src={deckPhoto} />
-            <div>
-              <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
-                Change cover
-              </Button>
-              <div>
-                <Input
-                  onChange={onUploadPhoto}
-                  ref={inputRef}
-                  style={{ display: 'none', height: '0' }}
-                  type={'file'}
-                />
-              </div>
-            </div>
+            <ChangeCoverButton
+              inputRef={inputRef}
+              onUploadPhoto={onUploadPhoto}
+              selectFileHandler={selectFileHandler}
+            />
 
             <div>
               <Input label={'Name Pack'} onValueChange={onChangeNamePack} />
@@ -347,25 +340,11 @@ export const TableDecks = () => {
                           <div>
                             <img className={s.createPhoto} src={deck.cover || deckPhoto} />
                           </div>
-                          <div>
-                            <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
-                              <Icon
-                                height={'16'}
-                                iconId={'changeCover'}
-                                viewBox={'0 0 16 16'}
-                                width={'16'}
-                              />
-                              Change cover
-                            </Button>
-                            <div>
-                              <Input
-                                onChange={onUploadPhoto}
-                                ref={inputRef}
-                                style={{ display: 'none', height: '0' }}
-                                type={'file'}
-                              />
-                            </div>
-                          </div>
+                          <ChangeCoverButton
+                            inputRef={inputRef}
+                            onUploadPhoto={onUploadPhoto}
+                            selectFileHandler={selectFileHandler}
+                          />
                           <div>
                             <Input
                               defaultValue={deck.name}

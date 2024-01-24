@@ -8,6 +8,7 @@ import {
 } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { ChangeCoverButton } from '@/components/ui/button/changeCoverButton/changeCoverButton'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Input } from '@/components/ui/input'
@@ -136,21 +137,11 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
                   src={deck?.cover ? deck?.cover : deckPhoto}
                 />
               </div>
-              <div>
-                <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
-                  <Icon height={'16'} iconId={'changeCover'} viewBox={'0 0 16 16'} width={'16'} />
-                  Change cover
-                </Button>
-                <div>
-                  <Input
-                    onChange={onUploadPhoto}
-                    ref={inputRef}
-                    style={{ display: 'none', height: '0' }}
-                    type={'file'}
-                  />
-                </div>
-              </div>
-
+              <ChangeCoverButton
+                inputRef={inputRef}
+                onUploadPhoto={onUploadPhoto}
+                selectFileHandler={selectFileHandler}
+              />
               <div>
                 <Input label={'Name Pack'} onValueChange={onChangeNamePack} value={packName} />
               </div>
