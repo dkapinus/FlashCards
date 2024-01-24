@@ -71,7 +71,6 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
   const onclickPrivatePack = () => {
     setIsPrivatePack(!isPrivatePack)
   }
-
   const UpDatePack = (id: string, deckName: string) => {
     const formData = new FormData()
     const name = packName === '' ? deckName : packName
@@ -86,23 +85,13 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
 
     updatePack({ body: formData, id: id })
 
-    // if (isPrivatePack) {
-    //   updatePack({
-    //     cover: formData,
-    //     id: id,
-    //     isPrivate: isPrivatePack,
-    //     name: packName === '' ? deckName : packName,
-    //   })
-    // }
-
     console.log(formData)
     console.log(`isPrivatePack for server: ${isPrivatePack}`)
   }
 
   return (
     <DropdownMenu.Root {...rest}>
-      {/*<DropdownMenu.Trigger asChild style={{ marginLeft: '50%' }}>*/}
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger asChild className={d.trigger}>
         <button className={`${d.IconButton} ${className}`}>{child}</button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
@@ -149,6 +138,7 @@ export const DropDownMenuOptions = <T extends ElementType = 'button'>(
               </div>
               <div>
                 <Button fullWidth onClick={selectFileHandler} variant={'secondary'}>
+                  <Icon height={'16'} iconId={'changeCover'} viewBox={'0 0 16 16'} width={'16'} />
                   Change cover
                 </Button>
                 <div>
