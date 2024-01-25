@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { ChangeCoverButton } from '@/components/ui/button/changeCoverButton/changeCoverButton'
 import { Icon } from '@/components/ui/icon/Icon'
 import { Input } from '@/components/ui/input'
 import { Modals } from '@/components/ui/modals'
 import { useUpdateCardsMutation } from '@/services/cards_Api/Cards.service'
 import { Item } from '@/services/cards_Api/Cards.types'
 
-import s from '@/pages/pack/Pack.module.scss'
+import s from '@/components/ui/modals/modalsEditCard/modalsEditCard.module.scss'
 
 type EditCard = {
   card: Item
@@ -15,28 +16,60 @@ type EditCard = {
 export const ModalsEditCard = (props: EditCard) => {
   const { card } = props
   const [updateCard, cardUpdateStatus] = useUpdateCardsMutation({})
-  const [createPackAnswer, setCreatePackAnswer] = useState('')
-  const [createPackQuestion, setCreatePackQuestion] = useState('')
+  const [cardAnswer, setCardAnswer] = useState('')
+  const [cardQuestion, setCardQuestion] = useState('')
+  const [answerPhoto, setAnswerPhoto] = useState<File | null>(null)
+  const [questionPhoto, setQuestionPhoto] = useState<File | null>(null)
+  const inputRefQuestion = useRef<HTMLInputElement>(null)
+  const inputRefAnswer = useRef<HTMLInputElement>(null)
+
+  console.log(card.answerImg)
+  const selectFileHandlerQuestion = () => {
+    inputRefQuestion && inputRefQuestion.current?.click()
+  }
+  const selectFileHandlerAnswer = () => {
+    inputRefAnswer && inputRefAnswer.current?.click()
+  }
+  const onUploadQuestionPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0]
+
+    setQuestionPhoto(file)
+  }
+  const onUploadAnswerPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0]
+
+    setAnswerPhoto(file)
+  }
   const onChangeAnswer = (value: string) => {
-    setCreatePackAnswer(value)
+    setCardAnswer(value)
   }
 
   const onChangeQuestion = (value: string) => {
-    setCreatePackQuestion(value)
+    setCardQuestion(value)
   }
-  const UpDatePack = (id: string) => {
-    updateCard({ answer: createPackAnswer, id: id, question: createPackQuestion })
+  const UpDateCard = (id: string) => {
+    const formData = new FormData()
+
+    questionPhoto && formData.append('questionImg', questionPhoto)
+    answerPhoto && formData.append('answerImg', answerPhoto)
+
+    formData.append('question', cardQuestion)
+    formData.append('answer', cardAnswer)
+
+    updateCard({ body: formData, id: id })
+
+    setAnswerPhoto(null)
+    setQuestionPhoto(null)
   }
 
   return (
     <Modals
       buttonIcon={<Icon height={'16'} iconId={'edit'} viewBox={'0 0 16 16'} width={'16'} />}
       buttonsInFooter={[
-        // <Button onClick={cancelModals} variant={'secondary'}>
         <Button variant={'secondary'}>Cancel</Button>,
         <Button
           disabled={cardUpdateStatus.isLoading}
-          onClick={() => UpDatePack(card.id)}
+          onClick={() => UpDateCard(card.id)}
           variant={'primary'}
         >
           Save Changes
@@ -51,10 +84,43 @@ export const ModalsEditCard = (props: EditCard) => {
       <div>
         <Input defaultValue={card.question} label={'Question'} onValueChange={onChangeQuestion} />
       </div>
-
+      {questionPhoto !== null ? (
+        <div>
+          <img
+            alt={'Question Photo'}
+            className={s.photo}
+            src={URL.createObjectURL(questionPhoto)}
+          />
+        </div>
+      ) : (
+        <div>
+          <img alt={'Question Photo'} className={s.photo} src={card.questionImg} />
+        </div>
+      )}
+      <ChangeCoverButton
+        inputRef={inputRefQuestion}
+        name={'Select question image'}
+        onUploadPhoto={onUploadQuestionPhoto}
+        selectFileHandler={selectFileHandlerQuestion}
+      />
       <div>
         <Input defaultValue={card.answer} label={'Answer'} onValueChange={onChangeAnswer} />
       </div>
+      {answerPhoto !== null ? (
+        <div>
+          <img alt={'Answer Photo'} className={s.photo} src={URL.createObjectURL(answerPhoto)} />
+        </div>
+      ) : (
+        <div>
+          <img alt={'Answer Photo'} className={s.photo} src={card.answerImg} />
+        </div>
+      )}
+      <ChangeCoverButton
+        inputRef={inputRefAnswer}
+        name={'Select answer image'}
+        onUploadPhoto={onUploadAnswerPhoto}
+        selectFileHandler={selectFileHandlerAnswer}
+      />
     </Modals>
   )
 }

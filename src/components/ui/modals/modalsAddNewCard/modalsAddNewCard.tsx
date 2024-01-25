@@ -1,6 +1,5 @@
 import { ChangeEvent, useRef, useState } from 'react'
 
-import deckPhoto from '@/assets/images/deckPhoto.svg'
 import { Button } from '@/components/ui/button'
 import { ChangeCoverButton } from '@/components/ui/button/changeCoverButton/changeCoverButton'
 import { Input } from '@/components/ui/input'
@@ -8,7 +7,7 @@ import { Modals } from '@/components/ui/modals'
 import { useCreateCardsMutation } from '@/services/cards_Api/Cards.service'
 import { GetDeckById } from '@/services/decks_Api/Decks.types'
 
-import s from '@/pages/decks/TableDecks.module.scss'
+import s from '@/components/ui/modals/modalsAddNewCard/modalsAddNewCard.module.scss'
 
 type AddNewCard = {
   deck: GetDeckById | undefined
@@ -16,39 +15,56 @@ type AddNewCard = {
 export const ModalsAddNewCard = (props: AddNewCard) => {
   const { deck } = props
 
-  const [createPackAnswer, setCreatePackAnswer] = useState('')
-  const [createPackQuestion, setCreatePackQuestion] = useState('')
-  const [photo, setPhoto] = useState<File>()
+  const [cardAnswer, setCardAnswer] = useState('')
+  const [cardQuestion, setCardQuestion] = useState('')
+  const [answerPhoto, setAnswerPhoto] = useState<File | null>(null)
+  const [questionPhoto, setQuestionPhoto] = useState<File | null>(null)
   const [createCard, cardCreationStatus] = useCreateCardsMutation({})
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRefQuestion = useRef<HTMLInputElement>(null)
+  const inputRefAnswer = useRef<HTMLInputElement>(null)
 
   const onChangeAnswer = (value: string) => {
-    setCreatePackAnswer(value)
+    setCardAnswer(value)
   }
 
   const onChangeQuestion = (value: string) => {
-    setCreatePackQuestion(value)
+    setCardQuestion(value)
   }
 
   const cancelModals = () => {
-    setCreatePackAnswer('')
-    setCreatePackQuestion('')
+    setCardAnswer('')
+    setCardQuestion('')
   }
-  const selectFileHandler = () => {
-    inputRef && inputRef.current?.click()
+  const selectFileHandlerQuestion = () => {
+    inputRefQuestion && inputRefQuestion.current?.click()
   }
-  const onUploadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+  const selectFileHandlerAnswer = () => {
+    inputRefAnswer && inputRefAnswer.current?.click()
+  }
+  const onUploadQuestionPhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0]
 
-    setPhoto(file)
+    setQuestionPhoto(file)
   }
-  const onClickCreatePack = () => {
-    createCard({
-      answer: createPackAnswer,
-      id: deck?.id,
-      question: createPackQuestion,
-      questionImg: photo,
-    })
+  const onUploadAnswerPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0]
+
+    setAnswerPhoto(file)
+  }
+  const onClickCreateCard = () => {
+    const formData = new FormData()
+
+    questionPhoto && formData.append('questionImg', questionPhoto)
+    answerPhoto && formData.append('answerImg', answerPhoto)
+
+    formData.append('question', cardQuestion)
+    formData.append('answer', cardAnswer)
+
+    if (deck && deck.id) {
+      createCard({ body: formData, id: deck.id })
+    }
+    setAnswerPhoto(null)
+    setQuestionPhoto(null)
   }
 
   return (
@@ -60,7 +76,7 @@ export const ModalsAddNewCard = (props: AddNewCard) => {
         </Button>,
         <Button
           disabled={cardCreationStatus.isLoading}
-          onClick={onClickCreatePack}
+          onClick={onClickCreateCard}
           variant={'primary'}
         >
           Add New Card
@@ -70,17 +86,35 @@ export const ModalsAddNewCard = (props: AddNewCard) => {
       showCloseButton
     >
       <Input label={'Question'} onValueChange={onChangeQuestion} />
-      <div>
-        <img className={s.createPhoto} src={deck?.cover || deckPhoto} />
-      </div>
+      {questionPhoto && (
+        <div>
+          <img
+            alt={'Question Photo'}
+            className={s.photo}
+            src={URL.createObjectURL(questionPhoto)}
+          />
+        </div>
+      )}
       <ChangeCoverButton
-        inputRef={inputRef}
-        onUploadPhoto={onUploadPhoto}
-        selectFileHandler={selectFileHandler}
+        inputRef={inputRefQuestion}
+        name={'Select question image'}
+        onUploadPhoto={onUploadQuestionPhoto}
+        selectFileHandler={selectFileHandlerQuestion}
       />
       <div>
         <Input label={'Answer'} onValueChange={onChangeAnswer} />
       </div>
+      {answerPhoto && (
+        <div>
+          <img alt={'Answer Photo'} className={s.photo} src={URL.createObjectURL(answerPhoto)} />
+        </div>
+      )}
+      <ChangeCoverButton
+        inputRef={inputRefAnswer}
+        name={'Select answer image'}
+        onUploadPhoto={onUploadAnswerPhoto}
+        selectFileHandler={selectFileHandlerAnswer}
+      />
     </Modals>
   )
 }
