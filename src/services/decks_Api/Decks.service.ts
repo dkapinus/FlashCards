@@ -70,12 +70,25 @@ const decksService = baseApi.injectEndpoints({
                 name: nameSearch,
               },
               draft => {
-                const deck = draft.items.find(deck => deck.id === id)
+                const index = draft.items.findIndex(deck => deck.id === id)
+                let cover = ''
 
-                if (!deck) {
-                  return
+                const name = body.get('name')
+                const isPrivate = body.get('isPrivate')
+                const coverBlob = body.get('cover')
+
+                if (coverBlob instanceof Blob) {
+                  cover = URL.createObjectURL(coverBlob)
                 }
-                Object.assign(deck, body)
+
+                if (index !== -1) {
+                  draft.items[index] = {
+                    ...draft.items[index],
+                    cover: cover,
+                    isPrivate: !!isPrivate,
+                    name: typeof name === 'string' ? name : '',
+                  }
+                }
               }
             )
           )

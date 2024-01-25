@@ -1,13 +1,12 @@
 import { useState } from 'react'
 
+import { RadioGroup } from '@/components/ui/radioGroup/RadioGroup'
 import { Meta, StoryObj } from '@storybook/react'
-
-import { RadioGroup } from './RadioGroup'
 
 const meta: Meta<typeof RadioGroup> = {
   component: RadioGroup,
   tags: ['autodocs'],
-  title: 'Components/RadioGroup',
+  title: 'Components/radioGroup',
 }
 
 export default meta
