@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { SingleRadio } from '@/components/ui/RadioGroup/SingleRadio'
+import { SingleRadio } from '@/components/ui/radioGroup/SingleRadio'
 import * as RadixRadioGroup from '@radix-ui/react-radio-group'
 import cn from 'classnames'
 

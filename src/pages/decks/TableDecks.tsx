@@ -147,7 +147,6 @@ export const TableDecks = () => {
 
     formData.append('name', name)
 
-    // updatePack({ id: id, isPrivate: isPrivatePack, name: packName === '' ? deckName : packName })
     updatePack({ body: formData, id: id })
     setIsPrivatePack(false)
   }

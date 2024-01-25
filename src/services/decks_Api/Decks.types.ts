@@ -18,6 +18,12 @@ export type DeleteDecksArg = {
   id: string
 }
 
+// type UpdateDeckParamsTypeBody = {
+//   cover: FormData
+//   isPrivate: boolean
+//   name: string
+// }
+
 export type UpdateDeckParamsType = {
   body: FormData
   id: string
