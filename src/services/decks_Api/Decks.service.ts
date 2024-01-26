@@ -1,6 +1,7 @@
 import { RootState } from '@/services/Store'
 import { baseApi } from '@/services/base_Api/Base-Api'
 import {
+  DeckResponse,
   DeleteDecksArg,
   GetDeckById,
   GetDecksArgs,
@@ -11,8 +12,25 @@ import {
 const decksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createDecks: builder.mutation<void, FormData>({
+      createDecks: builder.mutation<DeckResponse, FormData>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const res = await queryFulfilled
+
+          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
+            getState(),
+            [{ type: 'Decks' }]
+          )) {
+            if (endpointName !== 'getDecks') {
+              continue
+            }
+            dispatch(
+              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
+                draft.items.unshift(res.data)
+              })
+            )
+          }
+        },
         query: arg => {
           return {
             body: arg,
@@ -24,6 +42,35 @@ const decksService = baseApi.injectEndpoints({
       }),
       deleteDecks: builder.mutation<void, DeleteDecksArg>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
+          const state = getState() as RootState
+          const minCardsCount = state.decks.minCards
+          const nameSearch = state.decks.search
+          const currentPage = state.decks.currentPage
+          const maxCardsCount = state.decks.maxCards
+          const authorId = state.decks.authorId
+
+          const patchResult = dispatch(
+            decksService.util.updateQueryData(
+              'getDecks',
+              { authorId, currentPage, maxCardsCount, minCardsCount, name: nameSearch },
+              draft => {
+                const index = draft?.items?.findIndex(deck => deck.id === id)
+
+                if (index !== -1) {
+                  draft?.items?.splice(index, 1)
+                }
+              }
+            )
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
+
         query: ({ id }) => {
           return {
             method: 'DELETE',

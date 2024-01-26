@@ -1,5 +1,5 @@
 export interface GetDecksResponse {
-  items: Item[]
+  items: Deck[]
   maxCardsCount: number
   pagination: Pagination
 }
@@ -18,30 +18,28 @@ export type DeleteDecksArg = {
   id: string
 }
 
-// type UpdateDeckParamsTypeBody = {
-//   cover: FormData
-//   isPrivate: boolean
-//   name: string
-// }
-
 export type UpdateDeckParamsType = {
   body: FormData
   id: string
 }
-export interface Item {
+
+export type Deck = {
   author: Author
   cardsCount: number
-  cover?: string
+  cover?: null | string
   created: string
   id: string
   isBlocked?: boolean | null
-  isDeleted?: boolean | null
+  isDeleted: boolean | null
   isPrivate: boolean
   name: string
+  rating: number
   shots: number
   updated: string
   userId: string
 }
+
+export type DeckResponse = Deck
 
 export interface Author {
   id: string
