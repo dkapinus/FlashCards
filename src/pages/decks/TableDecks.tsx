@@ -148,6 +148,7 @@ export const TableDecks = () => {
     formData.append('name', name)
 
     updatePack({ body: formData, id: id })
+    console.log({ body: formData, id: id })
     setIsPrivatePack(false)
   }
 

@@ -27,11 +27,8 @@ export interface Pagination {
 }
 
 export type CreateCardArg = {
-  answer?: string
-  answerImg?: string
-  id?: string
-  question?: string
-  questionImg?: string
+  body: FormData
+  id: string
 }
 
 export type DeleteCardsArg = {
@@ -39,10 +36,14 @@ export type DeleteCardsArg = {
 }
 
 export type UpdateCardsArgs = {
-  answer?: string
-  answerImg?: string
-  answerVideo?: string
-  question?: string
-  questionImg?: string
-  questionVideo?: string
+  body: FormData
+  id: string
 }
+// export type UpdateCardsArgs = {
+//   answer?: string
+//   answerImg?: string
+//   answerVideo?: string
+//   question?: string
+//   questionImg?: string
+//   questionVideo?: string
+// }

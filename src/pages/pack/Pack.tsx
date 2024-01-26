@@ -186,7 +186,6 @@ const Pack = () => {
                                     />
                                   }
                                   buttonsInFooter={[
-                                    // <Button onClick={cancelModals} variant={'secondary'}>
                                     <Button variant={'secondary'}>Cancel</Button>,
                                     <Button
                                       disabled={cardDeleteStatus.isLoading}

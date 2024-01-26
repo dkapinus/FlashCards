@@ -11,9 +11,10 @@ const cardsService = baseApi.injectEndpoints({
     return {
       createCards: builder.mutation<void, CreateCardArg>({
         invalidatesTags: ['Cards'],
-        query: ({ id, ...args }) => {
+        query: ({ body, id }) => {
           return {
-            body: args,
+            body,
+            formData: true,
             method: 'POST',
             url: `v1/decks/${id}/cards`,
           }
@@ -39,9 +40,10 @@ const cardsService = baseApi.injectEndpoints({
       }),
       updateCards: builder.mutation<void, UpdateCardsArgs & DeleteCardsArg>({
         invalidatesTags: ['Cards'],
-        query: ({ id, ...arg }) => {
+        query: ({ body, id }) => {
           return {
-            body: arg,
+            body,
+            formData: true,
             method: 'PATCH',
             url: `v1/cards/${id}`,
           }
