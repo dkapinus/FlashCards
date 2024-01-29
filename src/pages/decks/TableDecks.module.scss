@@ -3,8 +3,11 @@
 }
 
 .input {
-  width: 100%;
   max-width: 50%;
+
+  @media (width <= 1700px) {
+    max-width: 20%;
+  }
 }
 
 .name {
@@ -51,6 +54,6 @@
   box-shadow: none;
 }
 
-.TabSwitcherTitle {
+.tabSwitcherTitle {
   margin: 5px 0;
 }
