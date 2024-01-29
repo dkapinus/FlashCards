@@ -25,10 +25,7 @@ const Pack = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [view, setView] = useState('10')
   const [questionSearch, setInputValue] = useState('')
-  // const [createPackAnswer, setCreatePackAnswer] = useState('')
-  // const [createPackQuestion, setCreatePackQuestion] = useState('')
   const [deleteCard, cardDeleteStatus] = useDeleteCardsMutation()
-  // const [, deckUpdateStatus] = useUpdateCardsMutation({})
 
   const params = useParams()
 

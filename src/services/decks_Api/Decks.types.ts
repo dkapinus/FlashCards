@@ -39,8 +39,6 @@ export type Deck = {
   userId: string
 }
 
-export type DeckResponse = Deck
-
 export interface Author {
   id: string
   name: string
