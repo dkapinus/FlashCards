@@ -23,7 +23,6 @@ export const ModalsEditCard = (props: EditCard) => {
   const inputRefQuestion = useRef<HTMLInputElement>(null)
   const inputRefAnswer = useRef<HTMLInputElement>(null)
 
-  console.log(card.answerImg)
   const selectFileHandlerQuestion = () => {
     inputRefQuestion && inputRefQuestion.current?.click()
   }
