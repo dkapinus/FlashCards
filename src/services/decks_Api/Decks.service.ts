@@ -1,7 +1,7 @@
 import { RootState } from '@/services/Store'
 import { baseApi } from '@/services/base_Api/Base-Api'
 import {
-  DeckResponse,
+  Deck,
   DeleteDecksArg,
   GetDeckById,
   GetDecksArgs,
@@ -12,29 +12,32 @@ import {
 const decksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createDecks: builder.mutation<DeckResponse, FormData>({
+      createDecks: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
-          const res = await queryFulfilled
+          const state = getState() as RootState
 
-          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
-            getState(),
-            [{ type: 'Decks' }]
-          )) {
-            if (endpointName !== 'getDecks') {
-              continue
-            }
-            dispatch(
-              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
-                draft.items.unshift(res.data)
-              })
+          const minCardsCount = state.decks.minCards
+          const nameSearch = state.decks.search
+          const currentPage = state.decks.currentPage
+          const maxCardsCount = state.decks.maxCards
+          const authorId = state.decks.authorId
+
+          const response = await queryFulfilled
+
+          dispatch(
+            decksService.util.updateQueryData(
+              'getDecks',
+              { authorId, currentPage, maxCardsCount, minCardsCount, name: nameSearch },
+              draft => {
+                draft.items.unshift(response.data)
+              }
             )
-          }
+          )
         },
-        query: arg => {
+        query: body => {
           return {
-            body: arg,
-            formData: true,
+            body,
             method: 'POST',
             url: `v1/decks`,
           }

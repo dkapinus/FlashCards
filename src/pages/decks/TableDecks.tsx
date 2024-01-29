@@ -51,7 +51,11 @@ export const TableDecks = () => {
   const packName = useAppSelector(selectDecksName)
   const tab = useAppSelector(selectDecksCurrentTab)
 
-  const { data, error, isLoading } = useGetDecksQuery({
+  const {
+    currentData: data,
+    error,
+    isLoading,
+  } = useGetDecksQuery({
     authorId,
     currentPage,
     maxCardsCount,
@@ -60,8 +64,8 @@ export const TableDecks = () => {
   })
   const { data: userData, isError } = useMeQuery()
   const [createDeck, deckCreationStatus] = useCreateDecksMutation()
-  const [deletePack, deckDeleteStatus] = useDeleteDecksMutation()
-  const [updatePack, deckUpdateStatus] = useUpdateDecksMutation({})
+  const [deleteDeck, deckDeleteStatus] = useDeleteDecksMutation()
+  const [updateDeck, deckUpdateStatus] = useUpdateDecksMutation({})
 
   const isOwner = userData?.id
 
@@ -131,11 +135,11 @@ export const TableDecks = () => {
 
     setPhoto(file)
   }
-  const DeletePack = (id: string) => {
-    deletePack({ id: id })
+  const DeleteDeck = (id: string) => {
+    deleteDeck({ id: id })
   }
 
-  const UpDatePack = (id: string, deckName: string) => {
+  const UpDateDeck = (id: string, deckName: string) => {
     const formData = new FormData()
     const name = packName === '' ? deckName : packName
 
@@ -147,8 +151,8 @@ export const TableDecks = () => {
 
     formData.append('name', name)
 
-    updatePack({ body: formData, id: id })
-    console.log({ body: formData, id: id })
+    updateDeck({ body: formData, id: id })
+
     setIsPrivatePack(false)
   }
 
@@ -294,7 +298,7 @@ export const TableDecks = () => {
                             </Button>,
                             <Button
                               disabled={deckDeleteStatus.isLoading}
-                              onClick={() => DeletePack(deck.id)}
+                              onClick={() => DeleteDeck(deck.id)}
                               variant={'primary'}
                             >
                               Delete Pack
@@ -325,7 +329,7 @@ export const TableDecks = () => {
                             </Button>,
                             <Button
                               disabled={deckUpdateStatus.isLoading}
-                              onClick={() => UpDatePack(deck.id, deck.name)}
+                              onClick={() => UpDateDeck(deck.id, deck.name)}
                               variant={'primary'}
                             >
                               Save Changes
