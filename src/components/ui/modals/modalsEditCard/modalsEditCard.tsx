@@ -16,8 +16,8 @@ type EditCard = {
 export const ModalsEditCard = (props: EditCard) => {
   const { card } = props
   const [updateCard, cardUpdateStatus] = useUpdateCardsMutation({})
-  const [cardAnswer, setCardAnswer] = useState('')
-  const [cardQuestion, setCardQuestion] = useState('')
+  const [cardAnswer, setCardAnswer] = useState(card.answer)
+  const [cardQuestion, setCardQuestion] = useState(card.question)
   const [answerPhoto, setAnswerPhoto] = useState<File | null>(null)
   const [questionPhoto, setQuestionPhoto] = useState<File | null>(null)
   const inputRefQuestion = useRef<HTMLInputElement>(null)
@@ -82,7 +82,7 @@ export const ModalsEditCard = (props: EditCard) => {
       variant={'secondary'}
     >
       <div>
-        <Input defaultValue={card.question} label={'Question'} onValueChange={onChangeQuestion} />
+        <Input defaultValue={cardQuestion} label={'Question'} onValueChange={onChangeQuestion} />
       </div>
       {questionPhoto !== null ? (
         <div>
@@ -104,7 +104,7 @@ export const ModalsEditCard = (props: EditCard) => {
         selectFileHandler={selectFileHandlerQuestion}
       />
       <div>
-        <Input defaultValue={card.answer} label={'Answer'} onValueChange={onChangeAnswer} />
+        <Input defaultValue={cardAnswer} label={'Answer'} onValueChange={onChangeAnswer} />
       </div>
       {answerPhoto !== null ? (
         <div>
