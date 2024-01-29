@@ -225,7 +225,7 @@ export const TableDecks = () => {
             value={nameSearch}
           />
           <div>
-            <Typography className={s.TabSwitcherTitle} variant={'body2'}>
+            <Typography className={s.tabSwitcherTitle} variant={'body2'}>
               Show packs cards
             </Typography>
             <TabSwitcher
